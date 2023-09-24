@@ -1,0 +1,1129 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="侯捷c++面向对象笔记2, 说的">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>侯捷c++面向对象笔记2 | 说的</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">说的</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">说的</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">侯捷c++面向对象笔记2</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/c/">
+                                <span class="chip bg-color">c++</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-08-08
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本系列笔记记录侯捷《C++面向对象高级开发》下知识点。</p>
+<h2 id="1、转换函数"><a href="#1、转换函数" class="headerlink" title="1、转换函数"></a>1、转换函数</h2><p><img src="1.png"></p>
+<ul>
+<li>转换函数，对象的类型之间进行转换。</li>
+<li>黄色部分即为转换函数，<strong>要以operator开头，函数名称为需要转成的类型，不可以有参数。前面不需要写返回类型，因为c++会自动返回函数名称这个类型。</strong></li>
+<li>转换函数通常后面有const，即不需要改变数据则要加const。</li>
+<li>写好之后，在将Fraction对象转成double的时候，会调用我们写好的转换函数。</li>
+</ul>
+<h2 id="2-non-explicit-one-argument-ctor"><a href="#2-non-explicit-one-argument-ctor" class="headerlink" title="2.non-explicit-one-argument ctor"></a>2.<strong>non-explicit-one-argument ctor</strong></h2><p>one-argument表示只要一个实参就够了。</p>
+<p>non-explicit</p>
+<p><img src="2.png"></p>
+<ul>
+<li>这里没有写转换函数，二是重载了+操作符。</li>
+<li>重载之后的+是分数+分数，编译器处理d2 &#x3D; f+4的时候，发现右边不是分数，则看4能否转换成分数。</li>
+<li>因为是只需要一个实参的构造函数，因此4可以转为分数，则可以调用重载之后的+。**</li>
+<li>因此non-explicit-one-argument ctor可以把其他类型转换为该类型。</li>
+</ul>
+<p><img src="3.png"></p>
+<ul>
+<li>如果这两个并存了，编译器就不知道该调用哪个了。（不知道把分数转为double还是把int转为分数）</li>
+</ul>
+<p><img src="4.png"></p>
+<ul>
+<li><strong>构造函数加上explicit之后，表示这个构造函数只能在构造的时候使用，不会在转换类型时使用了。</strong></li>
+<li>这个explicit关键字主要就出现在这里。</li>
+<li>所以这个图上没成功</li>
+</ul>
+<h2 id="3-pointer-like-classes"><a href="#3-pointer-like-classes" class="headerlink" title="3.pointer-like classes"></a>3.<strong>pointer-like classes</strong></h2><p>关于智能指针</p>
+<p><img src="5.png"></p>
+<ul>
+<li>设计的class，像指针。智能指针，完成比指针更多的工作。一般都是包着一层普通指针。</li>
+<li>指针允许的动作，这个类也需要允许操作。</li>
+<li>操作符和-&gt;操作符&#96;都需要重载。</li>
+<li>这样调用sp-&gt;的时候，实际上内部重载操作符，将内部的普通指针px返回出来，然后px可以继续使用-&gt;来完成。<strong>相当于这个-&gt;符号用了两次。</strong>(这就是-&gt;的特殊能力)</li>
+</ul>
+<p>迭代器</p>
+<p><img src="6.png"></p>
+<ul>
+<li>迭代器这种智能指针还需要处理++，–等符号。</li>
+</ul>
+<p><img src="7.png"></p>
+<ul>
+<li>这里面node用 * 号，则是取得data。</li>
+</ul>
+<h2 id="4-function-like-classes"><a href="#4-function-like-classes" class="headerlink" title="4. function-like classes"></a><strong>4. function-like classes</strong></h2><p>设计一个class，行为像一个函数，即仿函数。</p>
+<p><img src="8.png"></p>
+<ul>
+<li>即可以使用小括号来调用。</li>
+<li>对小括号（）操作符进行重载。</li>
+</ul>
+<h2 id="5-namespace"><a href="#5-namespace" class="headerlink" title="5.namespace"></a>5.namespace</h2><p><img src="9.png"></p>
+<ul>
+<li>使用namespace将不同的函数包在里面，这样可以避免混淆。</li>
+</ul>
+<h2 id="6-类模板"><a href="#6-类模板" class="headerlink" title="6.类模板"></a>6.类模板</h2><p>类模板</p>
+<p><img src="10.png"></p>
+<ul>
+<li>设计class的时候，如果数据的类型可以指定，那么就可以使用类模板。</li>
+</ul>
+<p>函数模板</p>
+<p><img src="11.png"></p>
+<ul>
+<li>与上面的类模板一致，在设计函数的时候，如果传入的参数可以指定，那么就使用模板。</li>
+<li>在函数定义前面，写template<class t></class></li>
+<li>或者，template<typename t></typename></li>
+</ul>
+<p>成员模板</p>
+<p><img src="12.png"></p>
+<ul>
+<li>黄色部分是成员模板，它即是模板的一部分（在pair类中），自己又是模板，则称为成员模板。</li>
+</ul>
+<p><img src="13.png"></p>
+<ul>
+<li>右上角设计了四种class。</li>
+<li>右下角的最后三行，设计了一个pair的构造函数，可以使用&lt;U1,U2&gt;这种pair对象p作为初值来构造一个pair，将p的first和second作为构造的pair的first和second。</li>
+<li><strong>例子就是，可以使用&lt;鲫鱼，麻雀&gt;对象来构造一个&lt;鱼类，鸟类&gt;的pair。如左下角所示。</strong></li>
+</ul>
+<p><img src="14.png"></p>
+<ul>
+<li>new一个子类，这个指针类型是指向父类，是可以的，叫做up-cast。</li>
+<li>智能指针也必须可以这样。</li>
+</ul>
+<h2 id="7-specialization特化"><a href="#7-specialization特化" class="headerlink" title="7. specialization特化"></a><strong>7. specialization特化</strong></h2><p><img src="15.png"></p>
+<ul>
+<li>特化是泛化模板的反面。</li>
+<li>在使用模板之后，可以针对不同的类型，来设计不同的东西。</li>
+<li>使用template&lt;&gt;，后面指定类型，比如struct hash<char>进行特定的设计。</char></li>
+</ul>
+<p>偏特化</p>
+<p><img src="16.png"></p>
+<ul>
+<li>偏特化，即局部特化。</li>
+<li>第一种是个数的偏，比如上面的模板有两个，特化其中一个为bool类型。</li>
+</ul>
+<p><img src="17.png"></p>
+<ul>
+<li>第二种是范围的偏</li>
+<li>可以把参数的范围缩小，比如上面，如果只要传进来的是指针，就使用下面这种。而指针指向的是什么，不需要考虑。</li>
+</ul>
+<h2 id="8-模板模板参数"><a href="#8-模板模板参数" class="headerlink" title="8. 模板模板参数"></a><strong>8. 模板模板参数</strong></h2><p>模板中的一个模板参数也为模板。</p>
+<p><img src="18.png"></p>
+<ul>
+<li>只有模板的尖括号中&lt;&gt;，typename和class写哪个都行，互通。</li>
+<li>要使用最后一行代码来使用，第一个参数为string，第二个模板参数本身为模板，引入Lst，来作为第二参数。</li>
+</ul>
+<ul>
+<li>为什么第一个不行，因为list类，他是有几个参数的，平时写一个就行，后面有默认的，但是，但是，这里不行，这里只写一个编译不能通过，你问我为什么，我怎么知道</li>
+</ul>
+<p><img src="19.png"></p>
+<ul>
+<li>这不是！</li>
+</ul>
+<h2 id="9-C-11新特性"><a href="#9-C-11新特性" class="headerlink" title="9.C++11新特性"></a>9.C++11新特性</h2><p>variadic templates 数量不定的模板参数</p>
+<p><img src="20.png"></p>
+<ul>
+<li>模板的参数可以变化，使用…即可，表示任意个数。</li>
+<li>示例中，将模板参数分为一个和一包参数，后面的一包参数数量任意。</li>
+<li>这个示例中，使用了递归，不断地将一包参数里的每一个print…，直到最后一个，调用了没有参数的print，结束。</li>
+<li>使用sizeof…(args)可以直到现在这个参数包中有多少个参数。</li>
+</ul>
+<p>auto关键字</p>
+<p><img src="21.png"></p>
+<ul>
+<li>编译器自动匹配返回类型。</li>
+</ul>
+<p>range-base for</p>
+<p><img src="22.png"></p>
+<ul>
+<li>使用单冒号来进行for循环遍历。</li>
+</ul>
+<h2 id="10-reference引用"><a href="#10-reference引用" class="headerlink" title="10.reference引用"></a>10.<strong>reference引用</strong></h2><p><img src="23.png"></p>
+<ul>
+<li>x是整数，p是指向x的指针，r是x的引用。</li>
+<li>x是整数，占4字节；p是指针，32位机器上占4字节；<strong>r代表x，那么r也是整数，占4字节。</strong></li>
+<li>逻辑上r是这样，但底部的实现也是指针，即r也是指向x的指针。（即使底部是这样，但是引用占用的大小也需要与代表的物体一样，编译器创建出的假象）<strong>引用与指针不同，不可以改变，代表一个变量之后，就不能改变。</strong></li>
+</ul>
+<p><img src="24.png"></p>
+<ul>
+<li>这里r和x都是8字节，且地址也相同，实际是假象。</li>
+</ul>
+<p><img src="25.png"></p>
+<ul>
+<li>reference通常用在参数传递上。</li>
+</ul>
+<h2 id="11-vtpr和vtbl"><a href="#11-vtpr和vtbl" class="headerlink" title="11.vtpr和vtbl"></a>11.vtpr和vtbl</h2><p><img src="26.png"></p>
+<ul>
+<li>三个类，B继承了A，C继承了B。因此三个类所占的内存如左边所示。</li>
+<li>子类对象中，有父类的成分。</li>
+<li>当类中有虚函数的时候，对象就会多一个指针。（无论多少个虚函数，都是多一个指针，即vptr）<strong>，因此占用的内存，会多一个指针的空间（4字节）。</strong></li>
+<li><strong>继承的时候，会继承父类的函数的调用权。</strong></li>
+<li>vptr只会关联到虚函数上，与一般函数无关。<strong>vptr指向一个表格vtbl，里面是虚函数的位置。</strong></li>
+<li>调用函数则是动态绑定，通过指针p找到vptr，找到vtbl，再找到调用的函数。<code>(*p-&gt;vptr[n])(p)</code>，则调用第n个虚函数。</li>
+</ul>
+<h2 id="12-关于this-pointer"><a href="#12-关于this-pointer" class="headerlink" title="12. 关于this pointer"></a><strong>12. 关于this pointer</strong></h2><p><img src="27.png"></p>
+<ul>
+<li>通过对象来调用函数，这个对象的地址即是this pointer</li>
+<li>父类中其他可以通用，读文件这个函数Serialize设置为虚函数，需要override。</li>
+<li>我们定义一个读文档的类，那么serialize函数就要override成读文档的函数。</li>
+<li>调用serialize时，通过隐藏的this pointer来调用，因为myDoc.OnFileOpen，因此this就是myDoc（这里就是上面说的动态绑定，this指向的serialize，是重载过的虚函数），因此调用的是我们override之后的serialize函数。**</li>
+<li>这就是设计模式，template method</li>
+</ul>
+<p>动态绑定</p>
+<p><img src="29.png"></p>
+<ul>
+<li>a.vfunc1()这是通过对象来调用（将B转成A类对象），是静态的调用。可以看到右边的汇编代码，调用call来执行（固定地址）。</li>
+</ul>
+<p><img src="28.png"></p>
+<ul>
+<li>这里是使用动态绑定调用。</li>
+<li>首先<strong>向上转型，new B的指针是A*，</strong>下面用指针调用函数，是动态的。</li>
+<li><strong>右边的汇编中可以看到，调用函数的时候，call的是dword ptr[edx]，即是vtbl中对应虚函数的位置。</strong></li>
+</ul>
+<h2 id="13-浅谈const"><a href="#13-浅谈const" class="headerlink" title="13. 浅谈const"></a><strong>13. 浅谈const</strong></h2><p><img src="30.png"></p>
+<ul>
+<li>const放在成员函数定义小括号的后面，表示修饰这个成员函数。<strong>表示我这个成员函数不准备改变class的data。</strong></li>
+<li>*当两个版本同时存在的时候，**const object只能调用const版本，non-const object只能调用non-const版本。</li>
+<li>常量对象是不可以调用非常量函数的，非常量对象可以调用常量函数。</li>
+</ul>
+<h2 id="14-关于new、delete"><a href="#14-关于new、delete" class="headerlink" title="14. 关于new、delete"></a><strong>14. 关于new、delete</strong></h2><ul>
+<li>这里面的new和delete是表达式，之后具体执行几步，完成操作（详细可见上门课程）。</li>
+<li><strong>这里面的new和delete表达式无法重载，但是分解之后的几步操作是可以重载的。</strong></li>
+</ul>
+<p><img src="31.png"></p>
+<ul>
+<li>全局重载operator，new、delete、new[]、delete[]。</li>
+<li>这几个函数我们不会调用，是编译器会调用，<strong>我们new、delete的时候，编译器会找这几个操作符函数有没有重载。</strong></li>
+<li>重载了之后，全局的new和delete都调用这个版本。</li>
+</ul>
+<p><img src="32.png"></p>
+<ul>
+<li>重载之后，new这个类的时候，使用重载之后的操作符函数。</li>
+</ul>
+<p><img src="33.png"></p>
+<p>下面是接口示例：</p>
+<p><img src="34.png"></p>
+<ul>
+<li>在class Foo定义中，重载了这四种操作符函数。</li>
+<li>使用者进行调用。</li>
+<li><strong>如果要跳过我们设计的这四种，强制使用全局的，那么使用::new Foo；::delete pf即可。即前面加上::。</strong></li>
+</ul>
+<p><img src="35.png"></p>
+<ul>
+<li>这里面Foo的数据大小为12字节（int4字节，long4字节，string大小为指针大小，4字节）</li>
+<li>如果加上虚函数之后，会产生vptr，因此有虚函数的大小为16字节。</li>
+<li>主要看第三步和第四步，new一个Foo[5]，发现大小是64，不是60（12 * 5）。<strong>多出来的一个4字节，记录了这个数组的长度。</strong>从上到下进行构造，从下到上进行析构。</li>
+<li>同理，下面的大小是84，也不是80。</li>
+</ul>
+<p><img src="36.png"></p>
+<ul>
+<li>加上::之后会绕过我们重载过的函数。调用全局的。</li>
+</ul>
+<p><img src="37.png"></p>
+<ul>
+<li>可以重载类的成员操作符函数，new()、delete()。</li>
+<li>第一个参数必须是size_t。</li>
+<li>重载delete()，不会被delete调用，只当new调用的构造函数抛出异常的时候，才调用来归还占用的内存。</li>
+</ul>
+<p><img src="38.png"></p>
+<ul>
+<li>故意写错第一个参数，编译器会报错。</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/c/">
+                                    <span class="chip bg-color">c++</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/08/13/%E7%89%9B%E5%AE%A2c-%E5%88%B7%E9%A2%98/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="牛客c++刷题">
+                        
+                        <span class="card-title">牛客c++刷题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/c/">
+                        <span class="chip bg-color">c++</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">刷题总结</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/07/21/%E4%BE%AF%E6%8D%B7c-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%AC%94%E8%AE%B01/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="侯捷c++面向对象笔记1">
+                        
+                        <span class="card-title">侯捷c++面向对象笔记1</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/c/">
+                        <span class="chip bg-color">c++</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">G</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/GuSmallwhite" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>

@@ -1,0 +1,1254 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="牛客c++刷题, 说的">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>牛客c++刷题 | 说的</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">说的</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">说的</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">牛客c++刷题</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/c/">
+                                <span class="chip bg-color">c++</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/">
+                                <span class="chip bg-color">刷题总结</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-08-13
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看完了侯捷大师的课，直接刷题，刷题中自己不知道的东西，总结与此</p>
+<h2 id="8-13"><a href="#8-13" class="headerlink" title="8.13"></a>8.13</h2><h3 id="函数重载规则"><a href="#函数重载规则" class="headerlink" title="函数重载规则"></a>函数重载规则</h3><ol>
+<li>函数名需相同</li>
+<li>参数的个数、参数的顺序和参数的类型不同均可构成重载。</li>
+<li>在同一作用域</li>
+<li>返回值类型不同不能构成重载。</li>
+<li>对实参是否有影响，如volatile&#x2F;const修饰的指针或引用时，也可以构成重载。</li>
+</ol>
+<p>所以这个题目</p>
+<p><img src="1.png"></p>
+<pre><code>A.返回值不能区分重载函数，只有形参的个数、类型或者顺序可以       
+B.int和short不一样，所以可以重载       
+C.const放在函数后面是指这个成员函数为常成员函数，不能修改类里的成员变量，可以起到重载的作用。       
+D.int和const int都是int类型，区别是后者不能对形参进行修改而已，这样写不可以重载，编译会报错。       
+E.函数前面加const也起不来重载的作用，其作用在于声明返回的值为cosnt不可修改，绝大多数情况下没啥意义。      
+
+      PS：声明一个成员函数的时候用const关键字是用来说明这个函数是 &quot;只读(read-only)&quot;函数，也就是说明这个函数不会修改任何数据成 员(object)。 为了声明一个const成员函数，把const关键字放在函数括号的后面。声明和定义的时候都应该放const关键字。  
+ 
+              任何不会修改数据成员的函数都应该声明为const类型，如果在编写const成员函数时，不慎修改了数据成员，或者调用了其它非const成员函数，编译器将指出错误，这可以提高程序的健壮性。  
+</code></pre>
+<h3 id="关于友元"><a href="#关于友元" class="headerlink" title="关于友元"></a>关于友元</h3><p>类的友元函数是定义在类外部，但有权访问类的所有私有（private）成员和保护（protected）成员。尽管友元函数的原型有在类的定义中出现过，但是<strong>友元函数并不是成员函数。</strong></p>
+<p>友元可以是一个函数，该函数被称为友元函数；友元也可以是一个类，该类被称为友元类，在这种情况下，整个类及其所有成员都是友元。</p>
+<p>如果要声明函数为一个类的友元，需要在类定义中该函数原型前使用关键字 friend</p>
+<p>所以对于这个题目来说</p>
+<p><img src="2.png"></p>
+<p>  友元函数是不能被继承的，可理解为：你父亲的朋友不一定是你自己的朋友 </p>
+<p>  this指针是指向当前对象的，可以访问当前对象的所有成员，而友元函数是非成员函数，没有this指针 </p>
+<p>  友元函数并没有破坏继承性机制（破坏的是类的封装），因为友元函数是非成员函数，并不会被继承，继承只是继承的成员函数及变量 </p>
+<h3 id="关于union"><a href="#关于union" class="headerlink" title="关于union"></a>关于union</h3><p>union即为联合，它是一种特殊的类。通过关键字union进行定义，一个union可以有多个数据成员</p>
+<p>在任意时刻，联合中只能有一个数据成员可以有值。当给联合中某个成员赋值之后，该联合中的其它成员就变成未定义状态了。</p>
+<p>union类型的变量<strong>在定义时是可以被初始化</strong>的，定义如下union类型 union Test {     int a;     float b; }; Test test &#x3D; {1}; test变量的定义可以初始化，初始值的类型必须<strong>是union中第一个成员的类型</strong></p>
+<p>联合变量占有的内存空间是<strong>该联合变量中占有最大内存空间的成员在内存对齐时</strong>所需的存储空间</p>
+<p>所以这一题</p>
+<p><img src="33.png"></p>
+<p>答案为4 8</p>
+<p>为什么？</p>
+<p> union中的所有成员相对于基地址的偏移量都为零。d.x,d.y和d.s.x的起始地址都相同,共享内存空间，给任意一个变量赋值，其他两个变量也会赋相同的值。</p>
+<p><img src="34.png"></p>
+<p>结构体和union不一样，而s.y后定义所以先来后到，s.y在上面</p>
+<p>d.x&#x3D;1；&#x2F;&#x2F;&#x2F;d.x&#x3D;d.y&#x3D;d.s.x&#x3D;1; </p>
+<p> d.y&#x3D;2;&#x2F;&#x2F;&#x2F;d.x&#x3D;d.y&#x3D;d.s.x&#x3D;2;  </p>
+<p> d.s.x&#x3D;d.x<em>d.x;&#x2F;&#x2F;&#x2F;d.x&#x3D;d.y&#x3D;d.s.x&#x3D;2</em>2&#x3D;4;  </p>
+<p> d.s.y&#x3D;d.y*d.y;&#x2F;&#x2F;&#x2F;d.x&#x3D;d.y&#x3D;d.s.x&#x3D;4+4&#x3D;8; </p>
+<h3 id="关于成员函数"><a href="#关于成员函数" class="headerlink" title="关于成员函数"></a>关于成员函数</h3><p>默认访问权限是private </p>
+<p>所以这一题</p>
+<p><img src="3.png"></p>
+<h3 id="关于虚函数"><a href="#关于虚函数" class="headerlink" title="关于虚函数"></a>关于虚函数</h3><p>不能声明为虚函数的有 1、构造函数 2、静态成员函数 3、友元函数 4、内敛函数 (虚函数不可以是内联函数，因为内联函数要在编译期间展开，那样多态性就无法实现。但是虚函数可以声明为inline，这只是一个建议，编译器不会展开它)</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">假设构造函数为虚函数，而虚函数的调用需要虚表，虚表又由构造函数建立。
+这样就矛盾了。  就像儿子生了父亲一样，矛盾。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>一般析构函数会被定义为虚函数</p>
+<p>所以这一题</p>
+<p><img src="4.png"></p>
+<p>1.构造函数执行时还未创建对象，此时还没有虚函数表。 </p>
+<p>2.将基类的析构函数声明为虚函数，delete一个指向子类对象的基类指针，实际被执行的是子类的析构函数，而子类的析构函数会自动的调用基类的析构函数，进而保证所有资源都可以释放，防止内存泄露。 </p>
+<p>3.虚函数不可内联 </p>
+<p>4.静态成员函数属于类，不属于特定对象，既不会通过虚函数来调用。因为虚函数表位于特定的对象之中</p>
+<p><img src="32.png"></p>
+<p>子类中不一定要覆盖基类的纯虚函数</p>
+<p>虚函数不可以被重载为内联函数，为什么呢: <strong>inline是在编译器将函数类容替换到函数调用处，是静态编译的。 而虚函数是动态调用的，在编译器并不知道需要调用的是父 类还是子类的虚函数，所以不能够inline声明展开，所以编译器会忽略</strong></p>
+<h3 id="关于fopen"><a href="#关于fopen" class="headerlink" title="关于fopen"></a>关于fopen</h3><p>一图流</p>
+<p><img src="5.png"></p>
+<h3 id="一个坑爹题"><a href="#一个坑爹题" class="headerlink" title="一个坑爹题"></a>一个坑爹题</h3><p><img src="6.png"></p>
+<p>这个题坑在哪，坑就坑在他func的参数也叫p</p>
+<p>那么其实</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">p<span class="token operator">=</span><span class="token operator">&amp;</span>num<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>时，参数p已经变成了num的地址</p>
+<p>和main里的p没关系了</p>
+<h3 id="关于三目运算符"><a href="#关于三目运算符" class="headerlink" title="关于三目运算符"></a>关于三目运算符</h3><p>多个连续三目运算符从右往左运算</p>
+<p><img src="7.png"></p>
+<h3 id="关于函数模板"><a href="#关于函数模板" class="headerlink" title="关于函数模板"></a>关于函数模板</h3><p>两个阶段编译</p>
+<ol>
+<li>在模板定义阶段，模板的检查并不包含类型参数的检查。只包含下面几个方面:</li>
+</ol>
+<ul>
+<li>语法检查。比如少了分号。</li>
+<li>使用了未定义的不依赖于模板参数的名称（类型名，函数名，……）。</li>
+<li>未使用模板参数的 static assertions。</li>
+</ul>
+<ol start="2">
+<li>在模板实例化阶段，为确保所有代码都是有效的，模板会再次被检查，尤其是那些依赖类型参数的部分</li>
+</ol>
+<p><strong>模板类型推断</strong></p>
+<p>在类型推断的时候自动的类型转换是受限制的:<br><em>如果调用参数是按引用传递的，任何类型转换都不被允许。通过模板类型参数 T 定义的 两个参数，它们实参的类型必须完全一样。</em><br>如果调用参数是按值传递的，那么只有退化（decay）这一类简单转换是被允许的：const 和 volatile 限制符会被忽略，引用被转换成被引用的类型，raw array 和函数被转换为相 应的指针类型。通过模板类型参数 T 定义的两个参数，它们实参的类型在退化（decay） 后必须一样</p>
+<p>所以这一题</p>
+<p><img src="8.png"></p>
+<h3 id="关于抽象类"><a href="#关于抽象类" class="headerlink" title="关于抽象类"></a>关于抽象类</h3><p>含有纯虚函数的类被称为抽象类。抽象类只能作为派生类的基类，不能定义对象，但可以定义指针。在派生类实现该纯虚函数后，定义抽象类对象的指针，并指向或引用子类对象。</p>
+<p><img src="9.png"></p>
+<h3 id="关于回调函数"><a href="#关于回调函数" class="headerlink" title="关于回调函数"></a>关于回调函数</h3><pre class="line-numbers language-none"><code class="language-none">所谓的回调函数，就是预先在系统的对函数进行注册，让系统知道这个函数的存在，以后，当某个事件发生时，再调用这个函数对事件进行响应。 定义一个类的成员函数时在该函数前加CALLBACK即将其定义为回调函数，函数的实现和普通成员函数没有区别  <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>回调函数不能是特定的类成员函数。因为类成员函数含有this指针</strong></p>
+<h3 id="关于输出"><a href="#关于输出" class="headerlink" title="关于输出%"></a>关于输出%</h3><p><img src="10.png"></p>
+<p> C 语言中用 “%%” 打印输出字符 “%”, 所以 %%d, 输出为 %d 两个普通字符 , 而不是格式控制符 “%d” 的含义 , 所以打印结果为 C </p>
+<h3 id="关于二维数组定义"><a href="#关于二维数组定义" class="headerlink" title="关于二维数组定义"></a>关于二维数组定义</h3><p><img src="11.png"></p>
+<p>首先，数组定义的时候必须指定大小。指定的含义是指要么你显式地写出数组的长度，或者是让编译器自己通过初始化的元素的个数去计算长度。无论哪种，都是能确定大小的，当数组创建完成后，这个大小就无法改变了。<br> 其次，数组的初始化可以只初始化前面一部分，例如 int a[10] &#x3D; {1,2,3}。<br> 然后，对于二维数组，如果你指定了行数和列数，那么这种情况最简单，直接用你写的行列数；如果只指定了列数，那么必须有一个初始化列表，然后就会按照列数c和初始化的元素个数n去计算行数，行数r等于n&#x2F;c的上取整。但如果你不指定列数，C编译器不会给你统计初始化列表然后计算应该有多少列，而且没有初始化列表的根本无法确定行列数。<br> <strong>所以必须有列数。</strong></p>
+<h3 id="结构体中的字节对齐和杂七杂八"><a href="#结构体中的字节对齐和杂七杂八" class="headerlink" title="结构体中的字节对齐和杂七杂八"></a>结构体中的字节对齐和杂七杂八</h3><ol>
+<li><p>C 语言的位域（bit-field）是一种特殊的结构体成员，允许我们按位对成员进行定义，指定其占用的位数。</p>
+</li>
+<li><p>int+名称+冒号+数字”的写法叫“位域”，数字表示占多少位。一个int是4字节32位。   </p>
+</li>
+<li><p>字节对齐：</p>
+<p>公式1:<strong>前面的地址必须是后面的地址正数倍,不是就补齐</strong></p>
+<p>公式2:<strong>整个Struct的地址必须是最大字节的整数倍</strong></p>
+</li>
+</ol>
+<p>所以这个题目</p>
+<p><img src="12.png"></p>
+<p>xyz，3+4+5&#x3D;12位</p>
+<p>double8字节，</p>
+<p>12位小于8字节，补成8字节</p>
+<p>8+8&#x3D;16</p>
+<h3 id="动态联编和静态联编"><a href="#动态联编和静态联编" class="headerlink" title="动态联编和静态联编"></a>动态联编和静态联编</h3><p>其实就是动态链接和静态链接</p>
+<ul>
+<li>静态联编 ：指在编译阶段就将函数实现和函数调用关联起来，也叫早绑定。</li>
+<li>动态联编：在程序执行的时候才将函数实现和函数调用关联。因此也叫晚绑定，一般情况下都是静态联编，涉及到<strong>多态和虚拟函数就必须使用动态联编了</strong></li>
+</ul>
+<h3 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h3><p>隐藏是指派生类的成员函数遮蔽了与其同名的基类成员函数，具体规则如下</p>
+<p>(1) 派生类的函数与基类的函数同名，但是参数列表有所差异。此时，不论有无virtual关键字，基类的函数在派生类中将被隐藏。(注意别与重载混合)</p>
+<p>(2)派生类的函数与基类的函数同名，参数列表也相同，但是基类函数没有virtual关键字。此时，基类的函数在派生类中将被隐藏。(注意别与覆盖混合)</p>
+<p><img src="13.png"></p>
+<p>所以这一题，属于第一种情况</p>
+<h3 id="数组的地址"><a href="#数组的地址" class="headerlink" title="数组的地址"></a>数组的地址</h3><p>在定义数组的函数里，对数组名取地址+1，表示加整个数组的长度  </p>
+<p>所以这一题</p>
+<p><img src="14.png"></p>
+<p> 数组名是数组这种类型的变量名，所以对数组名取地址是取的整个数组的地址，所以&amp;a+1自然要跨过整个数组的长度，本题即跨过2*5 &#x3D;  10个int的长度。 </p>
+<h3 id="类的大小"><a href="#类的大小" class="headerlink" title="类的大小"></a>类的大小</h3><p><img src="15.png"></p>
+<p>类的大小实际是指该类对象的大小。为类所有非静态数据成员的大小之和，需要内存对齐。<strong>不包括静态数据成员，不包括函数成员</strong>。但若定义了虚函数，则需要加上虚指针的大小。类的大小不能为0，由前述规则计算出类大小为0时，实际大小为1。本题中只有静态数据成员，没有非静态数据成员，所以大小为1。</p>
+<h3 id="不能被重载的操作符"><a href="#不能被重载的操作符" class="headerlink" title="不能被重载的操作符"></a>不能被重载的操作符</h3><p>大部分的操作符是可以被重载的，例外的只有“.”、“::”、“?:”和“sizeof”</p>
+<h3 id="不能被友元函数重载"><a href="#不能被友元函数重载" class="headerlink" title="不能被友元函数重载"></a>不能被友元函数重载</h3><p>C++规定&#x3D;，[ ]，()，-&gt;这四个运算符只能被重载为类的非静态成员函数，其他的可以被友元重载，主要是因为其他的运算符重载函数都会根据参数类型或数目进行精确匹配，这四个不具有这种检查的功能，用友元定义就会出错。</p>
+<h3 id="只能使用成员函数重载"><a href="#只能使用成员函数重载" class="headerlink" title="只能使用成员函数重载"></a>只能使用成员函数重载</h3><p>只能使用成员函数重载的运算符有：&#x3D;、()、[]、-&gt;、new、delete</p>
+<h3 id="关于return"><a href="#关于return" class="headerlink" title="关于return"></a>关于return</h3><p>return只能返回一个值</p>
+<p><img src="16.png"></p>
+<h3 id="函数传递数组"><a href="#函数传递数组" class="headerlink" title="函数传递数组"></a>函数传递数组</h3><p>函数传递时数组退化为指针 </p>
+<p><img src="17.png"></p>
+<h3 id="字符串中的"><a href="#字符串中的" class="headerlink" title="字符串中的\"></a>字符串中的\</h3><p>\0表示字符串结束</p>
+<p>\\表示单个字符\</p>
+<p>\数字表示数字的ASCII代表的字符</p>
+<p>所以<img src="18.png"></p>
+<h3 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h3><p>枚举是 C 语言中的一种基本数据类型，用于定义一组具有离散值的常量。，它可以让数据更简洁，更易读。</p>
+<p>枚举类型通常用于为程序中的一组相关的常量取名字，以便于程序的可读性和维护性。</p>
+<p>定义一个枚举类型，需要使用 <strong>enum</strong> 关键字，后面跟着枚举类型的名称，以及用大括号 <strong>{}</strong> 括起来的一组枚举常量。每个枚举常量可以用一个标识符来表示，也可以为它们指定一个整数值，如果没有指定，那么默认从 <strong>0</strong> 开始递增。</p>
+<p>在函数外部访问枚举，值为0，函数内部访问则为其中的随机数</p>
+<p>所以这一题</p>
+<p><img src="19.png"></p>
+<p>x1&#x3D;0,x2&#x3D;1,x3&#x3D;10,x4&#x3D;11,x5&#x3D;12</p>
+<p>但是题目问的是外部访问，所以x&#x3D;0</p>
+<h3 id="malloc-free和new-delete的区别"><a href="#malloc-free和new-delete的区别" class="headerlink" title="malloc&#x2F;free和new&#x2F;delete的区别"></a>malloc&#x2F;free和new&#x2F;delete的区别</h3><p><strong>共同点是：</strong><br>都是从<strong>堆</strong>上申请空间，并且需要用户手动释放。</p>
+<p><strong>不同的地方是：</strong></p>
+<ol>
+<li><p>malloc和free是函数，new和delete是操作符</p>
+</li>
+<li><p>malloc申请的空间不会初始化，new可以初始化</p>
+</li>
+<li><p>malloc申请空间时，需要手动计算空间大小并传递，new只需在其后跟上空间的类型即可。</p>
+</li>
+<li><p>malloc的返回值为void*, 在使用时必须强转，new不需要，因为new后跟的是空间的类型。</p>
+</li>
+<li><p>malloc申请空间失败时，返回的是NULL，因此使用时必须判空，new不需要，但是new需要捕获异常。</p>
+</li>
+<li><p>申请自定义类型对象时，malloc&#x2F;free只会开辟空间，不会调用构造函数与析构函数，而new在申请空间后会调用构造函数完成对象的初始化，delete在释放空间前会调用析构函数完成空间中资源的清理。</p>
+</li>
+</ol>
+<h3 id="sizeof数组名"><a href="#sizeof数组名" class="headerlink" title="sizeof数组名"></a>sizeof数组名</h3><p>返回数组所占的字节数</p>
+<h3 id="浮点数比较问题"><a href="#浮点数比较问题" class="headerlink" title="浮点数比较问题"></a>浮点数比较问题</h3><p><img src="20.png"></p>
+<p>  由于计算机二进制表示浮点数有精度的问题，0.0(浮点double)实际上不是0，而是非常接近零的小数，所以C错！ </p>
+<p>不要用对浮点数进行等于和不等于的判断，那样得不到正确结果 </p>
+<p>float 尾数的位数决定float 精度的有效位数为 7位，所以0.0不能表示 float为0的数</p>
+<h2 id="8-15"><a href="#8-15" class="headerlink" title="8.15"></a>8.15</h2><h3 id="关于原子操作"><a href="#关于原子操作" class="headerlink" title="关于原子操作"></a>关于原子操作</h3><p>赋值是原子操作，不要上锁</p>
+<p>所以</p>
+<p><img src="21.png"></p>
+<h3 id="关于宏定义"><a href="#关于宏定义" class="headerlink" title="关于宏定义"></a>关于宏定义</h3><ul>
+<li>宏定义的常量是在预处理阶段展开，const常量是在编译运行阶段使用 </li>
+<li>宏定义的常量没有类型，不做任何类型检查;const常量是有具体类型的，在编译运行阶段会做类型检查. </li>
+<li>为了代码健壮性起见，还是尽量使用const。</li>
+</ul>
+<h3 id="构造函数初始化列表"><a href="#构造函数初始化列表" class="headerlink" title="构造函数初始化列表"></a>构造函数初始化列表</h3><p>C++ Primer中在讲构造函数初始化列表的时候有这么一段话：<br>无论是在构造函数初始化列表中初始化成员，还是在构造函数体中对它们赋值，最终结果是相同的。不同之处在于，使用构造函数初始化列表的版本初始化数据成员，没有定义初始化列表的构造函数版本在构造函数体中对数据成员赋值。</p>
+<p><img src="22.PNG"></p>
+<p>第一种：1.先调用复制构造函数给形参a赋值 2.调用默认构造函数初始化子对象 3.进行对象赋值的操作。 第二种：1.和第一种一样首先调用复制构造函数给形参a赋值 2.根据初始化列表调用复制构造函数将a复制给mA。 一般情况下：复制构造函数&lt;默认构造函数+赋值操作函数。 </p>
+<h3 id="const和-define定义常量的区别"><a href="#const和-define定义常量的区别" class="headerlink" title="const和#define定义常量的区别"></a>const和#define定义常量的区别</h3><ul>
+<li><p>就定义常量说的话：<br>const 定义的常数是变量 也带类型， #define 定义的只是个常数 不带类型。</p>
+</li>
+<li><p>就起作用的阶段而言：<br>define是在编译的预处理阶段起作用，而const是在 编译、运行的时候起作用。</p>
+</li>
+<li><p>就起作用的方式而言：<br>define只是简单的字符串替换，没有类型检查。而const有对应的数据类型，是要进行判断的，可以避免一些低级的错误。</p>
+</li>
+<li><p>define预处理后占用代码段空间 ，const占用数据段空间</p>
+</li>
+<li><p>从代码调试的方便程度而言：<br>const常量可以进行调试的，define是不能进行调试的，因为在预编译阶段就已经替换掉了</p>
+</li>
+<li><p>从是否可以再定义的角度而言：<br>const不足的地方，是与生俱来的，const不能重定义，而#define可以通过#undef取消某个符号的定义，再重新定义。</p>
+</li>
+<li><p>从某些特殊功能而言：<br>define可以用来防止头文件重复引用，而const不能</p>
+</li>
+</ul>
+<h3 id="引用标准库的两种写法"><a href="#引用标准库的两种写法" class="headerlink" title="引用标准库的两种写法"></a>引用标准库的两种写法</h3><p>   include <file>&#x2F;&#x2F;在标准库及默认搜索目录中寻找将要 include 的文件  </file></p>
+<p>   include “file” &#x2F;&#x2F;先在当前目录中搜索文件，然后再到默认搜索目录中搜寻。  </p>
+<p>所以用&lt;&gt;更快</p>
+<h3 id="赋值语句的返回值"><a href="#赋值语句的返回值" class="headerlink" title="赋值语句的返回值"></a>赋值语句的返回值</h3><p>赋值语句的返回值为等号右侧的数值，所以a&#x3D;0返回值为0。</p>
+<h3 id="引用的本质"><a href="#引用的本质" class="headerlink" title="引用的本质"></a>引用的本质</h3><p>引用等价于* const ptr，也就是对一个指针常量取值，指针才能指向内存地址，这也解释了引用为什么必须要初始化，且后面无法修改引用。int a &#x3D;10; int&amp; r &#x3D; a；在编译器底层就已经替换成r &#x3D; *const ptr &#x3D; <em>(&amp;a)，这就解释了为什么对引用取地址和原变量相等，看起来变量和引用使用相同的地址，因为&amp;(&amp;</em>)a&#x3D; ptr &#x3D; &amp;a。 </p>
+<h3 id="cin"><a href="#cin" class="headerlink" title="cin"></a>cin</h3><p>cin是istream的类<strong>对象</strong> </p>
+<h3 id="const修饰指针"><a href="#const修饰指针" class="headerlink" title="const修饰指针"></a>const修饰指针</h3><p><img src="23.png"></p>
+<p>所以这一题</p>
+<p><img src="24.png"></p>
+<p>const在*的左边，则指针指向的变量的值，不可直接通过指针改变（可以通过其他途径改变）； </p>
+<p>​      在*的右边，则指针的指向不可变。  简记为“左定值，右定向”。</p>
+<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>不是四舍五入</p>
+<h3 id="构造和析构的调用顺序"><a href="#构造和析构的调用顺序" class="headerlink" title="构造和析构的调用顺序"></a>构造和析构的调用顺序</h3><p>构造函数调用顺序：基类构造函数-&gt;子类成员变量构造函数-&gt;子类构造函数  </p>
+<p>析构函数调用顺序：子类析构函数-&gt;子类成员变量析构函数-&gt;基类析构函数  </p>
+<p>组合派生类的构造函数构造顺序为：初始化基类成员-&gt;初始化新增对象成员-&gt;初始化新增非对象成员 </p>
+<p>同时组合派生类具有多个新增对象成员的时候，按照类中的声明顺序来初始化对象成员。</p>
+<h3 id="关于switch-c"><a href="#关于switch-c" class="headerlink" title="关于switch(c)"></a>关于switch(c)</h3><p>switch语句后的控制表达式只能是short、char、int、long整数类型和枚举类型，不能是float，double和boolean类型</p>
+<h3 id="关于虚函数的大小"><a href="#关于虚函数的大小" class="headerlink" title="关于虚函数的大小"></a>关于虚函数的大小</h3><p>虚函数共享一块存储区域</p>
+<p>一个虚函数4字节</p>
+<p>所以这一题</p>
+<p><img src="25.png"></p>
+<p>选A 答案解析：类的大小只与成员变量（非static数据成员变量）和虚函数指针有关，还要考虑到对齐. 那么类A的大小等于4个字节 + 4个字节（考虑对齐） + 4个字节（指向虚函数的指针）&#x3D;12字节； 类B的大小就是等于类A的大小12个字节. 因为在基类中存在虚函数时，派生类会继承基类的虚函数，因此派生类中不再增加虚函数的存储空间（因为所有的虚函数共享一块内存区域），而仅仅需要考虑派生类中添加进来的非static数据成员的内存空间大小。所以类B大小为12B</p>
+<p>然后还有这一题</p>
+<p><img src="30.png"></p>
+<p>64位指针是8个字节。</p>
+<p>子类大小要加上所有的基类大小</p>
+<p>对于对象 A，包含一个虚函数指针，因此对齐到 8 字节，然后有 2 个 char 型，最后补齐到 8 字节整倍数，因此其长度为 16 。</p>
+<p>对于对象 B，包含一个虚函数指针，也是对齐到 8 字节，然后是 4 个 char 型，最后补齐到 8 字节整倍数，变成 16 字节。然后加上对象 A 的大小，共计 32 字节。</p>
+<p>对于对象 C，包含一个虚函数指针，也是对齐到 8 字节，然后是 6 个 char 型，最后补齐到 8 字节整倍数，变成 16 字节。然后加上对象 B 的大小，共计 48 字节。</p>
+<h3 id="继承后子类对基类成员的访问"><a href="#继承后子类对基类成员的访问" class="headerlink" title="继承后子类对基类成员的访问"></a>继承后子类对基类成员的访问</h3><p> 基类成员在派生类的访问属性取决于继承方式以及这些成员本来在基类中的访问属性。 (1)<strong>基类的私有成员无论何种继承方式在派生类中均不可直接访问</strong>。 (2)在公有继承方式下，基类的保护和公有成员在派生类中均保持原访问属性。 (3)在保护继承方式下，基类的保护和公有成员在派生类中的访问属性均为保护属性。 (4)在私有继承方式下，基类的保护和公有成员在派生类中的访问属性均为私有属性。</p>
+<h3 id="虚函数的强制类型转换"><a href="#虚函数的强制类型转换" class="headerlink" title="虚函数的强制类型转换"></a>虚函数的强制类型转换</h3><p><img src="26.png"></p>
+<p>对于2，强制类型转换时会将Base类型的数据所在的内存按照Derived类型格式解析和转换。pDerived解析得到的是pBase的虚函数表，相当于pDerived的vtbl虚函数表指针指向了pBase的虚函数表，故得到Base; </p>
+<h3 id="数组名和指针"><a href="#数组名和指针" class="headerlink" title="数组名和指针"></a>数组名和指针</h3><p><img src="27.png"></p>
+<p>数组名作为指针是一个常量，不能和变量指针等同</p>
+<p> 数组指针更像是指针的一个真子集，主要用于数组，所以范围更窄，而指针是可以用于数组乃至更广的地方，同时由于数组指针针对的是数组，所以有些方面可能会有特权（这是编译器实现的），比如使用sizeof（数组指针）和sizeof(指针），前者是数组长度*指针的范围（以字节为单位，win32程序就是4），而指针就只是指针的范围。 </p>
+<h3 id="常用友元运算符的解释"><a href="#常用友元运算符的解释" class="headerlink" title="常用友元运算符的解释"></a>常用友元运算符的解释</h3><p> a+b 编译器解释：operator+(a,b) 本类解释： a.operator+(b)<br> -a 编译器解释：operator-(a) 本类解释： a.operator-()<br> a++ 编译器解释：operator++(a,0) 本类解释： a.operator++(0)<br> –a 编译器解释： operator–(a)  本类解释：a.operator–();</p>
+<p>所以这一题</p>
+<p><img src="28.png"></p>
+<h3 id="字符串的返回值"><a href="#字符串的返回值" class="headerlink" title="字符串的返回值"></a>字符串的返回值</h3><p>字符串的返回值是指针，所以这一题</p>
+<p><img src="29.png"></p>
+<h3 id="基本数据类型的等级"><a href="#基本数据类型的等级" class="headerlink" title="基本数据类型的等级"></a>基本数据类型的等级</h3><p>基本数据类型的等级从低到高如下：char int long float double运算的时候是从低转到高的，表达式的类型会自动提升为参与表达式求值的最上级类 </p>
+<p><img src="31.png"></p>
+<h3 id="逗号表达式"><a href="#逗号表达式" class="headerlink" title="逗号表达式"></a>逗号表达式</h3><p>整个表达式的值为最后一个表达式的值</p>
+<h2 id="8-16"><a href="#8-16" class="headerlink" title="8.16"></a>8.16</h2><h3 id="一个题目"><a href="#一个题目" class="headerlink" title="一个题目"></a>一个题目</h3><p><img src="35.png"></p>
+<p>struct S a, *p &#x3D; &a;  #定义一个结构体对象a，同时定义一个指向结构体对象a的指针变量p。   *</p>
+<p>*p-&gt;a ：表示p当前指向的是对象a中的a成员。   </p>
+<p>*(<em>p).a : 也是对象a中的成员a，因为（</em>p）就是对象a。从(*p).a 表示是对象a下的成员a。  </p>
+<p> <em>p.a : 由于.的优先级大于</em>，因此这个表达方式等同于*（p.a）,显然表达式错误的。</p>
+<h3 id="设置虚基类的目的"><a href="#设置虚基类的目的" class="headerlink" title="设置虚基类的目的"></a>设置虚基类的目的</h3><p>消除二义性</p>
+<h3 id="二维数组指针"><a href="#二维数组指针" class="headerlink" title="二维数组指针++"></a>二维数组指针++</h3><p><img src="36.png"></p>
+<p>char* a[]代表的是a是一个数组，a里面的元素是字符指针。则m为指向字符指针的指针，m++则m指向下一个字符指针，然后*m就是提取当前指向的字符指针所指向的内容，也就是AFTERNOON。应该是这样吧 ..</p>
+<p>m++等价于m&#x3D;m+1，指向m[1]地址； </p>
+<p> 如果m&#x3D;&amp;m+1，则认为加上二维数组整个大小，因此为空</p>
+<h3 id="空类自动产生函数"><a href="#空类自动产生函数" class="headerlink" title="空类自动产生函数"></a>空类自动产生函数</h3><p>默认构造函数、默认拷贝构造函数、默认析构函数、默认赋值运算符重载 </p>
+<p>这四个是我们通常大都知道的。</p>
+<p>但是除了这四个，还有两个</p>
+<p>那就是取址运算符重载和 取址运算符重载 const</p>
+<h3 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;bits&#x2F;stdc++.h&gt;
+using namespace std;
+class CA
+&#123;
+public:
+    virtual void f1()
+    &#123;
+        cout&lt;&lt;&quot;CA::f1( )&quot;&lt;&lt;endl;
+        f2();
+    &#125;
+    void f2()
+    &#123;
+        cout&lt;&lt;&quot;CA::f2( )&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+class CB : public CA
+&#123;
+public:
+    void f1()
+    &#123;
+        cout&lt;&lt;&quot;CB::f1( )&quot;&lt;&lt;endl;
+        f2();
+    &#125;
+    void f2()
+    &#123;
+    cout&lt;&lt;&quot;CB::f2( )&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+class CC:public CB
+&#123;
+public:
+    virtual void f2()
+    &#123;
+        cout&lt;&lt;&quot;CC:f2()&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+int main()
+&#123;
+    CC c;
+    CA *pA &#x3D; &amp;c ;
+    pA-&gt;f1();
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果为：CB::f1() CB::f2()</p>
+<blockquote>
+<p>答案是B。 </p>
+<p>CA* pa &#x3D;  &c;这句话是父类指针指向子类对象，调用pa-&gt;f1()时，因为父类中的f1()是虚函数，所以将发生动态绑定，调用子类CB中的f1()函数，先输出CB::f1() </p>
+<p>在CB类的f1()函数中，调用非虚函数f2()，但因为其父类CA中的f2()函数并不是virtual函数，所以将调用CB类中的f2()函数，输出CB::f2()。如果将CA类中的f2()改成虚函数，那么将输出CC::f2()；如果将CB类中的f2()改成虚函数，也将输出CC::f2(),这是满足动态绑定的。</p>
+</blockquote>
+<h3 id="define的使用"><a href="#define的使用" class="headerlink" title="define的使用"></a>define的使用</h3><p>#define是直接的字符串替换，所以（）也会替换下来</p>
+<p>所以这一题</p>
+<p><img src="37.png"></p>
+<p>MA(i,i+1)&#x3D;i*i+1&#x3D;26 </p>
+<p>26-7&#x3D;19</p>
+<h3 id="什么时候调用构造函数"><a href="#什么时候调用构造函数" class="headerlink" title="什么时候调用构造函数"></a>什么时候调用构造函数</h3><p>只有给对象分配空间才调用构造函数和析构函数，指针并没有new一个新的对象，因此不会调用构造函数和析构函数  </p>
+<p><img src="38.png"></p>
+<h3 id="二级指针const"><a href="#二级指针const" class="headerlink" title="二级指针const"></a>二级指针const</h3><p><img src="39.png"></p>
+<blockquote>
+<p>const 限定一个对象为只读属性。<br>先从一级指针说起吧：<br>（1）const char p  限定变量p为只读。这样如p&#x3D;2这样的赋值操作就是错误的。<br>（2）const char <em>p  p为一个指向char类型的指针，const只限定p指向的对象为只读。这样，p&#x3D;&amp;a或 p++等操作都是合法的，但如</em>p&#x3D;4这样的操作就错了，因为企图改写这个已经被限定为只读属性的对象。<br>（3）char <em>const p 限定此指针为只读，这样p&#x3D;&amp;a或 p++等操作都是不合法的。而</em>p&#x3D;3这样的操作合法，因为并没有限定其最终对象为只读。<br>（4）const char *const p 两者皆限定为只读，不能改写。<br>有了以上的对比，再来看二级指针问题：<br>（1）const char <strong>p p为一个指向指针的指针，const限定其最终对象为只读，显然这最终对象也是为char类型的变量。故像</strong>p&#x3D;3这样的赋值是错误的，而像*p&#x3D;？ p++这样的操作合法。<br>（2）const char * const *p 限定最终对象和 p指向的指针为只读。这样 *p&#x3D;?的操作也是错的。<br>（3）const char * const * const p 全部限定为只读，都不可以改写</p>
+</blockquote>
+<h3 id="相当于"><a href="#相当于" class="headerlink" title="-&gt;相当于"></a>-&gt;相当于</h3><p>对象.成员名，对象指针－〉成员名 </p>
+<p><img src="40.png"></p>
+<h3 id="常量定义"><a href="#常量定义" class="headerlink" title="常量定义"></a>常量定义</h3><p>必须在声明中对常量初始化，否则该常量值不确定且无法修改</p>
+<h3 id="运算符分类"><a href="#运算符分类" class="headerlink" title="运算符分类"></a>运算符分类</h3><blockquote>
+<p>！属于逻辑运算符<br>1.算术运算符： <em>- + &#x2F; %<br>2.关系运算符： &gt; &lt; &#x3D;&#x3D; !&#x3D; &gt;&#x3D; &lt;&#x3D;<br>3.逻辑运算符：! &amp;&amp; ||<br>4.位运算符：&lt;&lt; &gt;&gt; ~ | ^ &amp;<br>5.赋值运算符：&#x3D;及扩展赋值运算符<br>6.条件运算符：?:<br>7.逗号运算符：,<br>8.指针运算符：</em>和&amp;<br>9.求字节数运算符：sizeof<br>10.强制类型转换运算符：(类型)<br>11.分量运算符：. -&gt;<br>12.下标运算符：[ ]</p>
+</blockquote>
+<h3 id="函数指针数组和数组指针函数"><a href="#函数指针数组和数组指针函数" class="headerlink" title="函数指针数组和数组指针函数"></a>函数指针数组和数组指针函数</h3><p>这一题</p>
+<p><img src="41.png"></p>
+<blockquote>
+<p>[]优先级最高，s[5] 为数组，看成一个整体x </p>
+<p>接着(*x)是指针，再看成一个整体x </p>
+<p>void x(int)，为一个函数； </p>
+<p>从外到内反着看就是 函数指针数组。</p>
+</blockquote>
+<h3 id="常引用"><a href="#常引用" class="headerlink" title="常引用"></a>常引用</h3><p>常引用就是const int&amp;</p>
+<p>这个先空在这啊，等后面补</p>
+<h3 id="常对象"><a href="#常对象" class="headerlink" title="常对象"></a>常对象</h3><p>在 <a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a> 中，const 也可以用来修饰对象，称为常对象。一旦将对象定义为常对象之后，就只能调用类的 const 成员（包括 const 成员变量和 const 成员函数）了</p>
+<h2 id="8-18"><a href="#8-18" class="headerlink" title="8.18"></a>8.18</h2><h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>看这个文章</p>
+<p>[]: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/343688629">https://zhuanlan.zhihu.com/p/343688629</a></p>
+<p>所以这一题</p>
+<p><img src="42.png"></p>
+<h3 id="C-语言程序中的基本功能模块"><a href="#C-语言程序中的基本功能模块" class="headerlink" title="C 语言程序中的基本功能模块"></a>C 语言程序中的基本功能模块</h3><p>函数</p>
+<h3 id="字符数组与字符串"><a href="#字符数组与字符串" class="headerlink" title="字符数组与字符串"></a>字符数组与字符串</h3><p><img src="43.png"></p>
+<p>字符数组后面没有自动&#96;\0’,字符串后面会加 </p>
+<h2 id="8-19"><a href="#8-19" class="headerlink" title="8.19"></a>8.19</h2><h3 id="import和include区别"><a href="#import和include区别" class="headerlink" title="import和include区别"></a>import和include区别</h3><p>这是什么年代的题了，C++11以后就已经摒弃import了。现在都至少C++14了，还出这种烂题。只能说牛客真的懒，不上进，题也不更新，歪瓜裂枣。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/c/">
+                                    <span class="chip bg-color">c++</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/">
+                                    <span class="chip bg-color">刷题总结</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/08/14/%E4%BE%AF%E6%8D%B7STL%E7%AC%94%E8%AE%B0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="侯捷STL笔记">
+                        
+                        <span class="card-title">侯捷STL笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-14
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/c/">
+                        <span class="chip bg-color">c++</span>
+                    </a>
+                    
+                    <a href="/tags/STL/">
+                        <span class="chip bg-color">STL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/08/08/%E4%BE%AF%E6%8D%B7c-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%AC%94%E8%AE%B02/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="侯捷c++面向对象笔记2">
+                        
+                        <span class="card-title">侯捷c++面向对象笔记2</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/c/">
+                        <span class="chip bg-color">c++</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">G</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/GuSmallwhite" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>

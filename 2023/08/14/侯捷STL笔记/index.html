@@ -1,0 +1,1127 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="侯捷STL笔记, 说的">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>侯捷STL笔记 | 说的</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">说的</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">说的</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">侯捷STL笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/c/">
+                                <span class="chip bg-color">c++</span>
+                            </a>
+                        
+                            <a href="/tags/STL/">
+                                <span class="chip bg-color">STL</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-08-14
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学完基础学stl，嗯，学完了学内存管理和c++11啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+<h2 id="STL设计模式：OOP与GP"><a href="#STL设计模式：OOP与GP" class="headerlink" title="STL设计模式：OOP与GP"></a>STL设计模式：OOP与GP</h2><p>OOP(Object-Oriented Programming)和GP(Generic Programming)是STL容器设计中使用的两种设计模式.</p>
+<ul>
+<li>OOP的目的是将<strong>数据</strong>和<strong>方法</strong>绑定在一起,例如对<code>std::list</code>容器进行排序要调用<code>std::list::sort</code>方法.</li>
+<li>GP的目的是将<strong>数据</strong>和<strong>方法</strong>分离开来,例如对<code>std::vector</code>容器进行排序要调用<code>std::sort</code>方法.</li>
+</ul>
+<p>这种不同是因为<code>std::sort</code>方法内部调用了<code>iterator</code>的<code>-</code>运算,<code>std::list</code>的<code>iterator</code>没有实现<code>-</code>运算符,而<code>std::vector</code>的<code>iterator</code>实现了<code>-</code>运算符.</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename _RandomAccessIterator&gt;
+inline void sort(_RandomAccessIterator __first, _RandomAccessIterator __last) &#123;
+    std::__sort(__first, __last, __gnu_cxx::__ops::__iter_less_iter());
+&#125;
+
+inline void __sort(_RandomAccessIterator __first, _RandomAccessIterator __last, _Compare __comp) &#123;
+    if (__first !&#x3D; __last) &#123;
+        std::__introsort_loop(__first, __last,
+                              std::__lg(__last - __first) * 2,		&#x2F;&#x2F; 对iterator进行减运算,std::list的iterator没有实现该运算
+                              __comp);
+        std::__final_insertion_sort(__first, __last, __comp);
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="运算符重载和模板特化"><a href="#运算符重载和模板特化" class="headerlink" title="运算符重载和模板特化"></a>运算符重载和模板特化</h2><p>见《侯捷面向对象下》</p>
+<h2 id="分配器"><a href="#分配器" class="headerlink" title="分配器"></a>分配器</h2><p>VC6.0的默认分配器<code>std::allocator</code>定义如下,可以看到VC6.0的分配器只是对<code>::operator new</code>和<code>::operator delete</code>的简单封装.</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class _Ty&gt;
+class allocator &#123;
+public:
+    typedef _SIZT size_type;
+    typedef _PDFT difference_type;
+    typedef _Ty _FARQ *pointer;
+    typedef _Ty value_type;
+
+    pointer allocate(size_type _N, const void *) &#123;
+        return (_Allocate((difference_type) _N，(pointer) 0));
+    &#125;
+
+    void deallocate(void _FARQ *_P, size_type) &#123;
+        operator delete(_P);
+    &#125;;
+    
+private:
+    inline _Ty _FARQ *_Allocate(_PDFT _N, _Ty _FARQ *) &#123;
+        if (_N &lt; 0) _N &#x3D; 0;
+        return ((_Ty _FARQ *) operator new((_SIZT) _N * sizeof(_Ty)));
+    &#125;
+
+&#x2F;&#x2F;...
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>gcc2.9中的分配器<code>std::allocator</code>与VC6.0的实现类似,但<code>std::allocator</code>并非gcc2.9的默认分配器,观察容器源码,可以看到,gcc2.9的默认分配器为<code>std::alloc</code>.</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T, class Alloc &#x3D; alloc&gt;
+class vector &#123;
+    &#x2F;&#x2F; ...
+&#125;;
+
+template&lt;class T, class Alloc &#x3D; alloc&gt;
+class list &#123;
+    &#x2F;&#x2F; ...
+&#125;;
+
+template&lt;class T, class Alloc &#x3D; alloc, size_t BufSiz &#x3D; 0&gt;
+class deque &#123;
+    &#x2F;&#x2F; ...
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>std::alloc</code>的代码结构如下:</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class alloc &#123;
+protected:
+
+    enum &#123; _S_align &#x3D; 8 &#125;;
+    enum &#123; _S_max_bytes &#x3D; 128 &#125;;
+    enum &#123; _S_free_list_size &#x3D; (size_t) _S_max_bytes &#x2F; (size_t) _S_align &#125;;
+
+    union _Obj &#123;
+        union _Obj *_M_free_list_link;
+        char _M_client_data[1];    &#x2F;&#x2F; The client sees this.
+    &#125;;
+    
+    &#x2F;&#x2F; ...
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>std::alloc</code>内部维护一个链表数组,数组中的每个链表保存某个尺寸的对象,减少了调用<code>malloc</code>的次数,从而减小了<code>malloc</code>带来的额外开销.</p>
+<p><img src="1.png"></p>
+<p>在gcc4.9以后,默认分配器变为<code>std::allocator</code>,变回了对<code>::operator new</code>和<code>::operator delete</code>的简单封装.gcc2.9中的<code>std::alloc</code>更名为<code>__gnu_cxx::__pool_alloc</code>.</p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>STL容器的各实现类关系如下图所示,以缩排形式表示衍生关系(主要是<strong>复合关系</strong>).</p>
+<p><img src="2.png"></p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>gcc2.9中<code>list</code>及相关类的代码如下所示:</p>
+<p><img src="3.png"></p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T, class Alloc &#x3D; alloc&gt;
+class list &#123;
+protected:
+    typedef __list_node&lt;T&gt; list_node;
+public:
+    typedef list_node *link_type;
+    typedef __list_iterator&lt;T, T &amp;, T *&gt; iterator;
+protected:
+    link_type node;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T&gt;
+struct __list_node &#123;
+    typedef void *void_pointer;
+    void_pointer prev;
+    void_pointer next;
+    T data;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>为实现前闭后开的特性,在环形链表末尾加入一个用以占位的空节点,并将迭代器<code>list::end()</code>指向该节点.</p>
+<p><img src="4.png"></p>
+<p>迭代器<code>__list_iterator</code>重载了指针的<code>*</code>,<code>-&gt;</code>,<code>++</code>,<code>--</code>等运算符,并定义了<code>iterator_category</code>、<code>value_type</code>、<code>difference_type</code>、<code>pointer</code>和<code>pointer</code>5个<strong>关联类型</strong>(associated types),这些特征将被STL算法使用.</p>
+<p><img src="5.png"></p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T, class Ref, class Ptr&gt;
+struct __list_iterator &#123;
+    typedef __list_iterator&lt;T, Ref, Ptr&gt; self;
+    typedef bidirectional_iterator_tag 	iterator_category; 	&#x2F;&#x2F; 关联类型1
+    typedef T 							value_type;			&#x2F;&#x2F; 关联类型2
+    typedef ptrdiff_t 					difference_type;	&#x2F;&#x2F; 关联类型3
+    typedef Ptr 						pointer;			&#x2F;&#x2F; 关联类型4
+    typedef Ref 						reference;			&#x2F;&#x2F; 关联类型5
+
+    typedef __list_node &lt;T&gt;*			link_type;
+    link_type node;		&#x2F;&#x2F; 指向的链表节点
+
+    reference operator*() const &#123; return (*node).data; &#125;
+    pointer operator-&gt;() const &#123; return &amp;(operator*()); &#125;
+
+    self&amp; operator++() &#123;
+        node &#x3D; (link_type) ((*node).next);
+        return *this;
+    &#125;
+
+    self operator++(int) &#123;
+        self tmp &#x3D; *this;
+        ++*this;
+        return tmp;
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意在这里前置<code>++</code>运算符返回左值,而后置<code>++</code>返回右值,这与基础类型的<code>++</code>和<code>--</code>运算一致.</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int i(6);
+i++++;		&#x2F;&#x2F; 被解析为 ++(++i), 能通过编译
+++++i;		&#x2F;&#x2F; 被解析为 (i++)++, 不能通过编译
+
+list&lt;int&gt; c;
+auto ite &#x3D; c.begin();
+++++ite;	&#x2F;&#x2F; 被解析为 ++(++ite), 能通过编译
+ite++++;	&#x2F;&#x2F; 被解析为 (ite++)++, 不能通过编译<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><p>容器<code>vector</code>的代码如下:</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T, class Alloc&#x3D; alloc&gt;
+class vector &#123;
+public:
+    typedef T value_type;
+    typedef value_type* iterator;
+    typedef value_type&amp; reference;
+    typedef size_t size_type;
+protected:
+    iterator start;
+    iterator finish;
+    iterator end_of_storage;
+public:
+    iterator begin() &#123; return start; &#125;
+    iterator end() &#123; return finish; &#125;
+    size_type size() const &#123; return size_type(end() - begin()); &#125;
+    size_type capacity() const &#123; return size_type(end_of_storage - begin()); &#125;
+    bool empty() const &#123; return begin() &#x3D;&#x3D; end(); &#125;
+    reference operator[](size_type n) &#123; return *(begin() + n); &#125;
+    reference front() &#123; return *begin(); &#125;
+    reference back() &#123; return *(end() - 1); &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/20210321014124690.png"></p>
+<p>容器vector的迭代器start指向第一个元素,迭代器finish指向最后一个元素的下一个元素,这两个迭代器对应begin()和end()的返回值,维持了前闭后开的特性.</p>
+<p>vector对使用者是连续的,因此重载了[]运算符.</p>
+<p>vector的实现也是连续的,因此使用指针类型做迭代器(即迭代器vector<T>::iterator的实际类型是原生指针T*).</T></p>
+<hr>
+<p><code>vector::push_back</code>方法先判断内存空间是否满,若内存空间不满则直接插入;若内存空间满则调用<code>insert_aux</code>函数先扩容两倍再插入元素</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void push_back(const T &amp;x) &#123;
+    if (finish !&#x3D; end_of_storage) &#123; &#x2F;&#x2F; 尚有备用空间,则直接插入,并调整finish迭代器
+        construct(finish, x);		
+        ++finish;					
+    &#125; else 							&#x2F;&#x2F; 已无备用空间则调用 insert_aux 先扩容再插入元素
+        insert_aux(end(), x);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>insert_aux</code>被设计用于在容器任意位置插入元素,在容器内存空间不足会现将原有容器扩容.</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T, class Alloc&gt;
+void vector&lt;T, Alloc&gt;::insert_ux(iterator position, const T &amp;x) &#123;
+    if (finish !&#x3D; end_of_storage) &#123;     &#x2F;&#x2F; 尚有备用空间,则将插入点后元素后移一位并插入元素
+        construct(finish, *(finish - 1));   &#x2F;&#x2F; 以vector最后一个元素值为新节点的初值
+        ++finish;
+        T x_copy &#x3D; x;
+        copy_backward(position, finish - 2, finish - 1);
+        *position &#x3D; x_copy;
+    &#125; else &#123;
+        &#x2F;&#x2F; 已无备用空间,则先扩容,再插入
+        const size_type old_size &#x3D; size();
+        const size_type len &#x3D; old_size !&#x3D; 0 ?: 2 * old_size:1;  &#x2F;&#x2F; 扩容后长度为原长度的两倍
+
+        iterator new_start &#x3D; data_allocator::allocate(len);
+        iterator new_finish &#x3D; new_start;
+        try &#123;
+            new_finish &#x3D; uninitialized_copy(start, position, new_start);    &#x2F;&#x2F; 拷贝插入点前的元素
+            construct(new_finish, x);                                       &#x2F;&#x2F; 插入新元素并调整水位
+            ++new_finish;
+            new_finish &#x3D; uninitialized_copy(position, finish, new_finish);  &#x2F;&#x2F; 拷贝插入点后的元素
+        &#125;
+        catch (...) &#123;
+            &#x2F;&#x2F; 插入失败则回滚,释放内存并抛出错误
+            destroy(new_start, new_finish) :
+            data_allocator::deallocate(new_start, len);
+            throw;
+        &#125;
+        &#x2F;&#x2F; 释放原容器所占内存
+        destroy(begin(), end());
+        deallocate();
+        &#x2F;&#x2F; 调整迭代器
+        start &#x3D; new_start;
+        finish &#x3D; new_finish;
+        end_of_storage &#x3D; new_start + len;
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/c/">
+                                    <span class="chip bg-color">c++</span>
+                                </a>
+                            
+                                <a href="/tags/STL/">
+                                    <span class="chip bg-color">STL</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/08/18/c-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="c++内存对齐">
+                        
+                        <span class="card-title">c++内存对齐</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            G
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/08/13/%E7%89%9B%E5%AE%A2c-%E5%88%B7%E9%A2%98/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="牛客c++刷题">
+                        
+                        <span class="card-title">牛客c++刷题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/c/">
+                        <span class="chip bg-color">c++</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">刷题总结</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">G</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/GuSmallwhite" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
