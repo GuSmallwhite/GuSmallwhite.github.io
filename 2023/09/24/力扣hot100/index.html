@@ -470,61 +470,7 @@
 
 
 
-<h3 id="20-有效的括号-力扣（LeetCode）"><a href="#20-有效的括号-力扣（LeetCode）" class="headerlink" title="20. 有效的括号 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">20. 有效的括号 - 力扣（LeetCode）</a></h3><p>这题没啥好说的，easy啊啊啊</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Solution &#123;
-public:
-    bool isValid(string s) &#123;
-        stack&lt;char&gt; stk;
-        for(int i&#x3D;0;i&lt;s.length();i++)
-        &#123;
-            if(s[i]&#x3D;&#x3D;&#39;(&#39;||s[i]&#x3D;&#x3D;&#39;[&#39;||s[i]&#x3D;&#x3D;&#39;&#123;&#39;)
-            &#123;
-                stk.push(s[i]);
-            &#125;
-            else if(stk.empty())
-            &#123;
-                return false;
-            &#125;
-            else if(s[i]&#x3D;&#x3D;&#39;)&#39;)
-            &#123;
-                if(stk.top()&#x3D;&#x3D;&#39;(&#39;)
-                &#123;
-                    stk.pop();
-                &#125;
-                else
-                &#123;
-                    return false;
-                &#125;
-            &#125;else if(s[i]&#x3D;&#x3D;&#39;]&#39;)
-            &#123;
-                if(stk.top()&#x3D;&#x3D;&#39;[&#39;)
-                &#123;
-                    stk.pop();
-                &#125;else
-                &#123;
-                    return  false;
-                &#125;
-            &#125;else
-            &#123;
-                if(stk.top()&#x3D;&#x3D;&#39;&#123;&#39;)
-                &#123;
-                    stk.pop();
-                &#125;else
-                &#123;
-                    return false;
-                &#125;
-            &#125;
-           
-        &#125;
-        if(stk.empty())
-        &#123;
-            return true;
-        &#125;
-        return false;
-    &#125;
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><del>为了熟悉go语言，也用go语言实现一下</del></p>
+<h3 id="20-有效的括号-力扣（LeetCode）"><a href="#20-有效的括号-力扣（LeetCode）" class="headerlink" title="20. 有效的括号 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">20. 有效的括号 - 力扣（LeetCode）</a></h3><p><del>为了熟悉go语言，也用go语言实现一下</del></p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">isValid</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
     n<span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
     <span class="token keyword">if</span> n<span class="token operator">%</span><span class="token number">2</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">&#123;</span>
@@ -582,6 +528,31 @@ public:
     &#125;
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="461-汉明距离-力扣（LeetCode）"><a href="#461-汉明距离-力扣（LeetCode）" class="headerlink" title="461. 汉明距离 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/hamming-distance/description/">461. 汉明距离 - 力扣（LeetCode）</a></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">hammingDistance</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">bitCount</span><span class="token punctuation">(</span>x<span class="token operator">^</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>知识点：异或、bitCount()</p>
+<h3 id="617-合并二叉树-力扣（LeetCode）"><a href="#617-合并二叉树-力扣（LeetCode）" class="headerlink" title="617. 合并二叉树 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-binary-trees/description/">617. 合并二叉树 - 力扣（LeetCode）</a></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span> <span class="token function">mergeTrees</span><span class="token punctuation">(</span><span class="token class-name">TreeNode</span> t1<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> t2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>t1<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> t2<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>t2<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> t1<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">TreeNode</span> merged<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span>t1<span class="token punctuation">.</span>val<span class="token operator">+</span>t2<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        merged<span class="token punctuation">.</span>left<span class="token operator">=</span><span class="token function">mergeTrees</span><span class="token punctuation">(</span>t1<span class="token punctuation">.</span>left<span class="token punctuation">,</span>t2<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        merged<span class="token punctuation">.</span>right<span class="token operator">=</span><span class="token function">mergeTrees</span><span class="token punctuation">(</span>t1<span class="token punctuation">.</span>right<span class="token punctuation">,</span>t2<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> merged<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我的没注意的地方：t1,t2为null时，应该是return 另一个</p>
 
                 
             </div>
