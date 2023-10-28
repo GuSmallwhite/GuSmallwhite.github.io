@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="java算法常用, 说的">
+    <meta name="keywords" content="假象哥的故事, 说的">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>java算法常用 | 说的</title>
+    <title>假象哥的故事 | 说的</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">java算法常用</h1>
+                    <h1 class="description center-align post-title">假象哥的故事</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
+                            <a href="/tags/%E7%9E%8E%E5%86%99/">
+                                <span class="chip bg-color">瞎写</span>
                             </a>
                         
                     </div>
@@ -380,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" class="post-category">
+                                杂七杂八
                             </a>
                         
                     </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-10-07
+                    2023-10-28
                 </div>
                 
 
@@ -417,63 +417,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="PriorityQueue"><a href="#PriorityQueue" class="headerlink" title="PriorityQueue"></a><strong>PriorityQueue</strong></h2><p>与普通队列不同，优先队列元素是按排序顺序检索的。</p>
-<p>假设我们想以升序检索元素。在这种情况下，优先队列的头是最小的元素。检索到该元素后，下一个最小的元素将成为队列的头。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这里，我们创建了一个没有任何参数的优先级队列。<strong>在这种情况下，优先级队列的头是队列中最小的元素。</strong>元素将按升序从队列中移除。</p>
-<h3 id="comparator"><a href="#comparator" class="headerlink" title="comparator"></a>comparator</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">PriorityQueue</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Comparator</span></span><span class="token punctuation">;</span>
-<span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-        <span class="token comment">//创建优先级队列</span>
-        <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CustomComparator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"PriorityQueue: "</span> <span class="token operator">+</span> numbers<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">CustomComparator</span> <span class="token keyword">implements</span> <span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compare</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> number1<span class="token punctuation">,</span> <span class="token class-name">Integer</span> number2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> value <span class="token operator">=</span>  number1<span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>number2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//元素以相反的顺序排序</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>在以上所有示例中，优先级队列元素都是按自然顺序（升序）检索的。 但是，我们可以自定义此顺序。</p>
-<p>为此，我们需要创建自己的comparator类，它实现了Comparator接口。</p>
-<h2 id="List"><a href="#List" class="headerlink" title="List&lt;int[]&gt;"></a>List&lt;int[]&gt;</h2><p>刷力扣遇到了这种用法，</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>是一个列表，其中每个元素都是一个int类型的数组,这个列表可以用来存储一组整数数组，每个数组可以有不同的长度和元素。</p>
-<p>转成int[][][][][][][] [],因为有的傻逼题目会要你写成int []  [] 返回</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">list<span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="Arrays-asList"><a href="#Arrays-asList" class="headerlink" title="Arrays.asList()"></a>Arrays.asList()</h2><p>把数组转成List</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> myArray <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"Apple"</span><span class="token punctuation">,</span> <span class="token string">"Banana"</span><span class="token punctuation">,</span> <span class="token string">"Orange"</span> <span class="token punctuation">&#125;</span>； 
-<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> myList <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>myArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//上面两个语句等价于下面一条语句</span>
-<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> myList <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Apple"</span><span class="token punctuation">,</span><span class="token string">"Banana"</span><span class="token punctuation">,</span> <span class="token string">"Orange"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+                <h3 id="假象哥的故事"><a href="#假象哥的故事" class="headerlink" title="假象哥的故事"></a>假象哥的故事</h3><p>​	假象哥出生在泰州的农村家庭，尽管家庭条件不好，但假象哥从小品学兼优，最终以全县第一的成绩考上了市里最好的学校，成为了父母心里的骄傲。上高中以后假象哥依旧努力学习励志考上酒吧舞，在高一成绩名列前茅。<br>​	</p>
+<p>​	在高二的一天周末，假象哥的好友小毛看着在空荡荡的教室中依旧奋笔疾书的他，便想着带他去网吧放松一下。这是假象哥第一次接触电脑，对电脑的一切都充满了好奇，看着好友小毛在旁边玩亚索在峡谷乱杀，假象哥脸上浮现出了羡慕的神情，通宵一晚，拖着疲惫的身子回去后，对学习便不再像以前那样有激情了，都说花花世界迷人眼，假象哥从此迷上了电脑游戏。时间飞逝，很快来到了高考出分这天，假象哥怀着忐忑的心情点开成绩，飞速遮住屏幕，随着一点点的往下挪动，心情也一步步跌入低谷，598分的数字轰的一下在脑中炸开。“完了，完了….”假象哥第一次让父母失望了，酒吧舞是没希望了，211倒是可以有几个选择，不过假象哥一直渴望的是学计算机，所以最终假象哥来到了一所双非学校。<br>​	</p>
+<p>​	大一新生晚会上假象哥遇到了他的女神幼楚，舞蹈学院，正是杨柳细飞时节。黄昏下的光影，正追着要暗下去的脚步，在校园小径上，若有若无，轻快跳跃，仿佛调皮的18岁女孩儿。幼楚，穿着白色的连衣裙，一双红色布鞋子，踏着石板路，一格一格地蹦，低着头，直到满头大汗，跳完这条小径，就看到了背着书包中规中矩站在树阴下的假象哥。“嗨同学，你是新生吗？”一句简单的问候加上甜美的笑容，假象哥沉寂了18年的内心变得躁动了起来，“啊？啊，对的”假象哥很紧张不敢去看女孩的脸，右手下意识的攥了一下衣服。在大礼堂落座以后不久，假象哥再一次见到了女孩，女孩在台上悠然的弹着钢琴，灯光打在她的身上就像是在月桂树下的仙女。假象哥看得如痴如醉，虽然听不懂，但他仍然想努力的读懂她，回去以后脑海里全是女孩的甜美笑容，想着想着便痴痴的笑了起来。<br>​	</p>
+<p>​	在大二一天，假象哥如愿的和女神在一起了，他因为没和女孩谈过恋爱，所以很多事情显得很笨拙，不过他们依旧感情越来越好。女孩家境比假象哥好得多，她对假象哥非常好，时不时的就会送他礼物，而且会带假象哥去旅游，去体验他从未有过的经历，这是假象哥最幸福的时光。这样好的女孩让假象哥如坠梦境一般，他也曾问过女孩：“幼楚，你为什么对我这么好？”“小拓为什么要这样问，你不也对我很好嘛，你爱我，那我就会更爱小拓”女孩眨巴着眼睛回答。<br>大三下学期，假象哥准备考研了，他初步定的是考科软，不过开始并没什么信心，但因为苏州是女孩的老家，所以假象哥决定冲击科软。在机缘巧合之下，假象哥加了科软考研总群，一进去就被那考研界独一无二的画风所吸引，也了解了群里名人堂的故事“49哥二战成功，再次见到了博士女友”“锦子喜欢的女孩成了他人的妻子”…..假象哥拿起电话准备跟女孩分享这有趣的一幕，可是女孩的第一句话便让他的笑容僵在了脸上“小拓，我们分手吧”假象哥还没来得及说话耳边便传来了女孩颤抖的声音，紧接着电话被挂断。假象哥愣了片刻，连忙将电话播了回去，死死攥着手机，身体忍不住地颤抖，可是电话再也没打通。原来女孩拉黑了假象哥的一些联系方式，将他狠狠的排出自己的生活。“为什么？为什么？”假象哥脑海里只有这句话，终于忍不住大哭了起来，把旁边的室友吓了一跳。他们感情一直很好，这分手来的太突然了，没有任何理由。<br>​	</p>
+<p>​	在这以后假象哥颓废了，经常半夜躲在被窝抹眼泪，或是在睡梦中惊醒不断叫着幼楚的名字。他天天打游戏试图转移注意力，考研的书本根本看不下去，整天都呆在宿舍，精神状态越来越差。再一次聚会的酒桌上假象哥醉了，他再一次想起了幼楚，在椅子上哭的像个孩子，那么的伤心，那么的无助，嘴里还在重复地念叨着“为什么？为什么？”这时同桌的有个朋友突然开口道：“拓哥，本来答应了保密的，可是我实在不忍心看到你这个样子了，其实学姐是因为家里出了变故，公司破产了，母亲也病重，她不得不撇开你不让你卷进去，因为她了解你，知道你愿意为她做任何事”。假象哥本来迷离的眼神瞬间清醒，猛地起身抓住他的手问：“这是真的吗？你确定是这样？是的，一定是的，不然幼楚不会丢下我的”。假象哥的脸上充满了震惊和兴奋，他飞速的掏出手机想给女孩打电话，可是手指刚要按到“宝贝幼楚”备注时又停了下来，嘴中喃喃道：“我现在给她打电话又有什么用呢，自己就是废物，什么忙都帮不上”，双手最终无力地垂下。<br>​	</p>
+<p>​	从那天以后，为了专心备考，他推出了科软考研群，假象哥重新每天出入图书馆，夜以继日的学习，因为他颓废了三个月，留给他的时间已经不多了。他本来即将坠入深渊，现在他又重新爬了起来，誓要扶摇直上九万里。最终假象哥查到了成绩429分，稳上科软，这次他没有让其他人失望。可是脑海里始终还是女孩的身影，他永远也不会忘记。</p>
 
                 
             </div>
@@ -488,8 +437,8 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
+                                <a href="/tags/%E7%9E%8E%E5%86%99/">
+                                    <span class="chip bg-color">瞎写</span>
                                 </a>
                             
                         </div>
@@ -530,9 +479,10 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2023/10/28/%E5%81%87%E8%B1%A1%E5%93%A5%E7%9A%84%E6%95%85%E4%BA%8B/">
                     <div class="card-image">
@@ -550,9 +500,9 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-10-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -565,6 +515,7 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -583,13 +534,13 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/09/24/c-stl%E7%AE%97%E6%B3%95%E5%B8%B8%E7%94%A8/">
+                <a href="/2023/10/07/java%E7%AE%97%E6%B3%95%E5%B8%B8%E7%94%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="c++stl算法常用">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="java算法常用">
                         
-                        <span class="card-title">c++stl算法常用</span>
+                        <span class="card-title">java算法常用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -600,14 +551,14 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -617,8 +568,8 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
