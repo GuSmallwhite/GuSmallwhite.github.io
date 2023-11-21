@@ -417,8 +417,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>实验室的东西，我来阅读一下这个model层代码，要接模型</p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p>GPT给的:</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>实验室的东西，我来阅读一下这个model层代码，要接模型</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>GPT给的:</p>
 <p>根据提供的代码，整个项目是一个命令行聊天机器人，其主要工作是与用户进行对话，并通过语言模型（Star Coder）生成代码。生成的代码会被提交到一个在线评测工具（OjRunTool）中，以进行编译和运行，然后返回评测结果。项目的主要组成部分包括以下几个类和模块：</p>
 <ol>
 <li><p><strong>ChatBot 主体：</strong></p>
@@ -459,14 +459,14 @@
 <li>通过 Flux 发布订阅模式，异步处理消息的传递和显示。</li>
 </ol>
 <p>整体上，项目采用了异步的、模块化的设计，通过不同的组件协同工作，实现了一个基于聊天的命令行代码生成和评测机器人。</p>
-<h1 id="Executor包"><a href="#Executor包" class="headerlink" title="Executor包"></a>Executor包</h1><p>这里主要就是执行逻辑，学长发话了，先看看这个executor包</p>
-<h2 id="BaseExecutor"><a href="#BaseExecutor" class="headerlink" title="BaseExecutor"></a>BaseExecutor</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaseExecutor</span> <span class="token punctuation">&#123;</span>
+<h2 id="Executor包"><a href="#Executor包" class="headerlink" title="Executor包"></a>Executor包</h2><p>这里主要就是执行逻辑，学长发话了，先看看这个executor包</p>
+<h3 id="BaseExecutor"><a href="#BaseExecutor" class="headerlink" title="BaseExecutor"></a>BaseExecutor</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaseExecutor</span> <span class="token punctuation">&#123;</span>
 
     <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>就是一个普通的接口，args里面存放的run的需要的参数，比如指定了什么模型，什么提示之类的</p>
-<h2 id="DefaultExecutor"><a href="#DefaultExecutor" class="headerlink" title="DefaultExecutor"></a>DefaultExecutor</h2><p>重点来了，这是默认的执行者</p>
+<h3 id="DefaultExecutor"><a href="#DefaultExecutor" class="headerlink" title="DefaultExecutor"></a>DefaultExecutor</h3><p>重点来了，这是默认的执行者</p>
 <p>先来看总体的代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultExecutor</span> <span class="token keyword">extends</span> <span class="token class-name">BaseExecutor</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">BaseLlm</span><span class="token punctuation">></span></span> <span class="token constant">MODEL_POOL</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">BaseLlm</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>
@@ -652,8 +652,8 @@ emit<span class="token punctuation">.</span><span class="token function">complet
 <p>问题：这样岂不是所有情况都得发射一次？</p>
 </li>
 </ul>
-<h1 id="memory包"><a href="#memory包" class="headerlink" title="memory包"></a>memory包</h1><p>这里主要存放了memory，包含人类消息，ai消息和系统消息，聊天历史等等</p>
-<h2 id="BaseMessage"><a href="#BaseMessage" class="headerlink" title="BaseMessage"></a>BaseMessage</h2><p>一个抽象类，是所有message的爹</p>
+<h2 id="memory包"><a href="#memory包" class="headerlink" title="memory包"></a>memory包</h2><p>这里主要存放了memory，包含人类消息，ai消息和系统消息，聊天历史等等</p>
+<h3 id="BaseMessage"><a href="#BaseMessage" class="headerlink" title="BaseMessage"></a>BaseMessage</h3><p>一个抽象类，是所有message的爹</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaseMessage</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">String</span> content<span class="token punctuation">;</span><span class="token comment">//内容</span>
 
@@ -681,7 +681,7 @@ emit<span class="token punctuation">.</span><span class="token function">complet
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="Humanmessage"><a href="#Humanmessage" class="headerlink" title="Humanmessage"></a>Humanmessage</h2><p>继承了basemessage，然后没啥变化</p>
+<h3 id="Humanmessage"><a href="#Humanmessage" class="headerlink" title="Humanmessage"></a>Humanmessage</h3><p>继承了basemessage，然后没啥变化</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HumanMessage</span> <span class="token keyword">extends</span> <span class="token class-name">BaseMessage</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token class-name">HumanMessage</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> extendParams<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">super</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span>extendParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -692,7 +692,7 @@ emit<span class="token punctuation">.</span><span class="token function">complet
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="systemmessage"><a href="#systemmessage" class="headerlink" title="systemmessage"></a>systemmessage</h2><p>其实就是oj的消息</p>
+<h3 id="systemmessage"><a href="#systemmessage" class="headerlink" title="systemmessage"></a>systemmessage</h3><p>其实就是oj的消息</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SystemMessage</span> <span class="token keyword">extends</span> <span class="token class-name">BaseMessage</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token class-name">SystemMessage</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> extendParams<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">super</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> extendParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -704,7 +704,7 @@ emit<span class="token punctuation">.</span><span class="token function">complet
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="AiMessage"><a href="#AiMessage" class="headerlink" title="AiMessage"></a>AiMessage</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AiMessage</span> <span class="token keyword">extends</span> <span class="token class-name">BaseMessage</span><span class="token punctuation">&#123;</span>
+<h3 id="AiMessage"><a href="#AiMessage" class="headerlink" title="AiMessage"></a>AiMessage</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AiMessage</span> <span class="token keyword">extends</span> <span class="token class-name">BaseMessage</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token class-name">AiMessage</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> extendParams<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">super</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> extendParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
@@ -716,7 +716,7 @@ emit<span class="token punctuation">.</span><span class="token function">complet
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>只是表面他是ai</p>
-<h2 id="BaseChatMessageHistory"><a href="#BaseChatMessageHistory" class="headerlink" title="BaseChatMessageHistory"></a>BaseChatMessageHistory</h2><p>聊天历史</p>
+<h3 id="BaseChatMessageHistory"><a href="#BaseChatMessageHistory" class="headerlink" title="BaseChatMessageHistory"></a>BaseChatMessageHistory</h3><p>聊天历史</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaseChatMessageHistory</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">void</span> <span class="token function">addUserMessage</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token class-name">HumanMessage</span> humanMessage<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">HumanMessage</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -736,14 +736,14 @@ emit<span class="token punctuation">.</span><span class="token function">complet
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>管理聊天记录，包含添加用户和ai信息的方法，以及导入message的方法</p>
-<h1 id="LLM包"><a href="#LLM包" class="headerlink" title="LLM包"></a>LLM包</h1><p>包含调用大模型去运行的代码</p>
-<h2 id="BaseLlm"><a href="#BaseLlm" class="headerlink" title="BaseLlm"></a>BaseLlm</h2><p>一个抽象类，是所有llm的爹，目测还要接别的llm</p>
+<h2 id="LLM包"><a href="#LLM包" class="headerlink" title="LLM包"></a>LLM包</h2><p>包含调用大模型去运行的代码</p>
+<h3 id="BaseLlm"><a href="#BaseLlm" class="headerlink" title="BaseLlm"></a>BaseLlm</h3><p>一个抽象类，是所有llm的爹，目测还要接别的llm</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaseLlm</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> <span class="token function">call</span><span class="token punctuation">(</span><span class="token class-name">String</span> prompt<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> extendedParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="StarCoderLlm"><a href="#StarCoderLlm" class="headerlink" title="StarCoderLlm"></a>StarCoderLlm</h2><p>表示是Starcoder模型，然后后面也可以接别的</p>
-<h3 id="初始化部分-1"><a href="#初始化部分-1" class="headerlink" title="初始化部分"></a>初始化部分</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">Logger</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">StarCoderLlm</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h3 id="StarCoderLlm"><a href="#StarCoderLlm" class="headerlink" title="StarCoderLlm"></a>StarCoderLlm</h3><p>表示是Starcoder模型，然后后面也可以接别的</p>
+<h4 id="初始化部分-1"><a href="#初始化部分-1" class="headerlink" title="初始化部分"></a>初始化部分</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">Logger</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">StarCoderLlm</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">OkHttpClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">connectTimeout</span><span class="token punctuation">(</span><span class="token number">180</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">writeTimeout</span><span class="token punctuation">(</span><span class="token number">180</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span>
@@ -758,7 +758,7 @@ emit<span class="token punctuation">.</span><span class="token function">complet
 <blockquote>
 <p>OkHttp 是一个用于在 Java 和 Android 应用程序中进行网络请求的开源 HTTP 客户端库。它由 Square 公司开发，并被广泛用于 Android 应用的网络通信以及 Java 应用的后端通信。以下是 OkHttp 的一些主要特点和用途：</p>
 </blockquote>
-<h3 id="call方法"><a href="#call方法" class="headerlink" title="call方法"></a>call方法</h3><h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> <span class="token function">call</span><span class="token punctuation">(</span><span class="token class-name">String</span> prompt<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> extendedParams<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h4 id="call方法"><a href="#call方法" class="headerlink" title="call方法"></a>call方法</h4><h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> <span class="token function">call</span><span class="token punctuation">(</span><span class="token class-name">String</span> prompt<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> extendedParams<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 代码省略...</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
@@ -767,7 +767,7 @@ emit<span class="token punctuation">.</span><span class="token function">complet
 <li>该方法接受一个提示 (<code>prompt</code>) 和扩展参数 (<code>extendedParams</code>)，并返回一个包含生成的代码和消息的 <code>Map</code>。</li>
 </ul>
 <p><strong>prompt是什么，再说</strong></p>
-<h4 id="HTTP-请求和处理响应"><a href="#HTTP-请求和处理响应" class="headerlink" title="HTTP 请求和处理响应:"></a><strong>HTTP 请求和处理响应:</strong></h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">JSONObject</span> json <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JSONObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h5 id="HTTP-请求和处理响应"><a href="#HTTP-请求和处理响应" class="headerlink" title="HTTP 请求和处理响应:"></a><strong>HTTP 请求和处理响应:</strong></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">JSONObject</span> json <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JSONObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> promptLength <span class="token operator">=</span> prompt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 json<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"prompt"</span><span class="token punctuation">,</span> prompt<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -786,7 +786,7 @@ json<span class="token punctuation">.</span><span class="token function">put</sp
 <li>捕获可能抛出的 <code>IOException</code> 异常，记录错误日志，并将异常重新抛出为 <code>RuntimeException</code>。</li>
 </ul>
 <p><strong>HTTPUTIL</strong>再说</p>
-<h4 id="解析响应和提取生成的代码"><a href="#解析响应和提取生成的代码" class="headerlink" title="解析响应和提取生成的代码"></a><strong>解析响应和提取生成的代码</strong></h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> responseMap <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parseObject</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">TypeReference</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//将响应解析为map</span>
+<h5 id="解析响应和提取生成的代码"><a href="#解析响应和提取生成的代码" class="headerlink" title="解析响应和提取生成的代码"></a><strong>解析响应和提取生成的代码</strong></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> responseMap <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parseObject</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">TypeReference</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//将响应解析为map</span>
 <span class="token class-name">String</span> llmResponse <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span> responseMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"text"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">String</span> codeGenerate<span class="token punctuation">;</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span>llmResponse<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"```"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -803,7 +803,7 @@ logger<span class="token punctuation">.</span><span class="token function">debug
 </ul>
 <p>为什么能这么判断呢？</p>
 <p><strong>学长曰：模型是这样吐出的，我现放着看看</strong></p>
-<h4 id="构造并返回结果-Map"><a href="#构造并返回结果-Map" class="headerlink" title="构造并返回结果 Map"></a><strong>构造并返回结果 <code>Map</code></strong></h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> resMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h5 id="构造并返回结果-Map"><a href="#构造并返回结果-Map" class="headerlink" title="构造并返回结果 Map"></a><strong>构造并返回结果 <code>Map</code></strong></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> resMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 resMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"code"</span><span class="token punctuation">,</span> codeGenerate<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">String</span> msgContent <span class="token operator">=</span> <span class="token function">getMessageContent</span><span class="token punctuation">(</span>llmResponse<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>promptLength<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">AiMessage</span> aiMessage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AiMessage</span><span class="token punctuation">(</span>msgContent<span class="token punctuation">,</span> <span class="token class-name">Collections</span><span class="token punctuation">.</span><span class="token function">emptyMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -819,7 +819,7 @@ resMap<span class="token punctuation">.</span><span class="token function">put</
 </ul>
 <p><strong>问题：为什么是promptlength来sub</strong></p>
 <p>答：<code>promptLength</code> 表示提示的长度，即在模型输入时的提示内容的长度。这是因为生成的文本中，代码块的内容通常从提示内容后开始。</p>
-<h4 id="getMessageContent-方法"><a href="#getMessageContent-方法" class="headerlink" title="getMessageContent 方法"></a><strong><code>getMessageContent</code> 方法</strong></h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getMessageContent</span><span class="token punctuation">(</span><span class="token class-name">String</span> text<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h5 id="getMessageContent-方法"><a href="#getMessageContent-方法" class="headerlink" title="getMessageContent 方法"></a><strong><code>getMessageContent</code> 方法</strong></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getMessageContent</span><span class="token punctuation">(</span><span class="token class-name">String</span> text<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">String</span> tempStr <span class="token operator">=</span> text<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token class-name">StarCoderPromptTemplate</span><span class="token punctuation">.</span><span class="token constant">ASSISTANT_TOKEN</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span>
             text<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token class-name">StarCoderPromptTemplate</span><span class="token punctuation">.</span><span class="token constant">END_TOKEN</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> tempStr<span class="token punctuation">;</span>
@@ -828,12 +828,12 @@ resMap<span class="token punctuation">.</span><span class="token function">put</
 <p>用于从模型返回的文本中提取消息内容</p>
 <p><strong>问题：msgContent和codeGenerate有什么区别</strong></p>
 <p>**答：有的，区别就是codegennerate没有前面的c++**和前后的&#96;&#96;&#96;</p>
-<h1 id="prompt包"><a href="#prompt包" class="headerlink" title="prompt包"></a>prompt包</h1><h2 id="BasePromptTemplate"><a href="#BasePromptTemplate" class="headerlink" title="BasePromptTemplate"></a>BasePromptTemplate</h2><p>就一个方法，就是生成提示</p>
+<h2 id="prompt包"><a href="#prompt包" class="headerlink" title="prompt包"></a>prompt包</h2><h3 id="BasePromptTemplate"><a href="#BasePromptTemplate" class="headerlink" title="BasePromptTemplate"></a>BasePromptTemplate</h3><p>就一个方法，就是生成提示</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BasePromptTemplate</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token class-name">String</span> <span class="token function">parsePrompt</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">BaseMessage</span><span class="token punctuation">></span></span> messages<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="StarCoderPromptTemplate"><a href="#StarCoderPromptTemplate" class="headerlink" title="StarCoderPromptTemplate"></a>StarCoderPromptTemplate</h2><p>Starcoder对应的这个东西</p>
+<h3 id="StarCoderPromptTemplate"><a href="#StarCoderPromptTemplate" class="headerlink" title="StarCoderPromptTemplate"></a>StarCoderPromptTemplate</h3><p>Starcoder对应的这个东西</p>
 <p>先来看整体代码:</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StarCoderPromptTemplate</span> <span class="token keyword">extends</span> <span class="token class-name">BasePromptTemplate</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYS_TOKEN</span><span class="token operator">=</span><span class="token string">"&lt;|system|>"</span><span class="token punctuation">;</span>
@@ -910,7 +910,7 @@ resMap<span class="token punctuation">.</span><span class="token function">put</
 <li>然后遍历消息列表，根据消息的类型（”ai” 或 “human”）将消息内容添加到提示字符串中。</li>
 <li>最后，添加助手的标记（ASSISTANT_TOKEN）作为提示的结束标记。</li>
 </ul>
-<h1 id="Util包"><a href="#Util包" class="headerlink" title="Util包"></a>Util包</h1><h2 id="HttpUtil"><a href="#HttpUtil" class="headerlink" title="HttpUtil"></a>HttpUtil</h2><p>一个简单的 <code>HttpUtil</code> 类，其中包含一个用于发送 HTTP POST 请求的方法。以下是对这个类和方法的解释：</p>
+<h2 id="Util包"><a href="#Util包" class="headerlink" title="Util包"></a>Util包</h2><h3 id="HttpUtil"><a href="#HttpUtil" class="headerlink" title="HttpUtil"></a>HttpUtil</h3><p>一个简单的 <code>HttpUtil</code> 类，其中包含一个用于发送 HTTP POST 请求的方法。以下是对这个类和方法的解释：</p>
 <p><strong>静态变量定义</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">MediaType</span> <span class="token constant">JSON_TYPE</span> <span class="token operator">=</span> <span class="token class-name">MediaType</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">"application/json; charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -937,7 +937,7 @@ resMap<span class="token punctuation">.</span><span class="token function">put</
 <li>使用 <code>client.newCall(request).execute()</code> 发起请求，并得到一个 <code>Response</code> 对象。</li>
 <li>在 <code>try-with-resources</code> 语句块中，通过 <code>response.body().string()</code> 获取响应体的字符串表示，并将其作为方法的返回值。</li>
 </ul>
-<h1 id="tool包"><a href="#tool包" class="headerlink" title="tool包"></a>tool包</h1><h2 id="OjRunTool"><a href="#OjRunTool" class="headerlink" title="OjRunTool"></a>OjRunTool</h2><p>先来看总体代码</p>
+<h2 id="tool包"><a href="#tool包" class="headerlink" title="tool包"></a>tool包</h2><h3 id="OjRunTool"><a href="#OjRunTool" class="headerlink" title="OjRunTool"></a>OjRunTool</h3><p>先来看总体代码</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OjRunTool</span> <span class="token keyword">extends</span> <span class="token class-name">BaseTool</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger<span class="token operator">=</span> <span class="token class-name">Logger</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">OjRunTool</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">OkHttpClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -1131,18 +1131,17 @@ json<span class="token punctuation">.</span><span class="token function">put</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/11/19/langchain%E4%B9%8Bmodel%E5%B1%82%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/">
+                <a href="/2023/11/21/%E6%8E%A5chatlm%E5%AE%9E%E7%8E%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="langchain之model层代码阅读">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="接chatlm实现">
                         
-                        <span class="card-title">langchain之model层代码阅读</span>
+                        <span class="card-title">接chatlm实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1152,9 +1151,9 @@ json<span class="token punctuation">.</span><span class="token function">put</sp
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-19
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-21
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1167,7 +1166,6 @@ json<span class="token punctuation">.</span><span class="token function">put</sp
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
