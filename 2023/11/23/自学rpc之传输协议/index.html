@@ -1,0 +1,1254 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="自学rpc之传输协议, 说的">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>自学rpc之传输协议 | 说的</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">说的</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">说的</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">自学rpc之传输协议</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/rpc/">
+                                <span class="chip bg-color">rpc</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-11-23
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>傻逼guide，也不讲，草拟吗</p>
+<h2 id="传输协议部分"><a href="#传输协议部分" class="headerlink" title="传输协议部分"></a>传输协议部分</h2><p>为什么要有传输协议？</p>
+<p><strong>通过设计协议，我们定义需要传输哪些类型的数据， 并且还会规定每一种类型的数据应该占多少字节。这样我们在接收到二进制数据之后，就可以正确的解析出我们需要的数据。</strong></p>
+<p>通常一些标准的 RPC 协议包含下面这些内容：</p>
+<p>● 魔数 ： 通常是 4 个字节。这个魔数主要是为了筛选来到服务端的数据包，有了这个魔数之后，服务端首先取出前面四个字节进行比对，能够在第一时间识别出这个数据包并非是遵循自定义协议的，也就是无效数据包，为了安全考虑可以直接关闭连接以节省资源。<br>● 序列化器编号 ：标识序列化的方式，比如是使用 Java 自带的序列化，还是 json，kryo 等序列化方式。<br>● 消息体长度 ： 运行时计算出来。<br>● …… </p>
+<p>所以本项目，作者采用的传输协议是：</p>
+<pre class="line-numbers language-none"><code class="language-none">*   0     1     2     3     4        5     6     7     8         9          10      11     12  13  14   15 16
+*   +-----+-----+-----+-----+--------+----+----+----+------+-----------+-------+----- --+-----+-----+-------+
+*   |   magic   code        |version | full length         | messageType| codec|compress|    RequestId       |
+*   +-----------------------+--------+---------------------+-----------+-----------+-----------+------------+
+*   |                                                                                                       |
+*   |                                         body                                                          |
+*   |                                                                                                       |
+*   |                                        ... ...                                                        |
+*   +-------------------------------------------------------------------------------------------------------+
+* 4B  magic code（魔法数）   1B version（版本）   4B full length（消息长度）    1B messageType（消息类型）
+* 1B compress（压缩类型） 1B codec（序列化类型）    4B  requestId（请求的Id）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>Magic Code（魔法数）（4字节）:</strong></p>
+<ul>
+<li>用于标识消息的开始，通常是一个固定的值，可以防止误解析非法数据为有效消息。这个魔数主要是为了筛选来到服务端的数据包，有了这个魔数之后，服务端首先取出前面四个字节进行比对，能够在第一时间识别出这个数据包并非是遵循自定义协议的，也就是无效数据包，为了安全考虑可以直接关闭连接以节省资源。</li>
+</ul>
+<p><strong>Version（版本）（1字节）:</strong></p>
+<ul>
+<li>表示消息协议的版本号，用于在未来协议更新时进行兼容性处理。</li>
+</ul>
+<p><strong>Full Length（消息长度）（4字节）:</strong></p>
+<ul>
+<li>表示整个消息的长度，包括消息头和消息体。用于解析时确定消息的边界。</li>
+</ul>
+<p><strong>Message Type（消息类型）（1字节）:</strong></p>
+<ul>
+<li>表示消息的类型，可能是请求消息、响应消息、心跳消息等。</li>
+</ul>
+<p><strong>Codec（序列化类型）（1字节）:</strong></p>
+<ul>
+<li>表示消息体采用的序列化方式，如JSON、Protobuf、Hessian等。</li>
+</ul>
+<p><strong>Compress（压缩类型）（1字节）:</strong></p>
+<ul>
+<li>表示消息体是否经过压缩，以及采用的压缩算法。</li>
+</ul>
+<p><strong>Request ID（请求的ID）（4字节）:</strong></p>
+<ul>
+<li>表示请求的唯一标识，用于将请求与响应进行关联。</li>
+</ul>
+<p><strong>Body（消息体）:</strong></p>
+<ul>
+<li>包含实际的业务数据，可以是序列化后的对象等。</li>
+</ul>
+<h2 id="编解码器"><a href="#编解码器" class="headerlink" title="编解码器"></a>编解码器</h2><p>编解码器的作用主要是让我们在 Netty 进行网络传输所用的对象类型 ByteBuf 与 我们代码层面需要的业务对象之间转换。</p>
+<p>这部分呢，其实在之前的编解码器博客已经分析过了</p>
+<p>只不过这里要加上这个传输协议</p>
+<h2 id="RpcMessageDecoder"><a href="#RpcMessageDecoder" class="headerlink" title="RpcMessageDecoder"></a><strong>RpcMessageDecoder</strong></h2><p>自定义解码器。负责处理”入站”消息，将 ByteBuf 消息格式的对象转换为我们需要的业务对象。</p>
+<p>有一说一还是有点不一样的，接下来我们来分析代码</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><p>一上来给我来了个看不懂的勾八东西</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">RpcMessageDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       <span class="token comment">// lengthFieldOffset: magic code is 4B, and version is 1B, and then full length. so value is 5</span>
+       <span class="token comment">// lengthFieldLength: full length is 4B. so value is 4</span>
+       <span class="token comment">// lengthAdjustment: full length include all data and read 9 bytes before, so the left length is (fullLength-9). so values is -9</span>
+       <span class="token comment">// initialBytesToStrip: we will check magic code and version manually, so do not strip any bytes. so values is 0</span>
+       <span class="token keyword">this</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAX_FRAME_LENGTH</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span>
+
+   <span class="token comment">/**
+    * @param maxFrameLength      Maximum frame length. It decide the maximum length of data that can be received.
+    *                            If it exceeds, the data will be discarded.
+    * @param lengthFieldOffset   Length field offset. The length field is the one that skips the specified length of byte.
+    * @param lengthFieldLength   The number of bytes in the length field.
+    * @param lengthAdjustment    The compensation value to add to the value of the length field
+    * @param initialBytesToStrip Number of bytes skipped.
+    *                            If you need to receive all of the header+body data, this value is 0
+    *                            if you only want to receive the body data, then you need to skip the number of bytes consumed by the header.
+    */</span>
+   <span class="token keyword">public</span> <span class="token class-name">RpcMessageDecoder</span><span class="token punctuation">(</span><span class="token keyword">int</span> maxFrameLength<span class="token punctuation">,</span> <span class="token keyword">int</span> lengthFieldOffset<span class="token punctuation">,</span> <span class="token keyword">int</span> lengthFieldLength<span class="token punctuation">,</span>
+                            <span class="token keyword">int</span> lengthAdjustment<span class="token punctuation">,</span> <span class="token keyword">int</span> initialBytesToStrip<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       <span class="token keyword">super</span><span class="token punctuation">(</span>maxFrameLength<span class="token punctuation">,</span> lengthFieldOffset<span class="token punctuation">,</span> lengthFieldLength<span class="token punctuation">,</span> lengthAdjustment<span class="token punctuation">,</span> initialBytesToStrip<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>RpcMessageDecoder</strong>继承了Netty提供的<strong>LengthFieldBasedFrameDecoder</strong></p>
+<p><code>maxFrameLength</code>: 最大帧长度，指定能够处理的帧的最大长度。如果帧的长度超过这个值，将抛出<code>TooLongFrameException</code>，表示数据帧太长，超出系统能够处理的范围，可能是恶意攻击或异常情况。</p>
+<p><code>lengthFieldOffset</code>: 长度字段偏移量，指定长度字段在帧中的偏移量。在这里，魔法数占4个字节，版本号占1个字节，然后是消息总长度字段，因此长度字段的偏移量是5。也就是说，下标5后面，是长度字段</p>
+<p><code>lengthFieldLength</code>: 长度字段的字节长度，指定长度字段占用几个字节。在这里，消息总长度字段占4个字节，所以长度字段的字节长度是4。</p>
+<p><code>lengthAdjustment</code>: 长度调整值，指定长度字段的补偿值，用于计算实际的消息长度。在这里，由于总长度字段包括所有数据，因此读取9个字节之前，剩下的长度是<code>(fullLength-9)</code>，所以长度调整值是-9。<strong>为什么是减去9呢？因为在整个消息中，前面有4字节的魔法数，1字节的版本号，4字节的总长度字段，所以这9个字节是在计算消息长度时已经包括在内的，需要减去。</strong>举个例子，假设读取到的长度字段的值是20，那么实际的消息长度就是20 - 9 &#x3D; 11字节。这样就可以正确计算出消息的实际长度，以便后续的解码过程。</p>
+<p><code>initialBytesToStrip</code>: 跳过的初始字节数，指定从解码帧中去掉的字节数，这些字节包括长度字段本身。在这里，由于将手动检查魔法数和版本号，所以不需要跳过任何字节，值是0。</p>
+<h3 id="decode"><a href="#decode" class="headerlink" title="decode"></a>decode</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+   <span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">decode</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">,</span> <span class="token class-name">ByteBuf</span> in<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+       <span class="token class-name">Object</span> decoded <span class="token operator">=</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> in<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">if</span> <span class="token punctuation">(</span>decoded <span class="token keyword">instanceof</span> <span class="token class-name">ByteBuf</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+           <span class="token class-name">ByteBuf</span> frame <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">ByteBuf</span><span class="token punctuation">)</span> decoded<span class="token punctuation">;</span>
+           <span class="token keyword">if</span> <span class="token punctuation">(</span>frame<span class="token punctuation">.</span><span class="token function">readableBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">TOTAL_LENGTH</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+               <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                   <span class="token keyword">return</span> <span class="token function">decodeFrame</span><span class="token punctuation">(</span>frame<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                   log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Decode frame error!"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                   <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+               <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+                   frame<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token punctuation">&#125;</span>
+           <span class="token punctuation">&#125;</span>
+
+       <span class="token punctuation">&#125;</span>
+       <span class="token keyword">return</span> decoded<span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>覆盖了父类的decode方法</p>
+<p><code>Object decoded = super.decode(ctx, in);</code>: 这一行调用了父类<code>LengthFieldBasedFrameDecoder</code>的<code>decode</code>方法，获得解码后的结果。<code>LengthFieldBasedFrameDecoder</code>会根据长度字段的信息，将输入的<code>ByteBuf</code>切割成一帧一帧的消息。</p>
+<p><code>if (decoded instanceof ByteBuf) &#123;</code>: 这里检查<code>decoded</code>是否是<code>ByteBuf</code>的实例。如果是，说明解码成功，获取到了一帧完整的消息。</p>
+<p><code>ByteBuf frame = (ByteBuf) decoded;</code>: 将解码后的结果强制转换为<code>ByteBuf</code>类型，方便后续处理。</p>
+<p><code>if (frame.readableBytes() &gt;= RpcConstants.TOTAL_LENGTH) &#123;</code>: 这里检查帧的可读字节数是否大于或等于<code>RpcConstants.TOTAL_LENGTH</code>，即消息的总长度。这是为了确保帧中包含了完整的消息。</p>
+<p><code>return decodeFrame(frame);</code>: 如果帧中包含完整的消息，调用<code>decodeFrame</code>方法进行进一步的解码。</p>
+<p><code>frame.release();</code>: 在<code>finally</code>块中释放<code>frame</code>，确保不会造成内存泄漏。</p>
+<p><code>return decoded;</code>: 如果帧中不包含完整的消息，则直接返回上一层解码器的结果，等待更多数据的到来。</p>
+<h3 id="decodeframe"><a href="#decodeframe" class="headerlink" title="decodeframe"></a>decodeframe</h3><p>将二进制数据解析成可读的 <code>RpcMessage</code> 对象</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Object</span> <span class="token function">decodeFrame</span><span class="token punctuation">(</span><span class="token class-name">ByteBuf</span> in<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// note: must read ByteBuf in order</span>
+    <span class="token function">checkMagicNumber</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">checkVersion</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> fullLength <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// build RpcMessage object</span>
+    <span class="token keyword">byte</span> messageType <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">byte</span> codecType <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">byte</span> compressType <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> requestId <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">RpcMessage</span> rpcMessage <span class="token operator">=</span> <span class="token class-name">RpcMessage</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">codec</span><span class="token punctuation">(</span>codecType<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">requestId</span><span class="token punctuation">(</span>requestId<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">messageType</span><span class="token punctuation">(</span>messageType<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">==</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_REQUEST_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">PING</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> rpcMessage<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">==</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_RESPONSE_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">PONG</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> rpcMessage<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> bodyLength <span class="token operator">=</span> fullLength <span class="token operator">-</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEAD_LENGTH</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bodyLength <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span>bodyLength<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        in<span class="token punctuation">.</span><span class="token function">readBytes</span><span class="token punctuation">(</span>bs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// decompress the bytes</span>
+        <span class="token class-name">String</span> compressName <span class="token operator">=</span> <span class="token class-name">CompressTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>compressType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Compress</span> compress <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Compress</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>compressName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bs <span class="token operator">=</span> compress<span class="token punctuation">.</span><span class="token function">decompress</span><span class="token punctuation">(</span>bs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// deserialize the object</span>
+        <span class="token class-name">String</span> codecName <span class="token operator">=</span> <span class="token class-name">SerializationTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"codec name: [&#123;&#125;] "</span><span class="token punctuation">,</span> codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Serializer</span> serializer <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Serializer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">==</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">REQUEST_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">RpcRequest</span> tmpValue <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bs<span class="token punctuation">,</span> <span class="token class-name">RpcRequest</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span>tmpValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">RpcResponse</span> tmpValue <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bs<span class="token punctuation">,</span> <span class="token class-name">RpcResponse</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span>tmpValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> rpcMessage<span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>逐步分析</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">checkMagicNumber</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//检查魔术</span>
+<span class="token function">checkVersion</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//检查版本</span>
+<span class="token keyword">int</span> fullLength <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//传输协议里吗，消息长度四个字节，正好一个int</span>
+<span class="token comment">// build RpcMessage object</span>
+<span class="token keyword">byte</span> messageType <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//一个字节</span>
+<span class="token keyword">byte</span> codecType <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//一个字节</span>
+<span class="token keyword">byte</span> compressType <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//一个字节</span>
+<span class="token keyword">int</span> requestId <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//四个字节</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>分别于传输协议对应</p>
+<p><strong>构建 RpcMessage 对象</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">RpcMessage</span> rpcMessage <span class="token operator">=</span> <span class="token class-name">RpcMessage</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">codec</span><span class="token punctuation">(</span>codecType<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">requestId</span><span class="token punctuation">(</span>requestId<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">messageType</span><span class="token punctuation">(</span>messageType<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>利用上述解析到的信息构建了 <code>RpcMessage</code> 对象。这里应该是使用了构建者模式，根据解析得到的信息初始化 <code>RpcMessage</code>。</p>
+<p><strong>处理心跳消息</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">==</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_REQUEST_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">PING</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> rpcMessage<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">==</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_RESPONSE_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">PONG</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> rpcMessage<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>处理非心跳消息的数据解析</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> bodyLength <span class="token operator">=</span> fullLength <span class="token operator">-</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEAD_LENGTH</span><span class="token punctuation">;</span><span class="token comment">//计算消息体的长度。</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>bodyLength <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span>bodyLength<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    in<span class="token punctuation">.</span><span class="token function">readBytes</span><span class="token punctuation">(</span>bs<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//从 ByteBuf 中读取相应长度的字节数据</span>
+    <span class="token comment">// 解压缩数据</span>
+    <span class="token class-name">String</span> compressName <span class="token operator">=</span> <span class="token class-name">CompressTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>compressType<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取压缩类型名称</span>
+    
+    <span class="token class-name">Compress</span> compress <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Compress</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>compressName<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取压缩算法的实例</span>
+    bs <span class="token operator">=</span> compress<span class="token punctuation">.</span><span class="token function">decompress</span><span class="token punctuation">(</span>bs<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//按这个实例去解压缩</span>
+   
+    <span class="token comment">// deserialize the object</span>
+    <span class="token class-name">String</span> codecName <span class="token operator">=</span> <span class="token class-name">SerializationTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"codec name: [&#123;&#125;] "</span><span class="token punctuation">,</span> codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Serializer</span> serializer <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Serializer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">==</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">REQUEST_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">RpcRequest</span> tmpValue <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bs<span class="token punctuation">,</span> <span class="token class-name">RpcRequest</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span>tmpValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">RpcResponse</span> tmpValue <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>bs<span class="token punctuation">,</span> <span class="token class-name">RpcResponse</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rpcMessage<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span>tmpValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>ExtensionLoader.getExtensionLoader(Compress.class).getExtension(compressName)</code>：这里使用了扩展加载器模式。<code>ExtensionLoader</code> 是一个通用的扩展加载器，用于加载各种扩展点的实现。在这里，加载了实现了 <code>Compress</code> 接口的压缩算法的具体实现类。<code>compressName</code> 是之前获取的压缩算法类型的名称，通过加载器获取对应的压缩算法的实例。</p>
+<p><code>SerializationTypeEnum.getName(rpcMessage.getCodec())</code>：通过 <code>SerializationTypeEnum</code> 中的方法获取给定序列化类型的名称。<code>SerializationTypeEnum</code> 应该是一个枚举，其中包含了各种序列化算法的类型。</p>
+<p><code>ExtensionLoader.getExtensionLoader(Serializer.class).getExtension(codecName)</code>：这里同样使用了扩展加载器模式。<code>ExtensionLoader</code> 加载了实现了 <code>Serializer</code> 接口的序列化算法的具体实现类。<code>codecName</code> 是之前获取的序列化算法类型的名称，通过加载器获取对应的序列化算法的实例。</p>
+<p><strong>这个extensionloader，后面再说，你只要知道他现在能够获得对应的实例化对象就行了</strong></p>
+<p>根据消息类型的判断：</p>
+<ul>
+<li>如果消息类型是请求类型 (<code>RpcConstants.REQUEST_TYPE</code>)，则调用序列化算法的 <code>deserialize</code> 方法将接收到的字节数组 <code>bs</code> 反序列化为 <code>RpcRequest</code> 对象，并将其设置为 <code>rpcMessage</code> 的数据部分。</li>
+<li>如果消息类型不是请求类型，即为响应类型，则调用序列化算法的 <code>deserialize</code> 方法将接收到的字节数组 <code>bs</code> 反序列化为 <code>RpcResponse</code> 对象，并将其设置为 <code>rpcMessage</code> 的数据部分。</li>
+</ul>
+<h3 id="checkverison"><a href="#checkverison" class="headerlink" title="checkverison"></a>checkverison</h3><pre class="line-numbers language-ajva" data-language="ajva"><code class="language-ajva">private void checkVersion(ByteBuf in) &#123;
+    &#x2F;&#x2F; read the version and compare
+    byte version &#x3D; in.readByte();
+    if (version !&#x3D; RpcConstants.VERSION) &#123;
+        throw new RuntimeException(&quot;version isn&#39;t compatible&quot; + version);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>就是读取version，并且检查</p>
+<h3 id="checkMagicNumber"><a href="#checkMagicNumber" class="headerlink" title="checkMagicNumber"></a>checkMagicNumber</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">checkMagicNumber</span><span class="token punctuation">(</span><span class="token class-name">ByteBuf</span> in<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// read the first 4 bit, which is the magic number, and compare</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAGIC_NUMBER</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> tmp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span>len<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    in<span class="token punctuation">.</span><span class="token function">readBytes</span><span class="token punctuation">(</span>tmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>tmp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAGIC_NUMBER</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"Unknown magic code: "</span> <span class="token operator">+</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>tmp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>就是一位一位去比较魔术对不对</p>
+<h2 id="RpcMessageEncoder"><a href="#RpcMessageEncoder" class="headerlink" title="RpcMessageEncoder"></a>RpcMessageEncoder</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RpcMessageEncoder</span> <span class="token keyword">extends</span> <span class="token class-name">MessageToByteEncoder</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RpcMessage</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">AtomicInteger</span> <span class="token constant">ATOMIC_INTEGER</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">encode</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">,</span> <span class="token class-name">RpcMessage</span> rpcMessage<span class="token punctuation">,</span> <span class="token class-name">ByteBuf</span> out<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAGIC_NUMBER</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">VERSION</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// leave a place to write the value of full length</span>
+            out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span>out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">byte</span> messageType <span class="token operator">=</span> rpcMessage<span class="token punctuation">.</span><span class="token function">getMessageType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>messageType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span><span class="token class-name">CompressTypeEnum</span><span class="token punctuation">.</span><span class="token constant">GZIP</span><span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeInt</span><span class="token punctuation">(</span><span class="token constant">ATOMIC_INTEGER</span><span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// build full length</span>
+            <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bodyBytes <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> fullLength <span class="token operator">=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEAD_LENGTH</span><span class="token punctuation">;</span>
+            <span class="token comment">// if messageType is not heartbeat message,fullLength = head length + body length</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">!=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_REQUEST_TYPE</span>
+                    <span class="token operator">&amp;&amp;</span> messageType <span class="token operator">!=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_RESPONSE_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// serialize the object</span>
+                <span class="token class-name">String</span> codecName <span class="token operator">=</span> <span class="token class-name">SerializationTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"codec name: [&#123;&#125;] "</span><span class="token punctuation">,</span> codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name">Serializer</span> serializer <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Serializer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                bodyBytes <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// compress the bytes</span>
+                <span class="token class-name">String</span> compressName <span class="token operator">=</span> <span class="token class-name">CompressTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCompress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name">Compress</span> compress <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Compress</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>compressName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                bodyBytes <span class="token operator">=</span> compress<span class="token punctuation">.</span><span class="token function">compress</span><span class="token punctuation">(</span>bodyBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                fullLength <span class="token operator">+=</span> bodyBytes<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>bodyBytes <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                out<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span>bodyBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">int</span> writeIndex <span class="token operator">=</span> out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span>writeIndex <span class="token operator">-</span> fullLength <span class="token operator">+</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAGIC_NUMBER</span><span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeInt</span><span class="token punctuation">(</span>fullLength<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span>writeIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Encode request error!"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>ATOMIC_INTEGER</code> 用于为每个请求生成一个唯一的标识。每次调用 <code>getAndIncrement</code> 时，都会返回当前值，并将其递增。因此，每个请求都能够获得不同的唯一标识。</p>
+<h3 id="encode方法"><a href="#encode方法" class="headerlink" title="encode方法"></a>encode方法</h3><p>用于将 <code>RpcMessage</code> 对象编码成字节流以便发送到网络。以下是主要步骤的解释：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">encode</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">,</span> <span class="token class-name">RpcMessage</span> rpcMessage<span class="token punctuation">,</span> <span class="token class-name">ByteBuf</span> out<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        out<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAGIC_NUMBER</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写入魔术</span>
+        out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span><span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">VERSION</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写入版本</span>
+        <span class="token comment">// leave a place to write the value of full length</span>
+        out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span>out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//预留四个byte的地方给总长度</span>
+        <span class="token keyword">byte</span> messageType <span class="token operator">=</span> rpcMessage<span class="token punctuation">.</span><span class="token function">getMessageType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//得到消息类型</span>
+        out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>messageType<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写入信息类型</span>
+        out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写入序列化类型</span>
+        out<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span><span class="token class-name">CompressTypeEnum</span><span class="token punctuation">.</span><span class="token constant">GZIP</span><span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写入压缩方式</span>
+        out<span class="token punctuation">.</span><span class="token function">writeInt</span><span class="token punctuation">(</span><span class="token constant">ATOMIC_INTEGER</span><span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//把唯一的，自增的int值，作为唯一标识</span>
+        <span class="token comment">// build full length</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bodyBytes <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><span class="token comment">//存放消息体，也便于计算长度</span>
+        <span class="token keyword">int</span> fullLength <span class="token operator">=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEAD_LENGTH</span><span class="token punctuation">;</span><span class="token comment">//初始化消息的总长度，初始值为头部长度。</span>
+        <span class="token comment">// 如果不是心跳消息，总长度等于头+消息体</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>messageType <span class="token operator">!=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_REQUEST_TYPE</span>
+                <span class="token operator">&amp;&amp;</span> messageType <span class="token operator">!=</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">HEARTBEAT_RESPONSE_TYPE</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// serialize the object</span>
+            <span class="token class-name">String</span> codecName <span class="token operator">=</span> <span class="token class-name">SerializationTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"codec name: [&#123;&#125;] "</span><span class="token punctuation">,</span> codecName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Serializer</span> serializer <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Serializer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>codecName<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//还是一样的，用extensionloadre获取具体的序列化对象,</span>
+            bodyBytes <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//然后进行序列化</span>
+            <span class="token comment">// compress the bytes</span>
+            <span class="token class-name">String</span> compressName <span class="token operator">=</span> <span class="token class-name">CompressTypeEnum</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span>rpcMessage<span class="token punctuation">.</span><span class="token function">getCompress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Compress</span> compress <span class="token operator">=</span> <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Compress</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span>compressName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            bodyBytes <span class="token operator">=</span> compress<span class="token punctuation">.</span><span class="token function">compress</span><span class="token punctuation">(</span>bodyBytes<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//压缩</span>
+            fullLength <span class="token operator">+=</span> bodyBytes<span class="token punctuation">.</span>length<span class="token punctuation">;</span><span class="token comment">//加上到总长度</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bodyBytes <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            out<span class="token punctuation">.</span><span class="token function">writeBytes</span><span class="token punctuation">(</span>bodyBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//写入bytebuf中</span>
+        <span class="token keyword">int</span> writeIndex <span class="token operator">=</span> out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取当前的写入位置。</span>
+        out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span>writeIndex <span class="token operator">-</span> fullLength <span class="token operator">+</span> <span class="token class-name">RpcConstants</span><span class="token punctuation">.</span><span class="token constant">MAGIC_NUMBER</span><span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//移动到预留空间的位置。</span>
+        out<span class="token punctuation">.</span><span class="token function">writeInt</span><span class="token punctuation">(</span>fullLength<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//把总长度的值写到对应的地方</span>
+        out<span class="token punctuation">.</span><span class="token function">writerIndex</span><span class="token punctuation">(</span>writeIndex<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//还原写入位置。</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Encode request error!"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，编码就是把消息，按照协议，进行序列化和压缩之后，写到bytebuf之中</p>
+<p>解码就是从bytebuf中读取，然后按照协议分析是否正确并且得到消息体，然后解压后和反序列化</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/rpc/">
+                                    <span class="chip bg-color">rpc</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2023/11/23/%E8%87%AA%E5%AD%A6rpc%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="自学rpc之传输协议">
+                        
+                        <span class="card-title">自学rpc之传输协议</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/rpc/">
+                        <span class="chip bg-color">rpc</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/11/21/%E6%8E%A5chatlm%E5%AE%9E%E7%8E%B0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="接chatlm实现">
+                        
+                        <span class="card-title">接chatlm实现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/" class="post-category">
+                                    实验室
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/langchain/">
+                        <span class="chip bg-color">langchain</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">G</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/GuSmallwhite" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
