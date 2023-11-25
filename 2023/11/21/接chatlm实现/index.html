@@ -558,7 +558,7 @@
 <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>也就是说我需要把</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token string">"[&#123;\"role\": \"user\", \"content\": \"Description: Implement a c++ program to compute a+b. Requirement: Generate a complete c++ program from the previous description, encasing the code blocks in backquotes. The input contains only numbers separated by two Spaces. The output contains only the answers. Don't output any extra statements.\"&#125;]"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Description</span><span class="token operator">:</span> <span class="token class-name">Implement</span> a c<span class="token operator">++</span> program <span class="token keyword">to</span> <span class="token namespace">compute</span> a<span class="token operator">+</span><span class="token class-name"><span class="token namespace">b<span class="token punctuation">.</span></span> Requirement</span><span class="token operator">:</span> <span class="token class-name">Generate</span> a complete c<span class="token operator">++</span> program from the previous description<span class="token punctuation">,</span> encasing the code blocks in <span class="token class-name"><span class="token namespace">backquotes<span class="token punctuation">.</span></span> The</span> input contains only numbers separated by two <span class="token class-name">Spaces<span class="token punctuation">.</span> The</span> output contains only the <span class="token class-name"><span class="token namespace">answers<span class="token punctuation">.</span></span> Don</span>'t output any extra statements<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这一段字符串</p>
 <p>转变成</p>
@@ -573,17 +573,14 @@
 
 <p>gpt提供给我的方案:</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">JSONObject</span> json <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JSONObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> promptLength<span class="token operator">=</span>prompt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">ObjectMapper</span> objectMapper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
-            <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> promptList <span class="token operator">=</span> objectMapper<span class="token punctuation">.</span><span class="token function">readValue</span><span class="token punctuation">(</span>prompt<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token class-name">String</span> formattedPrompt <span class="token operator">=</span> objectMapper<span class="token punctuation">.</span><span class="token function">writerWithDefaultPrettyPrinter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>promptList<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            json<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"prompt"</span><span class="token punctuation">,</span>formattedPrompt<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">JsonMappingException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">JsonProcessingException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token class-name">JSONArray</span> promptArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JSONArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">JSONObject</span> promptObject <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JSONObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+promptObject<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"role"</span><span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+promptObject<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"content"</span><span class="token punctuation">,</span> prompt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+promptArray<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>promptObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+json<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"prompt"</span><span class="token punctuation">,</span> promptArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>先这么写吧</p>
 <h3 id="codegenerate"><a href="#codegenerate" class="headerlink" title="codegenerate"></a>codegenerate</h3><p>这部分是要送给pj评测的代码，所以我得确定这里面必须是纯代码部分</p>
@@ -658,6 +655,53 @@ using namespace std<span class="token punctuation">;</span>
 public static final String SYS_END_TOKEN&#x3D;&quot;System_Message_End&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>先这么说吧，累了，睡觉了</p>
+<p>那么我的想法也很简单，我的prompt就是</p>
+<pre class="line-numbers language-none"><code class="language-none">Description: Implement a c++ program to compute a+b. Requirement: Generate a complete c++ program from the previous description, encasing the code blocks in backquotes. The input contains only numbers separated by two Spaces. The output contains only the answers. Don&#39;t output any extra statements.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后我只要在前后加入”Here is System_Message”;”System_Message_End”;等等即可</p>
+<p>因为反正我这里的prompt，在真正的promt json中，只是content键对应的值而已</p>
+<p>所以这样是可行的</p>
+<h3 id="token定义"><a href="#token定义" class="headerlink" title="token定义"></a>token定义</h3><p><strong>我们来看看starcoder的token是怎么定义的</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYS_TOKEN</span><span class="token operator">=</span><span class="token string">"&lt;|system|>"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">USER_TOKEN</span><span class="token operator">=</span><span class="token string">"&lt;|user|>"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">ASSISTANT_TOKEN</span><span class="token operator">=</span><span class="token string">"&lt;|assistant|>"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">END_TOKEN</span><span class="token operator">=</span><span class="token string">"&lt;|end|>"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYS_MSG</span><span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这部分是参考模型的返回得出的，但是我们的llama7b并没有这样的返回，所以我们可以自定义</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYS_BEGIN_TOKEN</span><span class="token operator">=</span><span class="token string">"Here is SystemMessage"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYS_END_TOKEN</span><span class="token operator">=</span><span class="token string">"SystemMessage End"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">USER_BEGIN_TOKEN</span><span class="token operator">=</span><span class="token string">"Here is UserMessage"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">USER_END_TOKEN</span><span class="token operator">=</span><span class="token string">"UserMessage End"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">ASSISTANT_BEGIN_TOKEN</span><span class="token operator">=</span><span class="token string">"Here is AssistantMessage"</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">ASSISTANT_END_TOKEN</span><span class="token operator">=</span><span class="token string">"UserMessage End"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYS_MSG</span><span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>就这么看看吧，不知道能不能行</p>
+<h3 id="parse方法"><a href="#parse方法" class="headerlink" title="parse方法"></a>parse方法</h3><p>照猫画虎</p>
+<pre class="line-numbers language-JAVA" data-language="JAVA"><code class="language-JAVA">    public String parsePrompt(List&lt;BaseMessage&gt; messages) &#123;
+        StringBuffer promptBuffer&#x3D;new StringBuffer();
+        if(StringUtils.isNotBlank(SYS_MSG))&#123;
+            promptBuffer.append(SYS_BEGIN_TOKEN+&quot;\n&quot; + SYS_MSG + SYS_END_TOKEN + &quot;\n&quot;);
+        &#125;
+        if(messages.isEmpty())&#123;
+            throw new RuntimeException(&quot;Message List Cannot be empty&quot;);
+        &#125;
+        for(BaseMessage message:messages)&#123;
+            if(message.type().equals(&quot;ai&quot;))&#123;
+                promptBuffer.append(ASSISTANT_BEGIN_TOKEN+&quot;\n&quot; + message.getContent() + ASSISTANT_END_TOKEN + &quot;\n&quot;);
+            &#125;
+            else if(message.type().equals(&quot;human&quot;))&#123;
+                promptBuffer.append(USER_BEGIN_TOKEN + &quot;\n&quot; + message.getContent() + USER_END_TOKEN + &quot;\n&quot;);
+            &#125;
+        &#125;
+        promptBuffer.append(ASSISTANT_BEGIN_TOKEN);
+        return promptBuffer.toString();
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
