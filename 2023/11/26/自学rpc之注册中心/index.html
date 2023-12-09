@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="自学rpc之注册中心, 说的">
+    <meta name="keywords" content="自学和再看rpc之注册中心, 说的">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>自学rpc之注册中心 | 说的</title>
+    <title>自学和再看rpc之注册中心 | 说的</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">自学rpc之注册中心</h1>
+                    <h1 class="description center-align post-title">自学和再看rpc之注册中心</h1>
                 </div>
             </div>
         </div>
@@ -419,6 +419,8 @@
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>guide司马了</p>
 <p>注册中心负责服务地址的注册与查找，相当于目录服务。 服务端启动的时候将服务名称及其对应的地址(ip+port)注册到注册中心，服务消费端根据服务名称找到对应的服务地址。有了服务地址之后，服务消费端就可以通过网络请求服务端了。</p>
+<p><strong>服务名称是什么，就是哪个类的哪个方法</strong></p>
+<p>第一遍自学和第二遍再看，发现其实差不多，主要第一遍的时候CuratorUtils类没看，这里看一看</p>
 <h2 id="ServiceDiscovery"><a href="#ServiceDiscovery" class="headerlink" title="ServiceDiscovery"></a>ServiceDiscovery</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SPI</span>
 <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ServiceDiscovery</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">/**
@@ -430,7 +432,7 @@
     <span class="token class-name">InetSocketAddress</span> <span class="token function">lookupService</span><span class="token punctuation">(</span><span class="token class-name">RpcRequest</span> rpcRequest<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>就是个普通的接口，这边是准备实现服务发现</p>
+<p>就是个普通的接口，这边是准备实现服务发现，就是找到这个服务，这个函数在NettyClient有用到，废话因为你得找到往哪里发请求啊</p>
 <h2 id="ServiceRegistry"><a href="#ServiceRegistry" class="headerlink" title="ServiceRegistry"></a>ServiceRegistry</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SPI</span>
 <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ServiceRegistry</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">/**
@@ -443,7 +445,8 @@
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>注册服务</p>
+<p>注册服务，这个函数呢，一个是NettyServer有，这个是手动注册服务的</p>
+<p>还有一个是在SpringBeanPostProcessor里面，这里是运用了扫描，然后自动注册服务，重点关注第二种</p>
 <h2 id="ZkServiceRegistryImpl"><a href="#ZkServiceRegistryImpl" class="headerlink" title="ZkServiceRegistryImpl"></a>ZkServiceRegistryImpl</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ZkServiceRegistryImpl</span> <span class="token keyword">implements</span> <span class="token class-name">ServiceRegistry</span> <span class="token punctuation">&#123;</span>
 
@@ -456,6 +459,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里依赖了curatorutils类，这个类的东西，见对应文章</p>
+<p><strong>所谓注册服务，就是在zk里面创建一个对应的持久节点</strong></p>
 <p>当我们的服务被注册进 zookeeper 的时候，我们将完整的服务名称 rpcServiceName （class name+group+version）作为根节点 ，子节点是对应的服务地址（ip+端口号）。</p>
 <p>如果我们要获得某个服务对应的地址的话，就直接根据完整的服务名称来获取到其下的所有子节点，然后通过具体的负载均衡策略取出一个就可以了。相关代码如下在 ZkServiceDiscovery.java中已经给出。</p>
 <h2 id="ZkServiceDiscoveryImpl"><a href="#ZkServiceDiscoveryImpl" class="headerlink" title="ZkServiceDiscoveryImpl"></a>ZkServiceDiscoveryImpl</h2><p><strong>成员变量</strong></p>
@@ -468,6 +472,7 @@
 <p>负载均衡算法，这一部分看相关博客</p>
 <p><strong>lookupservice方法</strong></p>
 <p>主要作用是在给定的服务名称下查找可用的服务实例，使用负载均衡算法选择一个实例，最终返回该实例的网络地址。</p>
+<p><strong>这个负载均衡是 从给定的服务名称里面，选择一个合适的节点</strong>，<strong>一个实例对应的有一个父节点，下面的子节点全是他对应的服务</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token class-name">InetSocketAddress</span> <span class="token function">lookupService</span><span class="token punctuation">(</span><span class="token class-name">RpcRequest</span> rpcRequest<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">String</span> rpcServiceName <span class="token operator">=</span> rpcRequest<span class="token punctuation">.</span><span class="token function">getRpcServiceName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获得名字</span>
@@ -486,6 +491,114 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>负载均衡算法在loadbalance里，见别的博客</strong></p>
+<h2 id="CuratorUtils"><a href="#CuratorUtils" class="headerlink" title="CuratorUtils"></a>CuratorUtils</h2><p>就是创建节点的工具类，包装了一些方法</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span>  <span class="token keyword">final</span>  <span class="token keyword">int</span> <span class="token constant">BASE_SLEEP_TIME</span><span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">MAX_RETRIES</span><span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">ZK_REGISTER_ROOT_PATH</span> <span class="token operator">=</span> <span class="token string">"/my-rpc"</span><span class="token punctuation">;</span><span class="token comment">//根目录</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token constant">SERVICE_ADDRESS_MAP</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//服务对应的地址，一个服务可以对应对个地址</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token constant">REGISTERED_PATH_SET</span> <span class="token operator">=</span> <span class="token class-name">ConcurrentHashMap</span><span class="token punctuation">.</span><span class="token function">newKeySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//注册了的路径</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">CuratorFramework</span> zkClient<span class="token punctuation">;</span><span class="token comment">//zk提供给我们的东西，用这个进行操作，这个就是zk客户端</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">DEFAULT_ZOOKEEPER_ADDRESS</span> <span class="token operator">=</span> <span class="token string">"127.0.0.1:2181"</span><span class="token punctuation">;</span><span class="token comment">//zk运行的地址</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="createPersistentNode"><a href="#createPersistentNode" class="headerlink" title="createPersistentNode"></a>createPersistentNode</h3><p>看名字也看得出来，就是创建持久节点</p>
+<p>关键：<code>zkClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);</code></p>
+<p>其他代码只是做个检查罢了</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">createPersistentNode</span><span class="token punctuation">(</span><span class="token class-name">CuratorFramework</span> zkClient<span class="token punctuation">,</span><span class="token class-name">String</span> path<span class="token punctuation">)</span><span class="token comment">//创建一个持久节点，参数就是工具和你要注册的节点的路径</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token constant">REGISTERED_PATH_SET</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token operator">||</span>zkClient<span class="token punctuation">.</span><span class="token function">checkExists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forPath</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token comment">//判断是不是已经被注册或者已经有这个结点了</span>
+        <span class="token punctuation">&#123;</span>
+            log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"The node already exists. The node is:[&#123;&#125;]"</span><span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token keyword">else</span>
+        <span class="token punctuation">&#123;</span>
+            zkClient<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">creatingParentsIfNeeded</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withMode</span><span class="token punctuation">(</span><span class="token class-name">CreateMode</span><span class="token punctuation">.</span><span class="token constant">PERSISTENT</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forPath</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"The node was created successfully. The node is:[&#123;&#125;]"</span><span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token constant">REGISTERED_PATH_SET</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"create persistent node for path [&#123;&#125;] fail"</span><span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>持久节点什么意思：当链接断开的时候，这个结点不被删除</strong></p>
+<h3 id="getChildrenNodes"><a href="#getChildrenNodes" class="headerlink" title="getChildrenNodes"></a>getChildrenNodes</h3><p>看名字就看得出来，<strong>获取某个节点的所有子节点路径</strong></p>
+<p>关键：<code>result = zkClient.getChildren().forPath(servicePath);</code></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">getChildrenNodes</span><span class="token punctuation">(</span><span class="token class-name">CuratorFramework</span> zkClient<span class="token punctuation">,</span><span class="token class-name">String</span> rpcServiceName<span class="token punctuation">)</span><span class="token comment">//获取某个节点的所有子节点路径</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token constant">SERVICE_ADDRESS_MAP</span><span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//如果map里已经有了，那就直接返回就行</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token constant">SERVICE_ADDRESS_MAP</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//如果没有，我们自己创造</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span>result<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> servicePath <span class="token operator">=</span> <span class="token constant">ZK_REGISTER_ROOT_PATH</span> <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> rpcServiceName<span class="token punctuation">;</span>
+    <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
+        <span class="token constant">SERVICE_ADDRESS_MAP</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result<span class="token operator">=</span>zkClient<span class="token punctuation">.</span><span class="token function">getChildren</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forPath</span><span class="token punctuation">(</span>servicePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">registerWatcher</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">,</span> zkClient<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//给这个结点注册监听器，注册了监听器之后，这个节点的子节点发生变化比如增加、减少或者更新的时候，你可以自定义回调操作。</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"get children nodes for path [&#123;&#125;] fail"</span><span class="token punctuation">,</span> servicePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span>  result<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意还有一个增加监听器的操作，这个函数在下面</p>
+<h3 id="clearRegistry"><a href="#clearRegistry" class="headerlink" title="clearRegistry"></a>clearRegistry</h3><p>这个也简单，就是删除节点，相当于清除注册</p>
+<p>这里就不写了</p>
+<h3 id="getZkClient"><a href="#getZkClient" class="headerlink" title="getZkClient"></a>getZkClient</h3><p>获得zk客户端，这里就是给zkclient初始化</p>
+<p><strong>从配置文件读取zk地址</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token class-name">PropertiesFileUtil</span><span class="token punctuation">.</span><span class="token function">readPropertiesFile</span><span class="token punctuation">(</span><span class="token class-name">RpcConfigEnum</span><span class="token punctuation">.</span><span class="token constant">RPC_CONFIG_PATH</span><span class="token punctuation">.</span><span class="token function">getPropertyValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> zookeeperAddress <span class="token operator">=</span> properties <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token class-name">RpcConfigEnum</span><span class="token punctuation">.</span><span class="token constant">ZK_ADDRESS</span><span class="token punctuation">.</span><span class="token function">getPropertyValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">?</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token class-name">RpcConfigEnum</span><span class="token punctuation">.</span><span class="token constant">ZK_ADDRESS</span><span class="token punctuation">.</span><span class="token function">getPropertyValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token constant">DEFAULT_ZOOKEEPER_ADDRESS</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>最终要么使用默认地址，要么从配置文件读取</p>
+<p>这部分是todo，我还没看</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">CuratorFramework</span> <span class="token function">getZkClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token class-name">PropertiesFileUtil</span><span class="token punctuation">.</span><span class="token function">readPropertiesFile</span><span class="token punctuation">(</span><span class="token class-name">RpcConfigEnum</span><span class="token punctuation">.</span><span class="token constant">RPC_CONFIG_PATH</span><span class="token punctuation">.</span><span class="token function">getPropertyValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> zookeeperAddress <span class="token operator">=</span> properties <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token class-name">RpcConfigEnum</span><span class="token punctuation">.</span><span class="token constant">ZK_ADDRESS</span><span class="token punctuation">.</span><span class="token function">getPropertyValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">?</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token class-name">RpcConfigEnum</span><span class="token punctuation">.</span><span class="token constant">ZK_ADDRESS</span><span class="token punctuation">.</span><span class="token function">getPropertyValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token constant">DEFAULT_ZOOKEEPER_ADDRESS</span><span class="token punctuation">;</span>
+    <span class="token comment">//如果得到了并且是被启动了的 ，直接返回就行了</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>zkClient<span class="token operator">!=</span><span class="token keyword">null</span><span class="token operator">&amp;&amp;</span>zkClient<span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span> <span class="token class-name">CuratorFrameworkState</span><span class="token punctuation">.</span><span class="token constant">STARTED</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span>  zkClient<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//设置重试策略</span>
+    <span class="token class-name">RetryPolicy</span> retryPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ExponentialBackoffRetry</span><span class="token punctuation">(</span><span class="token constant">BASE_SLEEP_TIME</span><span class="token punctuation">,</span> <span class="token constant">MAX_RETRIES</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    zkClient <span class="token operator">=</span> <span class="token class-name">CuratorFrameworkFactory</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment">// the server to connect to (can be a server list)</span>
+            <span class="token punctuation">.</span><span class="token function">connectString</span><span class="token punctuation">(</span>zookeeperAddress<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">retryPolicy</span><span class="token punctuation">(</span>retryPolicy<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    zkClient<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//启动</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// wait 30s until connect to the zookeeper</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>zkClient<span class="token punctuation">.</span><span class="token function">blockUntilConnected</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"Time out waiting to connect to ZK!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> zkClient<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：</p>
+<p><strong>重试策略：</strong>ExponentialBackoffRetry是指数退避重试策略，这个然后背背八股</p>
+<h3 id="registerWatcher"><a href="#registerWatcher" class="headerlink" title="registerWatcher"></a>registerWatcher</h3><p>注册监听器，这里设置的监听器回调事件是:</p>
+<p><strong>回调方法将会更新 <code>SERVICE_ADDRESS_MAP</code>，从而保持最新的服务地址列表。</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">registerWatcher</span><span class="token punctuation">(</span><span class="token class-name">String</span> rpcServiceName<span class="token punctuation">,</span> <span class="token class-name">CuratorFramework</span> zkClient<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> servicepath<span class="token operator">=</span><span class="token constant">ZK_REGISTER_ROOT_PATH</span><span class="token operator">+</span>rpcServiceName<span class="token punctuation">;</span>
+    <span class="token class-name">PathChildrenCache</span> pathChildrenCache<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">PathChildrenCache</span><span class="token punctuation">(</span>zkClient<span class="token punctuation">,</span>servicepath<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">PathChildrenCacheListener</span> pathChildrenCacheListener<span class="token operator">=</span><span class="token punctuation">(</span><span class="token punctuation">(</span>curatorFramework<span class="token punctuation">,</span> pathChildrenCacheEvent<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> serviceAddresses <span class="token operator">=</span> curatorFramework<span class="token punctuation">.</span><span class="token function">getChildren</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forPath</span><span class="token punctuation">(</span>servicepath<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//子节点出现变化了，那么就更新对应 的map</span>
+        <span class="token constant">SERVICE_ADDRESS_MAP</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">,</span> serviceAddresses<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pathChildrenCache<span class="token punctuation">.</span><span class="token function">getListenable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span>pathChildrenCacheListener<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//添加这个监听器</span>
+    pathChildrenCache<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
