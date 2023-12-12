@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="自学rpc之通过注解注册消费, 说的">
+    <meta name="keywords" content="自学和再看rpc之通过注解注册消费, 说的">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>自学rpc之通过注解注册消费 | 说的</title>
+    <title>自学和再看rpc之通过注解注册消费 | 说的</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">自学rpc之通过注解注册消费</h1>
+                    <h1 class="description center-align post-title">自学和再看rpc之通过注解注册消费</h1>
                 </div>
             </div>
         </div>
@@ -419,6 +419,7 @@
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>傻逼guide一笔带过，我自己学得自己总结</p>
 <p>这里讲的主要是通过注解注册&#x2F;消费服务</p>
+<p>然后有的springboot的知识呢，学八股的时候再学习</p>
 <h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>使用注解开发，而不是xml配置文件，好处是便捷性，操作性。<br>比如@Builder主要作用是用来生成对象，并能够进行链式赋值。</p>
 <p>所以我们这里定义了两个注解</p>
 <p>在annotation包里</p>
@@ -545,7 +546,7 @@ public @interface RpcScan &#123;
 <p>在构造函数中，调用了<code>super(registry)</code>来调用父类的构造函数，并使用<code>super.addIncludeFilter(new AnnotationTypeFilter(annoType))</code>添加了一个包含过滤器，该过滤器根据给定的注解类型过滤扫描结果。也就是说保留含有特定注解的类</p>
 <h3 id="scan方法"><a href="#scan方法" class="headerlink" title="scan方法"></a>scan方法</h3><p>它调用了父类的<code>scan</code>方法，实际上触发了扫描过程。传入的<code>basePackages</code>参数是要扫描的包路径。</p>
 <p>所以这个类的主要作用就是，扫描带有特定注解的类，并且将他们注册为bean</p>
-<h2 id="CustomScannerRegistrar"><a href="#CustomScannerRegistrar" class="headerlink" title="CustomScannerRegistrar"></a>CustomScannerRegistrar</h2><p>先来看总的代码：</p>
+<h2 id="CustomScannerRegistrar"><a href="#CustomScannerRegistrar" class="headerlink" title="CustomScannerRegistrar"></a>CustomScannerRegistrar</h2><p>真正用来扫描包并进行注册的类</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomScannerRegistrar</span> <span class="token keyword">implements</span> <span class="token class-name">ImportBeanDefinitionRegistrar</span><span class="token punctuation">,</span> <span class="token class-name">ResourceLoaderAware</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SPRING_BEAN_BASE_PACKAGE</span> <span class="token operator">=</span> <span class="token string">"github.javaguide"</span><span class="token punctuation">;</span>
@@ -630,7 +631,7 @@ public @interface RpcScan &#123;
 <p>在上下文中，通过扫描 <code>RpcService</code> 注解，框架能够找到服务的实现类并进行相应的处理。而对于 <code>RpcReference</code> 注解，框架可能会在服务消费方的代码中进行处理，以便在运行时动态生成代理对象，实现服务的远程调用。扫描 <code>RpcReference</code> 注解可能更适合在服务消费方的上下文中进行，以便找到需要生成代理的地方。</p>
 <p>因此，框架选择性地扫描 <code>RpcService</code> 注解可能是为了满足服务提供方的需求，而在服务消费方的上下文中处理 <code>RpcReference</code> 注解。</p>
 </blockquote>
-<p>这个问题留在这</p>
+<p>因为你的</p>
 <h4 id="资源加载器设置到-CustomScanner-实例中"><a href="#资源加载器设置到-CustomScanner-实例中" class="headerlink" title="资源加载器设置到 CustomScanner 实例中"></a>资源加载器设置到 CustomScanner 实例中</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>resourceLoader <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     rpcServiceScanner<span class="token punctuation">.</span><span class="token function">setResourceLoader</span><span class="token punctuation">(</span>resourceLoader<span class="token punctuation">)</span><span class="token punctuation">;</span>
     springBeanScanner<span class="token punctuation">.</span><span class="token function">setResourceLoader</span><span class="token punctuation">(</span>resourceLoader<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -853,9 +854,9 @@ log<span class="token punctuation">.</span><span class="token function">info</sp
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="自学rpc之项目中的动态代理">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="自学和再看rpc之项目中的动态代理">
                         
-                        <span class="card-title">自学rpc之项目中的动态代理</span>
+                        <span class="card-title">自学和再看rpc之项目中的动态代理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

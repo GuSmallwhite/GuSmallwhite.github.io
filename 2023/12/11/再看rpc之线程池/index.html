@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="java算法常用, 说的">
+    <meta name="keywords" content="再看rpc之线程池, 说的">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>java算法常用 | 说的</title>
+    <title>再看rpc之线程池 | 说的</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">java算法常用</h1>
+                    <h1 class="description center-align post-title">再看rpc之线程池</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
+                            <a href="/tags/rpc/">
+                                <span class="chip bg-color">rpc</span>
                             </a>
                         
                     </div>
@@ -380,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
                             </a>
                         
                     </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-10-07
+                    2023-12-11
                 </div>
                 
 
@@ -417,86 +417,47 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="PriorityQueue"><a href="#PriorityQueue" class="headerlink" title="PriorityQueue"></a><strong>PriorityQueue</strong></h2><p>与普通队列不同，优先队列元素是按排序顺序检索的。</p>
-<p>假设我们想以升序检索元素。在这种情况下，优先队列的头是最小的元素。检索到该元素后，下一个最小的元素将成为队列的头。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在concurrent包里，主要是管理线程池</p>
+<h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><p>我们来看看这个自定义管理线程池部分有什么用，是怎么用的</p>
+<p>一个是在NettyServer里面用的</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">DefaultEventExecutorGroup</span> serviceHandlerGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultEventExecutorGroup</span><span class="token punctuation">(</span>
+                <span class="token class-name">RuntimeUtil</span><span class="token punctuation">.</span><span class="token function">cpus</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                <span class="token class-name">ThreadPoolFactoryUtil</span><span class="token punctuation">.</span><span class="token function">createThreadFactory</span><span class="token punctuation">(</span><span class="token string">"service-handler-group"</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这里，我们创建了一个没有任何参数的优先级队列。<strong>在这种情况下，优先级队列的头是队列中最小的元素。</strong>元素将按升序从队列中移除。</p>
-<h3 id="comparator"><a href="#comparator" class="headerlink" title="comparator"></a>comparator</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">PriorityQueue</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Comparator</span></span><span class="token punctuation">;</span>
-<span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p>创建一个事件处理线程池，把我们自定义的ThreadFactory传进去，用于控制这里面的线程是守护线程还是飞守护线程</p>
+<p>另一个是在CustomShutdownHook里面</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ThreadPoolFactoryUtil</span><span class="token punctuation">.</span><span class="token function">shutDownAllThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-        <span class="token comment">//创建优先级队列</span>
-        <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CustomComparator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"PriorityQueue: "</span> <span class="token operator">+</span> numbers<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+<p>用与关掉所有的线程池</p>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>就是一些参数，方便下面的方法里调用</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomThreadPoolConfig</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//默认参数</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">DEFAULT_CORE_POOL_SIZE</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span><span class="token comment">//默认核心线程池大小</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">DEFAULT_MAXIMUM_POOL_SIZE_SIZE</span> <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span><span class="token comment">//默认最大线程池大小</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">DEFAULT_KEEP_ALIVE_TIME</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">//默认空闲超时时间，超过这个时间就是死了</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">TimeUnit</span> <span class="token constant">DEFAULT_TIME_UNIT</span> <span class="token operator">=</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MINUTES</span><span class="token punctuation">;</span><span class="token comment">//时间单位是分钟</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">DEFAULT_BLOCKING_QUEUE_CAPACITY</span> <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span><span class="token comment">//默认阻塞队列</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">BLOCKING_QUEUE_CAPACITY</span> <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span><span class="token comment">//阻塞队列容量</span>
 
-<span class="token keyword">class</span> <span class="token class-name">CustomComparator</span> <span class="token keyword">implements</span> <span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//可配置参数</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> corePoolSize <span class="token operator">=</span> <span class="token constant">DEFAULT_CORE_POOL_SIZE</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> maximumPoolSize <span class="token operator">=</span> <span class="token constant">DEFAULT_MAXIMUM_POOL_SIZE_SIZE</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> keepAliveTime <span class="token operator">=</span> <span class="token constant">DEFAULT_KEEP_ALIVE_TIME</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">TimeUnit</span> unit <span class="token operator">=</span> <span class="token constant">DEFAULT_TIME_UNIT</span><span class="token punctuation">;</span>
+    <span class="token comment">//使用有界队列</span>
+    <span class="token keyword">private</span> <span class="token class-name">BlockingQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Runnable</span><span class="token punctuation">></span></span> workQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token constant">BLOCKING_QUEUE_CAPACITY</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compare</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> number1<span class="token punctuation">,</span> <span class="token class-name">Integer</span> number2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> value <span class="token operator">=</span>  number1<span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>number2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//元素以相反的顺序排序</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="ThreadPoolFactoryUtil"><a href="#ThreadPoolFactoryUtil" class="headerlink" title="ThreadPoolFactoryUtil"></a>ThreadPoolFactoryUtil</h2><p>用于管理线程池、创建线程池，可创建守护和飞守护线程池</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">ExecutorService</span><span class="token punctuation">></span></span> <span class="token constant">THREAD_POOLS</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//存放线程池的map</span>
 
-<p>在以上所有示例中，优先级队列元素都是按自然顺序（升序）检索的。 但是，我们可以自定义此顺序。</p>
-<p>为此，我们需要创建自己的comparator类，它实现了Comparator接口。</p>
-<p><strong>如果你是直接想创建大顶堆，就是直接比较存入的数据的大小，那么这样写就行</strong>，大顶堆就是后面减前面的</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span>pq<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span>o2<span class="token punctuation">)</span><span class="token operator">-></span>o2<span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>o1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token keyword">private</span> <span class="token class-name">ThreadPoolFactoryUtil</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
-<p>如果你想以别的，比如这个key在map里对应的value的大小，然后建立大顶堆，那么应该重写compare</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span>pq<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compare</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> a<span class="token punctuation">,</span><span class="token class-name">Integer</span> b<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token operator">-</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-
-
-<h2 id="List"><a href="#List" class="headerlink" title="List&lt;int[]&gt;"></a>List&lt;int[]&gt;</h2><p>刷力扣遇到了这种用法，</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>是一个列表，其中每个元素都是一个int类型的数组,这个列表可以用来存储一组整数数组，每个数组可以有不同的长度和元素。</p>
-<p>转成int[][][][][][][] [],因为有的傻逼题目会要你写成int []  [] 返回</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">list<span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="Arrays-asList"><a href="#Arrays-asList" class="headerlink" title="Arrays.asList()"></a>Arrays.asList()</h2><p>把数组转成List</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> myArray <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"Apple"</span><span class="token punctuation">,</span> <span class="token string">"Banana"</span><span class="token punctuation">,</span> <span class="token string">"Orange"</span> <span class="token punctuation">&#125;</span>； 
-<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> myList <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>myArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//上面两个语句等价于下面一条语句</span>
-<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> myList <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Apple"</span><span class="token punctuation">,</span><span class="token string">"Banana"</span><span class="token punctuation">,</span> <span class="token string">"Orange"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="Arrays-sort"><a href="#Arrays-sort" class="headerlink" title="Arrays.sort"></a>Arrays.sort</h2><p>重写排序规则</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">Comparator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">public</span> <span class="token keyword">int</span>  <span class="token function">compare</span><span class="token punctuation">(</span><span class="token class-name">String</span> s1<span class="token punctuation">,</span><span class="token class-name">String</span> s2<span class="token punctuation">)</span>
-            <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> <span class="token punctuation">(</span>s1<span class="token operator">+</span>s2<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>s2<span class="token operator">+</span>s1<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//升序就是前面比后面</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>用到了的题目：<a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993?tpId=13&tqId=23288&ru=/exam/oj/ta&qru=/ta/coding-interviews/question-ranking&sourceUrl=/exam/oj/ta?page=1&tpId=13&type=13">把数组排成最小的数_牛客题霸_牛客网 (nowcoder.com)</a></p>
+<p>算了直接看代码吧，比较简单</p>
 
                 
             </div>
@@ -511,8 +472,8 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
+                                <a href="/tags/rpc/">
+                                    <span class="chip bg-color">rpc</span>
                                 </a>
                             
                         </div>
@@ -557,13 +518,13 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/10/28/%E5%81%87%E8%B1%A1%E5%93%A5%E7%9A%84%E6%95%85%E4%BA%8B/">
+                <a href="/2023/12/11/%E5%86%8D%E7%9C%8Brpc%E4%B9%8B%E5%85%B3%E9%97%AD%E9%92%A9%E5%AD%90/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="假象哥的故事">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="再看rpc之关闭钩子">
                         
-                        <span class="card-title">假象哥的故事</span>
+                        <span class="card-title">再看rpc之关闭钩子</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -574,14 +535,14 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-10-28
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" class="post-category">
-                                    杂七杂八
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
                                 </a>
                             
                             
@@ -591,8 +552,8 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%9E%8E%E5%86%99/">
-                        <span class="chip bg-color">瞎写</span>
+                    <a href="/tags/rpc/">
+                        <span class="chip bg-color">rpc</span>
                     </a>
                     
                 </div>
@@ -606,13 +567,13 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/09/24/c-stl%E7%AE%97%E6%B3%95%E5%B8%B8%E7%94%A8/">
+                <a href="/2023/12/10/%E5%86%8D%E7%9C%8Brpc%E4%B9%8BExtensionloader/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="c++stl算法常用">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="再看rpc之Extensionloader">
                         
-                        <span class="card-title">c++stl算法常用</span>
+                        <span class="card-title">再看rpc之Extensionloader</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -623,7 +584,7 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-10
                             </span>
                         <span class="publish-author">
                             
@@ -640,8 +601,8 @@ list<span class="token punctuation">.</span><span class="token function">add</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/rpc/">
+                        <span class="chip bg-color">rpc</span>
                     </a>
                     
                 </div>

@@ -599,6 +599,60 @@
     pathChildrenCache<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h2><p>有这么一个provider包，里面提供了注册相关服务的接口</p>
+<h3 id="ServiceProvider"><a href="#ServiceProvider" class="headerlink" title="ServiceProvider"></a>ServiceProvider</h3><p>一个接口，还没是注册服务的接口，因为我们这里只实现了用zk当注册中心，所以只有一个实现类</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ServiceProvider</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">/**
+     * @param rpcServiceConfig rpc service related attributes
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">addService</span><span class="token punctuation">(</span><span class="token class-name">RpcServiceConfig</span> rpcServiceConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * @param rpcServiceName rpc service name
+     * @return service object
+     */</span>
+    <span class="token class-name">Object</span> <span class="token function">getService</span><span class="token punctuation">(</span><span class="token class-name">String</span> rpcServiceName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * @param rpcServiceConfig rpc service related attributes
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">publishService</span><span class="token punctuation">(</span><span class="token class-name">RpcServiceConfig</span> rpcServiceConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="ZkServiceProviderImp"><a href="#ZkServiceProviderImp" class="headerlink" title="ZkServiceProviderImp"></a>ZkServiceProviderImp</h3><p>实现了zk的对外接口，后面我们要干什么只需要通过单例模式获得这个类，然后用这个类的方法就行了</p>
+<h4 id="静态变量-1"><a href="#静态变量-1" class="headerlink" title="静态变量"></a>静态变量</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> serviceMap<span class="token punctuation">;</span><span class="token comment">//存储服务名称和对象</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> registeredService<span class="token punctuation">;</span><span class="token comment">//存储已经注册了的服务的名称</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ServiceRegistry</span> serviceRegistry<span class="token punctuation">;</span><span class="token comment">//用来注册的工具</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="publishService"><a href="#publishService" class="headerlink" title="publishService"></a>publishService</h4><p>发布服务，其实就是调用了方法去把他注册上去</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">publishService</span><span class="token punctuation">(</span><span class="token class-name">RpcServiceConfig</span> rpcServiceConfig<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> host<span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getHostAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">addService</span><span class="token punctuation">(</span>rpcServiceConfig<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//加到map里</span>
+        serviceRegistry<span class="token punctuation">.</span><span class="token function">registerService</span><span class="token punctuation">(</span>rpcServiceConfig<span class="token punctuation">.</span><span class="token function">getRpcServiceName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">InetSocketAddress</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span><span class="token constant">PORT</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//调用方法注册,调用的这个方法做的事情其实就是新建了一个consistentnode然后把地址放进去</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">UnknownHostException</span> e<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"&#123;&#125;"</span><span class="token punctuation">,</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="addService"><a href="#addService" class="headerlink" title="addService"></a>addService</h4><p>只是放到数据结构里，不是真的注册了</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addService</span><span class="token punctuation">(</span><span class="token class-name">RpcServiceConfig</span> rpcServiceConfig<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> rpcServiceName<span class="token operator">=</span>rpcServiceConfig<span class="token punctuation">.</span><span class="token function">getServiceName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>registeredService<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    registeredService<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    serviceMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">,</span> rpcServiceConfig<span class="token punctuation">.</span><span class="token function">getService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Add service: &#123;&#125; and interfaces:&#123;&#125;"</span><span class="token punctuation">,</span> rpcServiceName<span class="token punctuation">,</span> rpcServiceConfig<span class="token punctuation">.</span><span class="token function">getService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="getService"><a href="#getService" class="headerlink" title="getService"></a>getService</h4><p>简单，不写了</p>
 
                 
             </div>

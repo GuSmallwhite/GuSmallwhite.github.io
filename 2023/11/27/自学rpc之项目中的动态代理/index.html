@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="自学rpc之项目中的动态代理, 说的">
+    <meta name="keywords" content="自学和再看rpc之项目中的动态代理, 说的">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>自学rpc之项目中的动态代理 | 说的</title>
+    <title>自学和再看rpc之项目中的动态代理 | 说的</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">自学rpc之项目中的动态代理</h1>
+                    <h1 class="description center-align post-title">自学和再看rpc之项目中的动态代理</h1>
                 </div>
             </div>
         </div>
@@ -430,7 +430,7 @@
 </blockquote>
 <h2 id="回顾动态代理步骤"><a href="#回顾动态代理步骤" class="headerlink" title="回顾动态代理步骤"></a>回顾动态代理步骤</h2><ol>
 <li>定义一个接口及其实现类；</li>
-<li>自定义 InvocationHandler 并重写invoke方法，在 invoke 方法中我们会调用原生方法（被代理类的方法）<strong>并自定义一些处理逻辑</strong>；</li>
+<li>自定义 InvocationHandler 并重写invoke方法，在 invoke 方法中我们会调用原生方法?<del>其实也可以不调用原生方法</del>（被代理类的方法）<strong>并自定义一些处理逻辑</strong>；代理对象会实现一个接口，并且该接口的每个方法调用都会被重定向到 <code>invoke</code> 方法</li>
 <li>通过 Proxy.newProxyInstance(ClassLoader loader,Class&lt;?&gt;[] interfaces,InvocationHandler h) 方法创建代理对象；</li>
 </ol>
 <h2 id="本项目中的动态代理"><a href="#本项目中的动态代理" class="headerlink" title="本项目中的动态代理"></a>本项目中的动态代理</h2><h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">INTERFACE_NAME</span> <span class="token operator">=</span> <span class="token string">"interfaceName"</span><span class="token punctuation">;</span>
@@ -452,7 +452,7 @@
     <span class="token keyword">this</span><span class="token punctuation">.</span>rpcServiceConfig <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RpcServiceConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="rpcServiceConfig"><a href="#rpcServiceConfig" class="headerlink" title="rpcServiceConfig"></a>rpcServiceConfig</h3><p>在config包内</p>
+<h3 id="rpcServiceConfig"><a href="#rpcServiceConfig" class="headerlink" title="rpcServiceConfig"></a>rpcServiceConfig</h3><p>在config包内，就是什么类的什么方法</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RpcServiceConfig</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">/**
      * service version
@@ -504,7 +504,7 @@
 <li><strong>interfaces</strong> : 被代理类实现的一些接口；</li>
 <li><strong>h</strong>: 实现了 InvocationHandler 接口的对象；</li>
 </ol>
-<h3 id="重写invoke方法"><a href="#重写invoke方法" class="headerlink" title="重写invoke方法"></a>重写invoke方法</h3><p>当通过代理类调用方法时，实际上调用的是这个invoke</p>
+<h3 id="重写invoke方法"><a href="#重写invoke方法" class="headerlink" title="重写invoke方法"></a>重写invoke方法</h3><p>当通过代理类调用一切方法时，实际上调用的是这个invoke</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoked method: [&#123;&#125;]"</span><span class="token punctuation">,</span> method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -519,7 +519,8 @@
     <span class="token class-name">RpcResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> rpcResponse <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
     <span class="token comment">//本项目支持netty和socket两种通信方式</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>rpcRequestTransport <span class="token keyword">instanceof</span> <span class="token class-name">NettyRpcClient</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">CompletableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RpcResponse</span><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span><span class="token punctuation">></span></span> completableFuture <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">CompletableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RpcResponse</span><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span><span class="token punctuation">></span></span><span class="token punctuation">)</span> rpcRequestTransport<span class="token punctuation">.</span><span class="token function">sendRpcRequest</span><span class="token punctuation">(</span>rpcRequest<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//所以这部分你看，我们的代理类并没有执行原生类的方法，也只是把原来的method的信息传入到rpcRequest里，然后作为一个参数去发送请求给服务端而已</span>
+       <span class="token class-name">CompletableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RpcResponse</span><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span><span class="token punctuation">></span></span> completableFuture <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">CompletableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RpcResponse</span><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span><span class="token punctuation">></span></span><span class="token punctuation">)</span> rpcRequestTransport<span class="token punctuation">.</span><span class="token function">sendRpcRequest</span><span class="token punctuation">(</span>rpcRequest<span class="token punctuation">)</span><span class="token punctuation">;</span>
         rpcResponse <span class="token operator">=</span> completableFuture<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>rpcRequestTransport <span class="token keyword">instanceof</span> <span class="token class-name">SocketRpcClient</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -527,7 +528,7 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span>rpcResponse<span class="token punctuation">,</span> rpcRequest<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> rpcResponse<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>详细说说这个：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>rpcRequestTransport <span class="token keyword">instanceof</span> <span class="token class-name">NettyRpcClient</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -552,7 +553,7 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="本项目中实际的使用"><a href="#本项目中实际的使用" class="headerlink" title="本项目中实际的使用"></a>本项目中实际的使用</h2><h3 id="SocketClientMain"><a href="#SocketClientMain" class="headerlink" title="SocketClientMain"></a>SocketClientMain</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SocketClientMain</span> <span class="token punctuation">&#123;</span>
+<h2 id="本项目中实际的使用"><a href="#本项目中实际的使用" class="headerlink" title="本项目中实际的使用"></a>本项目中实际的使用</h2><h3 id="1-SocketClientMain"><a href="#1-SocketClientMain" class="headerlink" title="1. SocketClientMain"></a>1. SocketClientMain</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SocketClientMain</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">RpcRequestTransport</span> rpcRequestTransport <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SocketRpcClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token class-name">RpcServiceConfig</span> rpcServiceConfig <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RpcServiceConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -565,6 +566,75 @@
 
 <p><code>String hello = helloService.hello(new Hello(&quot;111&quot;, &quot;222&quot;));</code>：通过代理对象调用了 <code>HelloService</code> 接口的 <code>hello</code> 方法，实际上是通过动态代理发送了 RPC 请求。</p>
 <p>理论上来说，这里把<code>RpcRequestTransport rpcRequestTransport = new SocketRpcClient();</code>换成<code>new NettyRpcClient</code>也是有用的，但我没试</p>
+<h3 id="2-又和注入有关了"><a href="#2-又和注入有关了" class="headerlink" title="2.又和注入有关了"></a>2.又和注入有关了</h3><p>来看 <strong>postProcessAfterInitialization</strong>这段代码</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">postProcessAfterInitialization</span><span class="token punctuation">(</span><span class="token class-name">Object</span> bean<span class="token punctuation">,</span> <span class="token class-name">String</span> beanName<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeansException</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> targetClass <span class="token operator">=</span> bean<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Field</span><span class="token punctuation">[</span><span class="token punctuation">]</span> declaredFields <span class="token operator">=</span> targetClass<span class="token punctuation">.</span><span class="token function">getDeclaredFields</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Field</span> declaredField <span class="token operator">:</span> declaredFields<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">RpcReference</span> rpcReference <span class="token operator">=</span> declaredField<span class="token punctuation">.</span><span class="token function">getAnnotation</span><span class="token punctuation">(</span><span class="token class-name">RpcReference</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>rpcReference <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">RpcServiceConfig</span> rpcServiceConfig <span class="token operator">=</span> <span class="token class-name">RpcServiceConfig</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span>rpcReference<span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">version</span><span class="token punctuation">(</span>rpcReference<span class="token punctuation">.</span><span class="token function">version</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">RpcClientProxy</span> rpcClientProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RpcClientProxy</span><span class="token punctuation">(</span>rpcClient<span class="token punctuation">,</span> rpcServiceConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Object</span> clientProxy <span class="token operator">=</span> rpcClientProxy<span class="token punctuation">.</span><span class="token function">getProxy</span><span class="token punctuation">(</span>declaredField<span class="token punctuation">.</span><span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            declaredField<span class="token punctuation">.</span><span class="token function">setAccessible</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                declaredField<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>bean<span class="token punctuation">,</span> clientProxy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IllegalAccessException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> bean<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>看这里</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">RpcClientProxy</span> rpcClientProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RpcClientProxy</span><span class="token punctuation">(</span>rpcClient<span class="token punctuation">,</span> rpcServiceConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token class-name">Object</span> clientProxy <span class="token operator">=</span> rpcClientProxy<span class="token punctuation">.</span><span class="token function">getProxy</span><span class="token punctuation">(</span>declaredField<span class="token punctuation">.</span><span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+               declaredField<span class="token punctuation">.</span><span class="token function">setAccessible</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                   declaredField<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>bean<span class="token punctuation">,</span> clientProxy<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 这部分代码的意思呢，就是给带有RpcReference注解的类，自动注入一个其参数的代理对象</p>
+<p>比如我们的HelloController</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloController</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@RpcReference</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"version1"</span><span class="token punctuation">,</span> group <span class="token operator">=</span> <span class="token string">"test1"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">HelloService</span> helloService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> hello <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>helloService<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Hello</span><span class="token punctuation">(</span><span class="token string">"111"</span><span class="token punctuation">,</span> <span class="token string">"222"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//如需使用 assert 断言，需要在 VM options 添加参数：-ea</span>
+        <span class="token keyword">assert</span> <span class="token string">"Hello description is 222"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>hello<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">12000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>helloService<span class="token punctuation">.</span><span class="token function">hello</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Hello</span><span class="token punctuation">(</span><span class="token string">"111"</span><span class="token punctuation">,</span> <span class="token string">"222"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>流程是什么呢？</p>
+<blockquote>
+<ol>
+<li><p>在实例化 bean 之后，<code>postProcessAfterInitialization</code> 方法被调用。</p>
+</li>
+<li><p>对于每个 bean 类的字段，检查是否标记了 <code>@RpcReference</code> 注解。</p>
+</li>
+<li><p>如果发现标记了 <code>@RpcReference</code> 注解的字段，根据注解中的信息创建相应的 <code>RpcServiceConfig</code> 对象。</p>
+</li>
+<li><p>通过 <code>RpcClientProxy</code> 创建了一个代理对象 <code>clientProxy</code>，这个代理对象实现了 <code>declaredField.getType()</code> 所表示的接口，这个接口可能就是 <code>HelloService</code> 接口或其它接口，取决于 <code>helloService</code> 字段的类型。</p>
+</li>
+<li><p>这个代理对象 <code>clientProxy</code> 会在方法调用时委托给 <code>RpcClientProxy</code> 的 <code>invoke</code> 方法，该方法负责处理远程调用的逻辑。</p>
+</li>
+<li><p>通过反射设置 <code>clientProxy</code> 到 <code>HelloController</code> 类的 <code>helloService</code> 字段上，替换了原来的字段值。</p>
+</li>
+</ol>
+</blockquote>
+<p>这下懂了吧</p>
 
                 
             </div>
@@ -629,9 +699,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="自学rpc之通过注解注册消费">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="自学和再看rpc之通过注解注册消费">
                         
-                        <span class="card-title">自学rpc之通过注解注册消费</span>
+                        <span class="card-title">自学和再看rpc之通过注解注册消费</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
