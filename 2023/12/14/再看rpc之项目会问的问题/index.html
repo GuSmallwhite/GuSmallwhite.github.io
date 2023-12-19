@@ -1,0 +1,1232 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="再看rpc之项目会问的问题, 说的">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>再看rpc之项目会问的问题 | 说的</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">说的</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">说的</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">再看rpc之项目会问的问题</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/rpc/">
+                                <span class="chip bg-color">rpc</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                <span class="chip bg-color">面试</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%9D%A2%E5%90%91%E9%9D%A2%E8%AF%95/" class="post-category">
+                                面向面试
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-12-14
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了面对面试官的穷追猛打，我先把别人面试遇到的问题先放在这</p>
+<p>然后我们按不同的人遇到的，进行分类</p>
+<h2 id="来自牛客高启盛-pdd"><a href="#来自牛客高启盛-pdd" class="headerlink" title="来自牛客高启盛-pdd"></a>来自牛客高启盛-pdd</h2><h3 id="描述一下服务注册到注册中心和服务下线的一个具体流程"><a href="#描述一下服务注册到注册中心和服务下线的一个具体流程" class="headerlink" title="描述一下服务注册到注册中心和服务下线的一个具体流程"></a>描述一下服务注册到注册中心和服务下线的一个具体流程</h3><p>答：</p>
+<p>服务注册是使用bean扫描的方式进行自动注册，我自定义了两个注解，一个是服务提供者，一个是服务消费者的注册，通过**<code>postProcessBeforeInitialization</code>**方法，在方法内实现判断当前bean是否被@RpcService注解标记，如果有就将其注册到zk上。</p>
+<p>通过**<code>postProcessAfterInitialization</code>**方法，在方法内判断当前bean是否被@RpcReference标记，如果有就构建代理对象并设置到对应的字段当中，实现让他能够以类似本地调用的行为去进行远程调用。</p>
+<p>当服务器关闭时，我通过设置 的<code>CustomShutdownHook</code>关闭钩子，清除所有注册的服务以及关闭所有创建的线程池。</p>
+<p>在服务器运行过程当中，使用监听器，监听zk节点的变化，并进行更新</p>
+<h3 id="如果zk中的服务节点退出了，服务还能访问吗，怎么做"><a href="#如果zk中的服务节点退出了，服务还能访问吗，怎么做" class="headerlink" title="如果zk中的服务节点退出了，服务还能访问吗，怎么做"></a>如果zk中的服务节点退出了，服务还能访问吗，怎么做</h3><p>可以，项目当中使用了一致性哈希负载均衡算法，当一个服务节点退出了之后，首先监听器会得到这个事件，然后去进行对应的更新</p>
+<p>然后当服务节点退出了之后，在使用一致性哈希算法进行选择服务地址的时候，会发现当前选择器的哈希值和服务对应的哈希值不同，那么将会重新构建选择器，并且更新缓存，从而将原本节点的任务分配给他的下一个节点</p>
+<p>为了解决一个节点无法承受很多请求量的雪崩问题，我们还设置了虚拟节点，将一个物理结点拆分成多个虚拟节点，解决资源不平衡问题</p>
+<h3 id="如果一个正在被客户端请求的服务提供方准备下线，有什么方法能保证客户端这次能正常通信？"><a href="#如果一个正在被客户端请求的服务提供方准备下线，有什么方法能保证客户端这次能正常通信？" class="headerlink" title="如果一个正在被客户端请求的服务提供方准备下线，有什么方法能保证客户端这次能正常通信？"></a>如果一个正在被客户端请求的服务提供方准备下线，有什么方法能保证客户端这次能正常通信？</h3><p>答：</p>
+<p>可以看这一篇文章，我这项目里没解决这个问题</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhizhengguan/article/details/121451672">RPC：优雅关闭，如何避免服务停机带来的业务损失_rpcbind服务关闭影响-CSDN博客</a></p>
+<p>是不是可以在重启机器之前，<strong>先通过“某种方式”把要下线的机器从调用方维护的“健康列表”中删除就可以了，这样负载均衡机制就选不中这个节点的</strong>？</p>
+<ul>
+<li><p>因为服务提供方已经开始进入了关闭流程，那么很多对象就可能已经销毁了，关闭后再收到的请求按照正常业务请求来处理，肯定是没法保证能处理的。所以，我们可以<strong>在关闭的时候，设置一个请求“挡板”，挡板的作用就是告诉调用方，我已经开始进入关闭流程了，不能再处理你的这个请求了</strong>。</p>
+</li>
+<li><p>一个生活中的例子就是银行在交接班或者有其他要事情处理的时候，银行柜台工作人员会拿出一个纸板，放在窗口前，上面写到“该窗口已关闭”。在该窗口排队的人虽然有一万个不愿意，也只能换到其它窗口办理业务，因为柜台工作人员会把当前正在办理的业务处理完后正式关闭窗口。</p>
+</li>
+<li><p>基于这个思路，我们可以这样处理：</p>
+<ul>
+<li><strong>当服务提供方正在关闭，如果这之后还收到了新的业务请求，服务提供方直接返回一个特定的异常给调用方</strong>（比如shutdownException）。</li>
+<li>这个异常就是告诉调用方“我已经收到这个请求了，但是我正在关闭，并没有处理这个请求”</li>
+<li><strong>然后调用方收到这个异常响应后，RPC框架把这个节点从健康列表中拿出，并把请求自动重试到其他节点</strong>，因为这个请求是没有被服务提供方处理过，所以可以安全的重试到其他节点，这样就可以实现对业务无损。</li>
+</ul>
+</li>
+<li><p>但是如果只是靠等待被动，就会让这个关闭流程整体有点漫长。因为有的调用方那个时刻没有业务请求，就不能及时的通知调用方了，所以我们可以加上主动通知流程，这样既可以保证实时性，也可以避免通知失败的情况。</p>
+</li>
+</ul>
+<p>问题：<strong>要怎么捕获到关闭事件呢</strong>？</p>
+<ul>
+<li>可以通过捕获操作系统的进程信号来获取</li>
+<li>在RPC启动的时候，我们提前注册关闭钩子，并在里面添加两个处理程序，一个负责关闭标识，一个负责安全关闭服务对象:<ul>
+<li><strong>服务对象在关闭的时候会通知调用方下线节点</strong>。</li>
+<li>同时需要我们在调用链里面加上挡板处理器，<strong>当新的请求来的时候，会判断关闭表示，如果正在关闭，则抛出异常</strong>。</li>
+</ul>
+</li>
+</ul>
+<p>问题：关闭过程中已经在处理的请求会不会被影响呢？</p>
+<ul>
+<li>如果进程结束过快会造成这些请求还没有来得及应答，同时调用方也会抛出异常。 为了尽可能的完成正在处理的请求，首先我们要把这些请求标识出来。</li>
+<li>这就好比日常生活中，我们经常看见停车场指示牌上提示还有多少剩余车位，这个是如何做到的呢？如果仔细观察一下，你就会发现它是每进入一辆车，剩余车位就减一，每出来一辆车，剩余车位就加一。</li>
+<li>我们也可以利用这个原理<strong>在服务对象加上引用计数器，每开始处理请求之前加一，完成请求处理减一，通过该计数器我们就可以快速判断是否有正在处理的请求</strong>。</li>
+<li><strong>服务对象在关闭过程中，会拒绝新的请求，同时根据引用计数器等待正在处理的请求全部结束之后才会真正关闭</strong>。</li>
+<li>但考虑到有些业务请求可能会处理时间长，或者存在被挂住的情况，为了避免一直等待造成应用无法正常退出，我们可以<strong>在整个shutdownHook里面，加上超时时间控制，当超过了指定时间还没结束，就强制退出应用</strong>。超时时间建议10s，基本可以确保请求都处理完了。</li>
+</ul>
+<h2 id="来自牛客高启盛-字节一面"><a href="#来自牛客高启盛-字节一面" class="headerlink" title="来自牛客高启盛-字节一面"></a>来自牛客高启盛-字节一面</h2><h3 id="介绍一下-Netty、Socket、Http-三种通信方式的区别"><a href="#介绍一下-Netty、Socket、Http-三种通信方式的区别" class="headerlink" title="介绍一下 Netty、Socket、Http 三种通信方式的区别"></a>介绍一下 Netty、Socket、Http 三种通信方式的区别</h3><p>答：</p>
+<p>Socket是基于传输层的协议，Socket 编程提供了底层的灵活性，但需要程序员自己处理协议的细节。适用于需要直接操作网络层的场景，例如实现自定义的网络协议、P2P 网络通信等</p>
+<p>Http是建立在tcp之上的应用层的协议，定义了客户端和服务端请求和响应的格式</p>
+<p>而Netty是提供了异步事件驱动的开源网络框架，可以支持多种协议，包含http，适用于构建高性能的网络应用</p>
+<h3 id="如何用Socket去实现Netty的线程模型"><a href="#如何用Socket去实现Netty的线程模型" class="headerlink" title="如何用Socket去实现Netty的线程模型"></a>如何用Socket去实现Netty的线程模型</h3><p>netty线程模型爷还没看，等会看</p>
+<h3 id="自定义协议和编解码的具体做法"><a href="#自定义协议和编解码的具体做法" class="headerlink" title="自定义协议和编解码的具体做法"></a>自定义协议和编解码的具体做法</h3><p>本项目使用了自定义传输协议;</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">*</span>   <span class="token number">0</span>     <span class="token number">1</span>     <span class="token number">2</span>     <span class="token number">3</span>     <span class="token number">4</span>        <span class="token number">5</span>     <span class="token number">6</span>     <span class="token number">7</span>     <span class="token number">8</span>         <span class="token number">9</span>          <span class="token number">10</span>      <span class="token number">11</span>     <span class="token number">12</span>  <span class="token number">13</span>  <span class="token number">14</span>   <span class="token number">15</span> <span class="token number">16</span>
+<span class="token operator">*</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span> <span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>   magic   code        <span class="token operator">|</span>version <span class="token operator">|</span> full length         <span class="token operator">|</span> messageType<span class="token operator">|</span> codec<span class="token operator">|</span>compress<span class="token operator">|</span>    <span class="token class-name">RequestId</span>       <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                                                                                       <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                         body                                                          <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                                                                                       <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>                                                        <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span>
+<span class="token operator">*</span> <span class="token number">4</span>B  magic code（魔法数）   <span class="token number">1</span>B version（版本）   <span class="token number">4</span>B full length（消息长度）    <span class="token number">1</span>B messageType（消息类型）
+<span class="token operator">*</span> <span class="token number">1</span>B compress（压缩类型） <span class="token number">1</span>B codec（序列化类型）    <span class="token number">4</span>B  requestId（请求的<span class="token class-name">Id</span>）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先包含4个字节的魔数，用于筛选消息是否符合自定义协议</p>
+<p>然后是1字节的版本号</p>
+<p>然后是4字节的消息长度位，用来表示消息长度</p>
+<p>然后是1字节的消息类型，表示是请求消息，响应消息还是心跳消息</p>
+<p>然后是一字节的序列化类型，表示采用什么序列化协议</p>
+<p>然后是一字节的压缩类型，表示使用了什么压缩算法</p>
+<p>然后是4字节的请求id，用于判断请求和响应是否对应</p>
+<p>最后是请求体，也就是内容</p>
+<p>本项目采用了kryo进行序列化，我自定义了编码器和解码器，编码就是将消息先按照协议写入魔数等等，然后再将消息体的内容进行序列化，再压缩，最后存入bytebuf中</p>
+<p>解码就是将消息从bytebuf中读取，先按照协议检查魔数等是否对应，如果对应则进行解压缩和反序列化</p>
+<h3 id="五种序列化算法的体积的比较"><a href="#五种序列化算法的体积的比较" class="headerlink" title="五种序列化算法的体积的比较"></a>五种序列化算法的体积的比较</h3><p>我也不知道面试官问的哪些，我就默认是这五种了：</p>
+<ul>
+<li><p><strong>JDK原生</strong>：作为一个成熟的编程语言，JDK自带了序列化方法。只需要类实现了<code>Serializable</code>接口，就可以通过<code>ObjectOutputStream</code>类将对象变成byte[]字节数组。</p>
+<p>JDK 序列化会把对象类的描述信息和所有的属性以及继承的元数据都序列化为字节流，所以会导致<strong>生成的字节流相对比较大</strong></p>
+</li>
+<li><p><strong>ProtoBuf</strong>:谷歌推出的，是一种语言无关、平台无关、可扩展的序列化结构数据的方法，它可用于通信协议、数据存储等。序列化后<strong>体积小</strong>，一般用于对传输性能有较高要求的系统。</p>
+</li>
+<li><p><strong>Hessian</strong>：是一个轻量级的二进制 web service 协议，主要用于传输二进制数据，<strong>相对于 JDK 原生序列化，Hessian序列化之后体积更小。但是比Protobuf大。</strong></p>
+</li>
+<li><p><strong>Kryo</strong>： 号称 Java 最快的序列化框架。Kryo 在序列化速度上很有优势，底层依赖于字节码生成机制。由于只能限定在 JVM 语言上，所以 Kryo 不支持跨语言使用。</p>
+</li>
+<li><p><strong>JSON</strong>： JSON 序列化方式生成的是一串有规则的字符串，在可读性上要优于上面几种方式，但是在体积上就没什么优势了</p>
+</li>
+</ul>
+<p>从二进制流大小来讲：JSON 序列化 &gt; Java 序列化 &gt; Hessian2 序列化 &gt; Kryo 序列化 </p>
+<h3 id="为什么-Kryo-的体积小？（原理）"><a href="#为什么-Kryo-的体积小？（原理）" class="headerlink" title="为什么 Kryo 的体积小？（原理）"></a>为什么 Kryo 的体积小？（原理）</h3><p>有一说一找遍全网没找到答案</p>
+<p>Kryo使用二进制格式进行序列化，而不是类似于JSON或XML这样的文本格式。二进制格式通常更加紧凑。 Kryo在序列化的过程中不保存类型信息或字段名，而是使用索引或标签，这减少了序列化数据中的冗余信息。</p>
+<p>Kryo为了提供性能和减小序列化结果体积，提供注册的序列化对象类的方式。</p>
+<p>在注册时，会为该序列化类生成int ID，后续在序列化时使用int ID唯一标识该类型。</p>
+<p>注册的方式如下：</p>
+<p>或者可以明确指定注册类的int ID，但是该ID必须大于等于0。如果不提供，内部将会使用int++的方式维护一个有序的int ID生成。</p>
+<p>hessian使用了固定长度存储int和long，而kryo则使用的变长，实际中，很大的数据不会经常出现</p>
+<p>hessian将序列化的字段长度写入来确定一段field的结束，而kryo对于String将其最后一位byte+x70用于标识结束</p>
+<h3 id="使用这种方式进行序列化反序列化的问题是什么"><a href="#使用这种方式进行序列化反序列化的问题是什么" class="headerlink" title="使用这种方式进行序列化反序列化的问题是什么"></a>使用这种方式进行序列化反序列化的问题是什么</h3><p>就相当于是问kryo的缺点呗</p>
+<ol>
+<li><p><strong>不支持包含无参构造器类的反序列化</strong> ，尝试反序列化一个不包含无参构造器的类将会得到以下的异常</p>
+</li>
+<li><p>Kryo 是线程不安全的，意味着每当需要序列化和反序列化时都需要实例化一次，或者借助 ThreadLocal 来维护以保证其线程安全。</p>
+</li>
+<li><p><strong>缓存大小</strong>：Kryo 使用缓存来存储已经序列化或反序列化过的对象，默认情况下缓存大小为 4096。如果需要处理大量的对象，请适当增加缓存大小以提高性能。</p>
+</li>
+</ol>
+<h3 id="几种序列化算法时间上的对比"><a href="#几种序列化算法时间上的对比" class="headerlink" title="几种序列化算法时间上的对比"></a>几种序列化算法时间上的对比</h3><p>从序列化耗时而言来讲：GSON 序列化 &gt; Java 序列化 &gt; Kryo 序列化 &gt; Hessian2 序列化 &gt; Kryo 序列化注册模式</p>
+<p>从反序列化耗时而言来讲：GSON 序列化 &gt; Java 序列化 &gt; Hessian2 序列化 &gt; Kryo 序列化注册模式 &gt; Kryo 序列化</p>
+<p>从总耗时而言：Kryo 序列化注册模式耗时最短</p>
+<h3 id="Netty通信的心跳机制如何实现的"><a href="#Netty通信的心跳机制如何实现的" class="headerlink" title="Netty通信的心跳机制如何实现的"></a>Netty通信的心跳机制如何实现的</h3><p>在客户端channel的pipeline里添加IdleStateHandler，用于处理空闲状态，本项目设置的是如果5秒内没有写操作，也就是服务端没有向客户端发送内容，那么就触发写空闲事件</p>
+<p>在触发写空闲事件后，在 userEventTriggered方法中，我们获取到的IdleStateEvent就会是WRITER_IDLE表示写空闲，那么客户端会发送心跳请求，维持和服务端的链接 </p>
+<p>同样的再服务端channel也添加这样的handler，但是关注的是读事件，如果30秒没有从客户端读取，那么就发送心跳请求，维持和客户端的链接</p>
+<h3 id="使用zk做服务注册和发现中心，具体实现流程"><a href="#使用zk做服务注册和发现中心，具体实现流程" class="headerlink" title="使用zk做服务注册和发现中心，具体实现流程"></a>使用zk做服务注册和发现中心，具体实现流程</h3><p>这个和pdd的问法一样啊</p>
+<h3 id="zk的一致性算法（原理"><a href="#zk的一致性算法（原理" class="headerlink" title="zk的一致性算法（原理"></a>zk的一致性算法（原理</h3><p>你以为他要问的是你选择的一致性哈希？不是，他问的是zab !是zookeeper自己选择的那个算法！</p>
+<p><a target="_blank" rel="noopener" href="https://houbb.github.io/2018/10/30/zab">ZAB-一致性算法 | Echo Blog (houbb.github.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://xie.infoq.cn/article/70472178edd0a86fbf4a42785">面试官zookeeper 是如何实现一致性的？我大意了，让我回去等通知_Java_InfoQ写作社区</a></p>
+<p>有一说一有点复杂，后面在总结</p>
+<h3 id="针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案"><a href="#针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案" class="headerlink" title="针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案"></a>针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案</h3><p>我草这什么玩意，一个一个看吧</p>
+<p><strong>并发登录请求处理</strong></p>
+<ul>
+<li><strong>使用分布式锁：</strong> 在申请ID的过程中，可以使用分布式锁来保证同一时间只有一个客户端能够成功申请ID。这可以防止多个客户端同时请求导致的问题。</li>
+<li><strong>限流：</strong> 可以限制每秒允许的登录请求次数，以减轻服务器的压力。可以使用令牌桶算法或漏桶算法来实现。</li>
+</ul>
+<p><strong>登录失败处理：</strong></p>
+<ul>
+<li><strong>错误码返回：</strong> 在登录失败时，服务器可以返回特定的错误码，客户端根据错误码进行相应的处理，例如重新尝试登录或者展示错误提示。</li>
+<li><strong>日志记录：</strong> 记录登录失败的详细信息，便于后续排查问题。</li>
+</ul>
+<p><strong>提高ID申请的可用性：</strong></p>
+<ul>
+<li><strong>ID生成器优化：</strong> 使用高效的ID生成器，确保在高并发情况下仍能够迅速生成唯一ID。可以考虑使用<strong>Snowflake算法</strong><a target="_blank" rel="noopener" href="https://pdai.tech/md/algorithm/alg-domain-id-snowflake.html">snowflake</a>等。</li>
+<li><strong>缓存ID：</strong> 在一定时间内，可以将已经生成的ID缓存起来，避免频繁地生成新的ID。这在高并发登录场景下可以提高性能。</li>
+</ul>
+<h3 id="对RPC压力测试的具体实现过程"><a href="#对RPC压力测试的具体实现过程" class="headerlink" title="对RPC压力测试的具体实现过程"></a>对RPC压力测试的具体实现过程</h3><p>这个压力测试我还没做，他妈的</p>
+<h3 id="假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡"><a href="#假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡" class="headerlink" title="假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡"></a>假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡</h3><p>我们可以使用加权轮询算法</p>
+<p>我们按照性能给3个服务器分别设置权重为10,20,30总和权重为60，这样每个服务器就在0-60里占有一部分空间，然后我们取0-60的随机数，落入哪个区间就分配给哪个服务器，这样只要服务次数够多，就会无线接近权重分配.缺点是如果一个服务器权重过大，那么一段时间就会有大部分请求落入其中，造成不平衡。</p>
+<p>在此基础上，平滑加权算法来了.</p>
+<p>每个服务器不仅有不变的配置权重，还有当前权重，每次请求到达时，所有节点就在当前权重基础上加一个配置权重值，然后选择当前权重最大的节点，当处理完毕后，处理的那个节点权重值需要减去总“配置权重值”，在这里也就是60，然后重复这个过程,nginx就是这个算法</p>
+<h3 id="针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法"><a href="#针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法" class="headerlink" title="针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法"></a>针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法</h3><p>我超，不会</p>
+<h2 id="来自牛客高启盛-携程面试"><a href="#来自牛客高启盛-携程面试" class="headerlink" title="来自牛客高启盛-携程面试"></a>来自牛客高启盛-携程面试</h2><h3 id="客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗"><a href="#客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗" class="headerlink" title="客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗"></a>客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗</h3><p>并不是实际访问了注册中心，我设计了SERVICE_ADDRESS_MAP，缓存了每个服务对应的子节点列表，当客户端进行远程调用的时候，会先去这个缓存里寻找，通过一致性哈希算法选择一个节点。</p>
+<h3 id="获取结果是同步还是异步的"><a href="#获取结果是同步还是异步的" class="headerlink" title="获取结果是同步还是异步的"></a>获取结果是同步还是异步的</h3><p>目前是异步的，我使用了CompletableFuture对象来包装RpcResponse,然后将他存入一个名为unprocessedRequests的map里，一开始future里并没有内容，等客户端调用complete方法后，才会在方法内执行future.complete，这才获得了具体的rpc返回响应</p>
+<h3 id="客户端是否知道什么时候结果已经返回了"><a href="#客户端是否知道什么时候结果已经返回了" class="headerlink" title="客户端是否知道什么时候结果已经返回了"></a>客户端是否知道什么时候结果已经返回了</h3><p>当服务器处理完请求并返回响应时，响应中包含了相同的<code>requestId</code>。Netty RPC客户端的处理程序会从响应中取出<code>requestId</code>，然后根据<code>requestId</code>找到对应的<code>CompletableFuture</code>，将响应设置到<code>CompletableFuture</code>中</p>
+<p>有一说一 还是没有回答这个问题</p>
+<h2 id="来自牛客高启盛-美团一面"><a href="#来自牛客高启盛-美团一面" class="headerlink" title="来自牛客高启盛-美团一面"></a>来自牛客高启盛-美团一面</h2><h3 id="Netty的线程模型，主从线程模型"><a href="#Netty的线程模型，主从线程模型" class="headerlink" title="Netty的线程模型，主从线程模型"></a>Netty的线程模型，主从线程模型</h3><p><a target="_blank" rel="noopener" href="https://klose911.github.io/html/netty/thread.html#org927b7aa">Netty 多线程模型 (klose911.github.io)</a></p>
+<p>客户端线程模型如下：</p>
+<ol>
+<li>由用户线程负责初始化客户端资源，发起连接操作</li>
+<li>如果连接成功，将SocketChannel注册到IO线程组的NioEventLoop线程中，监听读操作位</li>
+<li>如果没有立即连接成功，将SocketChannel注册到IO线程组的NioEventLoop线程中，监听连接操作位</li>
+<li>连接成功之后，修改监听位为READ，但是不需要切换线程</li>
+</ol>
+<p>然后看这个文章总结吧，要面试的时候说呢，就这么说：</p>
+<p>主从多线程模型：Acceptor 线程用于绑定监听端口，接收客户端连接，将SocketChannel 从主线程池的 Reactor 线程的多路复用器上移除，重新注册到Sub 线程池的线程上，用于处理I&#x2F;O 的读写等操作，从而保证 mainReactor 只负责接入认证、握手等操作；</p>
+<h3 id="了解Netty当中的时间轮吗"><a href="#了解Netty当中的时间轮吗" class="headerlink" title="了解Netty当中的时间轮吗"></a>了解Netty当中的时间轮吗</h3><p>上面那个文章也提到了</p>
+<p>[21 技巧篇：延迟任务处理神器之时间轮 HashedWheelTimer (lianglianglee.com)](<a target="_blank" rel="noopener" href="https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Netty">https://learn.lianglianglee.com/专栏/Netty</a> 核心原理剖析与 RPC 实践-完&#x2F;21  技巧篇：延迟任务处理神器之时间轮 HashedWheelTimer.md)</p>
+<p>这个也可以看看</p>
+<p>HashedWheelTimer 的构造函数清晰地列举出了几个核心属性：</p>
+<ul>
+<li><strong>threadFactory</strong>，线程池，但是只创建了一个线程；</li>
+<li><strong>tickDuration</strong>，时针每次 tick 的时间，相当于时针间隔多久走到下一个 slot；</li>
+<li><strong>unit</strong>，表示 tickDuration 的时间单位；</li>
+<li><strong>ticksPerWheel</strong>，时间轮上一共有多少个 slot，默认 512 个。分配的 slot 越多，占用的内存空间就越大；</li>
+<li><strong>leakDetection</strong>，是否开启内存泄漏检测；</li>
+<li><strong>maxPendingTimeouts</strong>，最大允许等待任务数。</li>
+</ul>
+<p>时间轮的创建就是为了创建 HashedWheelBucket 数组，每个 HashedWheelBucket 表示时间轮中一个 slot。从 HashedWheelBucket 的结构定义可以看出，HashedWheelBucket 内部是一个双向链表结构，双向链表的每个节点持有一个 HashedWheelTimeout 对象，HashedWheelTimeout 代表一个定时任务。每个 HashedWheelBucket 都包含双向链表 head 和 tail 两个 HashedWheelTimeout 节点，这样就可以实现不同方向进行链表遍历。</p>
+<p><strong>添加任务</strong></p>
+<p>newTimeout() 方法主要做了三件事，分别为启动工作线程，创建定时任务，并把任务添加到 Mpsc Queue。HashedWheelTimer 的工作线程采用了懒启动的方式，不需要用户显示调用。这样做的好处是在时间轮中没有任务时，可以避免工作线程空转而造成性能损耗</p>
+<p>工作线程的启动之前，会通过 CAS 操作获取工作线程的状态，如果已经启动，则直接跳过。如果没有启动，再次通过 CAS 操作更改工作线程状态，然后启动工作线程。启动的过程是直接调用的 Thread#start() 方法</p>
+<p>回到 newTimeout() 的主流程，接下来的逻辑就非常简单了。根据用户传入的任务延迟时间，可以计算出任务的 deadline，然后创建定时任务 HashedWheelTimeout 对象，最终把 HashedWheelTimeout 添加到 Mpsc Queue 中。看到这里，你会不会有个疑问，为什么不是将 HashedWheelTimeout 直接添加到时间轮中呢？而是先添加到 Mpsc Queue？Mpsc Queue 可以理解为多生产者单消费者的线程安全队列，下节课我们会对 Mpsc Queue 详细分析，在这里就不做展开了。可以猜到 HashedWheelTimer 是想借助 Mpsc Queue 保证多线程向时间轮添加任务的线程安全性。****</p>
+<p><strong>工作线程 Worker</strong></p>
+<p>工作线程 Worker 的核心执行流程是代码中的 do-while 循环，只要 Worker 处于 STARTED 状态，就会执行 do-while 循环，我们把该过程拆分成为以下几个步骤，逐一分析。</p>
+<ul>
+<li>通过 waitForNextTick() 方法计算出时针到下一次 tick 的时间间隔，然后 sleep 到下一次 tick。</li>
+<li>通过位运算获取当前 tick 在 HashedWheelBucket 数组中对应的下标</li>
+<li>移除被取消的任务。</li>
+<li>从 Mpsc Queue 中取出任务加入对应的 HashedWheelBucket 中。</li>
+<li>执行当前 HashedWheelBucket 中的到期任务。</li>
+</ul>
+<p>懒得写了 ，看文章吧</p>
+<h2 id="牛客高启盛-美团二面"><a href="#牛客高启盛-美团二面" class="headerlink" title="牛客高启盛-美团二面"></a>牛客高启盛-美团二面</h2><h3 id="知道哪些比较成熟的RPC框架"><a href="#知道哪些比较成熟的RPC框架" class="headerlink" title="知道哪些比较成熟的RPC框架"></a>知道哪些比较成熟的RPC框架</h3><p>DUBBO,GRPC….</p>
+<h3 id="你的RPC和Dubbo对比有哪些区别（优缺点）"><a href="#你的RPC和Dubbo对比有哪些区别（优缺点）" class="headerlink" title="你的RPC和Dubbo对比有哪些区别（优缺点）"></a>你的RPC和Dubbo对比有哪些区别（优缺点）</h3><ol>
+<li><strong>服务治理：</strong> Dubbo提供了完整的服务治理功能，包括负载均衡、容错机制、服务注册与发现等。这使得在大型分布式系统中更容易管理和维护服务。</li>
+<li><strong>丰富的特性：</strong> Dubbo提供了更丰富的特性，例如可插拔的协议、注册中心、集群等。这使得Dubbo适用于更复杂的应用场景。</li>
+<li><strong>生态系统：</strong> Dubbo在阿里巴巴内部积累了大量的应用场景，具有较为丰富的生态系统。</li>
+</ol>
+<h3 id="粘包拆包怎么解决"><a href="#粘包拆包怎么解决" class="headerlink" title="粘包拆包怎么解决"></a>粘包拆包怎么解决</h3><p>就是自己设计了传输协议么</p>
+<h3 id="说一说Netty的原理"><a href="#说一说Netty的原理" class="headerlink" title="说一说Netty的原理"></a>说一说Netty的原理</h3><p>还没想好怎么回答这个逆天问题</p>
+<h3 id="三种线程模型如何选型？主从多线程模型一定更快吗"><a href="#三种线程模型如何选型？主从多线程模型一定更快吗" class="headerlink" title="三种线程模型如何选型？主从多线程模型一定更快吗"></a>三种线程模型如何选型？主从多线程模型一定更快吗</h3><ul>
+<li><p>单Reacotor单线程模型用的很少，基本没啥用，因为不能充分利用多核资源，当处理读写任务线程(单线程)负载过高后，处理速度下降，事件会堆积，严重的会超时，可能导致客户端重新发送请求，性能越来越差。再加上可靠性问题，一旦Reactor线程意外中断会导致整个通信模块不可用，无法接收和处理外部消息，造成节点故障。</p>
+</li>
+<li><p>单Reactor多线程模型，区别在于处理器部分使用了多线程，可以满足绝大多数的场景，除了一些个别的特殊场景：比如一个NIO线程负责处理客户所有的连接请求，但是如果连接请求中包含认证的需求（安全认证），在百万级别的场景下，就存在性能问题了，因为认证本身就要消耗CPU。</p>
+</li>
+<li><p>主从多线程模型：接入认证、IP黑白名单过滤、握手等操作的时候，需要主从多线程模型</p>
+</li>
+</ul>
+<p>不一定更快，因为认证、过滤等操作本身也需要消耗cpu</p>
+<h3 id="并发量小就不能用多线程模式吗"><a href="#并发量小就不能用多线程模式吗" class="headerlink" title="并发量小就不能用多线程模式吗"></a>并发量小就不能用多线程模式吗</h3><h3 id="两个节点有海量数据传输用哪种线程结构？（把他拆成多线程去传输还是什么，怎么选型？）"><a href="#两个节点有海量数据传输用哪种线程结构？（把他拆成多线程去传输还是什么，怎么选型？）" class="headerlink" title="两个节点有海量数据传输用哪种线程结构？（把他拆成多线程去传输还是什么，怎么选型？）"></a>两个节点有海量数据传输用哪种线程结构？（把他拆成多线程去传输还是什么，怎么选型？）</h3><h2 id="声哥总结的"><a href="#声哥总结的" class="headerlink" title="声哥总结的"></a>声哥总结的</h2><h3 id="为什么用-RPC，不用-HTTP"><a href="#为什么用-RPC，不用-HTTP" class="headerlink" title="为什么用 RPC，不用 HTTP"></a>为什么用 RPC，不用 HTTP</h3><p>RPC 是一种<strong>设计</strong>，就是为了解决<strong>不同服务之间的调用问题</strong>，完整的 RPC 实现一般会包含有 <strong>传输协议</strong> 和 <strong>序列化协议</strong> 这两个。</p>
+<p>而 HTTP 是一种传输协议，RPC 框架完全可以使用 HTTP 作为传输协议，也可以直接使用 TCP，使用不同的协议一般也是为了适应不同的场景。</p>
+<p>使用 TCP 和使用 HTTP 各有优势：</p>
+<p><strong>传输效率</strong>：</p>
+<ul>
+<li>TCP，通常自定义上层协议，可以让请求报文体积更小 </li>
+<li>HTTP：如果是基于HTTP 1.1 的协议，请求中会包含很多无用的内容</li>
+</ul>
+<p><strong>性能消耗</strong>，主要在于序列化和反序列化的耗时</p>
+<ul>
+<li>TCP，可以基于各种序列化框架进行，效率比较高 </li>
+<li>HTTP，大部分是通过 json 来实现的，字节大小和序列化耗时都要更消耗性能</li>
+</ul>
+<p><strong>跨平台</strong>：</p>
+<ul>
+<li>TCP：通常要求客户端和服务器为统一平台 </li>
+<li>HTTP：可以在各种异构系统上运行</li>
+</ul>
+<p><strong>总结</strong>：<br>  RPC 的 TCP 方式主要用于公司内部的服务调用，性能消耗低，传输效率高。HTTP主要用于对外的异构环境，浏览器接口调用，APP接口调用，第三方接口调用等。</p>
+<h3 id="调用如何在客户端无感（动态代理）"><a href="#调用如何在客户端无感（动态代理）" class="headerlink" title="调用如何在客户端无感（动态代理）"></a>调用如何在客户端无感（动态代理）</h3><p>项目中使用了JDK动态代理，具体流程被包含在了通过注解自动注册服务的过程当中，对每一个bean检查他是否有@RpcReference注解，如果有说明他是一个消费服务，需要调用远程方法，那么就通过RpcClientProxy创建了一个代理对象 clientProxy，通过反射将clientProxy映射到原来的字段值上，然后会在方法调用时委托给invoke方法，invoke方法负责执行远程调用，而对于客户端来讲，和调用本地方法的外观是一样的。</p>
+<h3 id="动态代理和静态代理的区别"><a href="#动态代理和静态代理的区别" class="headerlink" title="动态代理和静态代理的区别"></a>动态代理和静态代理的区别</h3><p>静态代理的代理对象和被代理对象在代理之前就已经确定，它们都实现相同的接口或继承相同的抽象类。<strong>静态代理中，我们对目标对象的每个方法的增强都是手动完成的</strong></p>
+<p>静态代理模式一般由业务实现类和业务代理类组成，业务实现类里面实现主要的业务逻辑，业务代理类负责在业务方法调用的前后作一些你需要的处理，以实现业务逻辑与业务方法外的功能解耦，减少了对业务方法的入侵。</p>
+<p><strong>从 JVM 角度来说，动态代理是在运行时动态生成类字节码，并加载到 JVM 中的。</strong></p>
+<p>JDK 动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用业务方法前调用<code>InvocationHandler</code> 处理。代理类必须实现 <code>InvocationHandler</code> 接口，并且，JDK 动态代理只能代理实现了接口的类</p>
+<h3 id="如果想代理没有实现接口的对象"><a href="#如果想代理没有实现接口的对象" class="headerlink" title="如果想代理没有实现接口的对象"></a>如果想代理没有实现接口的对象</h3><p><a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(Code Generation Library)是一个基于<a target="_blank" rel="noopener" href="http://www.baeldung.com/java-asm">ASM</a>的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB 通过继承方式实现代理。很多知名的开源框架都使用到了<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>， 例如 Spring 中的 AOP 模块中：如果目标对象实现了接口，则默认采用 JDK 动态代理，否则采用 CGLIB 动态代理。</p>
+<h3 id="对象是怎么在网络中传输的"><a href="#对象是怎么在网络中传输的" class="headerlink" title="对象是怎么在网络中传输的"></a>对象是怎么在网络中传输的</h3><p>通过将对象序列化成字节数组，即可将对象发送到网络中。</p>
+<p>在 Java 中，想要序列化一个对象，这个对象所属的类必须实现了 <code>Serializable</code> 接口，并且其内部属性必须都是可序列化的。如果有一个属性不是可序列化的，则该属性必须被声明为 <code>transient</code>。</p>
+<p>JDK 中提供了 ObjectOutStream 类来对对象进行序列化。</p>
+<p>本项目使用了kryo做序列化</p>
+<h3 id="你的框架实现了哪几种序列化方式"><a href="#你的框架实现了哪几种序列化方式" class="headerlink" title="你的框架实现了哪几种序列化方式"></a>你的框架实现了哪几种序列化方式</h3><p>本项目实现的基于kryo的序列化</p>
+<p>Kryo 是一个快速高效的 Java 序列化框架，旨在提供快速、高效和易用的 API。无论文件、数据库或网络数据 Kryo 都可以随时完成序列化。 Kryo 还可以执行自动深拷贝、浅拷贝。这是对象到对象的直接拷贝，而不是对象-&gt;字节-&gt;对象的拷贝。kryo 速度较快，序列化后体积较小，但是跨语言支持较复杂</p>
+<h3 id="简单介绍一下-Netty"><a href="#简单介绍一下-Netty" class="headerlink" title="简单介绍一下 Netty"></a>简单介绍一下 Netty</h3><p>Netty 是一个异步事件驱动的网络应用程序框架，用于快速开发可维护的高性能协议服务器和客户端。Netty 基于 NIO 的，封装了 JDK 的 NIO，让我们使用起来更加方法灵活。</p>
+<p>特点和优势：</p>
+<ul>
+<li>使用简单：封装了 NIO 的很多细节，使用更简单。 </li>
+<li>功能强大：预置了多种编解码功能，支持多种主流协议。 </li>
+<li>定制能力强：可以通过 ChannelHandler 对通信框架进行灵活地扩展。 </li>
+<li>性能高：通过与其他业界主流的 NIO 框架对比，Netty 的综合性能最优。</li>
+</ul>
+<h3 id="为什么-Netty-性能高"><a href="#为什么-Netty-性能高" class="headerlink" title="为什么 Netty 性能高"></a>为什么 Netty 性能高</h3><ul>
+<li>IO 线程模型：同步非阻塞，用最少的资源做更多的事。 </li>
+<li>内存零拷贝：尽量减少不必要的内存拷贝，实现了更高效率的传输。 </li>
+<li>内存池设计：申请的内存可以重用，主要指直接内存。内部实现是用一颗二叉查找树管理内存分配情况。 </li>
+<li>串行化处理读写：避免使用锁带来的性能开销。 </li>
+<li>高性能序列化协议：支持 protobuf 等高性能序列化协议。</li>
+</ul>
+<h3 id="简单说下-BIO、NIO-和-AIO"><a href="#简单说下-BIO、NIO-和-AIO" class="headerlink" title="简单说下 BIO、NIO 和 AIO"></a>简单说下 BIO、NIO 和 AIO</h3><p>BIO（同步阻塞）：客户端在请求数据的过程中，<strong>保持一个连接</strong>，<strong>不能做其他事情</strong>，线程开销大</p>
+<p>NIO：一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I&#x2F;O请求时才启动一个线程进行处理。</p>
+<p>AIO：一个有效请求一个线程，客户端的I&#x2F;O请求都是由OS先完成了再通知服务器应用去启动线程进行处理。</p>
+<h3 id="如何解决-TCP-的粘包拆包问题"><a href="#如何解决-TCP-的粘包拆包问题" class="headerlink" title="如何解决 TCP 的粘包拆包问题"></a>如何解决 TCP 的粘包拆包问题</h3><p>我的项目里是使用了自定义的传输协议解决这个问题，然后xxxxx前面有回答过了</p>
+<p>但是Netty也有自己提供了一些解决方式</p>
+<p>Netty 自带解决方式：</p>
+<ul>
+<li>消息定长：FixedLengthFrameDecoder 类</li>
+<li>包尾增加特殊字符分割：<ul>
+<li>行分隔符类：LineBasedFrameDecoder </li>
+<li>自定义分隔符类 ：DelimiterBasedFrameDecoder</li>
+</ul>
+</li>
+<li>将消息分为消息头和消息体：LengthFieldBasedFrameDecoder 类。分为有头部的拆包与粘包、长度字段在前且有头部的拆包与粘包、多扩展头部的拆包与粘包。</li>
+</ul>
+<h3 id="说下-Netty-零拷贝"><a href="#说下-Netty-零拷贝" class="headerlink" title="说下 Netty 零拷贝"></a>说下 Netty 零拷贝</h3><p>[16 IO 加速：与众不同的 Netty 零拷贝技术 (lianglianglee.com)](<a target="_blank" rel="noopener" href="https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Netty">https://learn.lianglianglee.com/专栏/Netty</a> 核心原理剖析与 RPC 实践-完&#x2F;16  IO 加速：与众不同的 Netty 零拷贝技术.md)</p>
+<p>有一说一这个博客无敌啊感觉，全是好文章</p>
+<ul>
+<li><p><strong>堆外内存：</strong>Netty 的接收和发送 ByteBuffer 采用 DIRECT BUFFERS，使用堆外直接内存进行 Socket 读写，不需要进行字节缓冲区的二次拷贝。如果使用传统的堆内存（HEAP BUFFERS）进行 Socket 读写，JVM 会将堆内存 Buffer 拷贝一份到直接内存中，然后才写入 Socket 中。相比于堆外直接内存，消息在发送过程中多了一次缓冲区的内存拷贝。</p>
+</li>
+<li><p><strong>CompositeByteBuf</strong>：在 CompositeByteBuf 内部保存着每个 ByteBuf 的引用关系，从逻辑上构成一个整体。CompositeByteBuf 内部维护了一个 Components 数组。在每个 Component 中存放着不同的 ByteBuf，各个 ByteBuf 独立维护自己的读写索引，而 CompositeByteBuf 自身也会单独维护一个读写索引。这样避免了传统通过内存拷贝的方式将几个小 Buffer 合并成一个大的 Buffer。</p>
+</li>
+<li><p><strong>ByteBuf.slice 操作</strong>：ByteBuf.slice 是将一个 ByteBuf 对象切分成多个共享同一个底层存储的 ByteBuf 对象。由于底层存储是共享的，所以也避免了新建bytebuf对象所需要的拷贝操作</p>
+</li>
+<li><p><strong>文件传输 FileRegion</strong>：Netty 使用 FileRegion 实现文件传输的零拷贝，FileRegion 其实就是对 FileChannel 的包装，并没有什么特殊操作，底层使用的是 JDK NIO 中的 FileChannel#transferTo() 方法实现文件传输，所以 FileRegion 是操作系统级别的零拷贝。</p>
+</li>
+</ul>
+<h3 id="简单说下-Netty-中的重要组件"><a href="#简单说下-Netty-中的重要组件" class="headerlink" title="简单说下 Netty 中的重要组件"></a>简单说下 Netty 中的重要组件</h3><ul>
+<li><p>Channel：Netty 网络操作抽象类，它除了包括基本的 I&#x2F;O 操作，如 bind、connect、read、write 等。 </p>
+</li>
+<li><p>EventLoop：主要是配合 Channel 处理 I&#x2F;O 操作，用来处理连接的生命周期中所发生的事情。 </p>
+</li>
+<li><p>ChannelFuture：Netty 框架中所有的 I&#x2F;O 操作都为异步的，因此我们需要 ChannelFuture 的 addListener()注册一个 ChannelFutureListener 监听事件，当操作执行成功或者失败时，监听就会自动触发返回结果。 </p>
+</li>
+<li><p>ChannelHandler：充当了所有处理入站和出站数据的逻辑容器。ChannelHandler 主要用来处理各种事件，这里的事件很广泛，比如可以是连接、数据接收、异常、数据转换等。 </p>
+</li>
+<li><p>ChannelPipeline：为 ChannelHandler 链提供了容器，当 channel 创建时，就会被自动分配到它专属的 ChannelPipeline，这个关联是永久性的。</p>
+</li>
+</ul>
+<h3 id="Netty-中责任链模式"><a href="#Netty-中责任链模式" class="headerlink" title="Netty 中责任链模式"></a>Netty 中责任链模式</h3><p>责任链模式为请求创建了一个处理对象的链，发起请求和具体处理请求的过程进行解耦:职责链上的处理者负责处理请求,客户只需要将请求发送到职责链上,无需关心请求的处理细节和请求的传递.</p>
+<p>netty 的 pipeline 设计,就采用了责任链设计模式, 底层采用双向链表的数据结构, 将链上的各个处理器(handler)串联起来</p>
+<p>客户端每一个请求的到来，netty 都认为，pipeline 中的所有的处理器都有机会处理它，因此，对于入栈的请求，全部从头节点开始往后传播，一直传播到尾节点（来到尾节点的 msg 会被释放掉）。</p>
+<p>责任终止机制</p>
+<ul>
+<li>在pipeline中的任意一个节点，只要我们不手动的往下传播下去，这个事件就会终止传播在当前节点 </li>
+<li>对于入站数据，默认会传递到尾节点，进行回收，如果我们不进行下一步传播，事件就会终止在当前节点</li>
+</ul>
+<h3 id="Netty-是如何保持长连接的（心跳）"><a href="#Netty-是如何保持长连接的（心跳）" class="headerlink" title="Netty 是如何保持长连接的（心跳）"></a>Netty 是如何保持长连接的（心跳）</h3><p>首先 TCP  协议的实现中也提供了 keepalive 报文用来探测对端是否可用。TCP 层将在定时时间到后发送相应的 KeepAlive 探针以确定连接可用性。</p>
+<p><code>ChannelOption.SO_KEEPALIVE, true</code> 表示打开 TCP 的 keepAlive 设置。</p>
+<p>虽然在 TCP 协议层面上, 提供了 keepalive 保活机制, 但是使用它有几个缺点:</p>
+<ol>
+<li>它不是 TCP 的标准协议, 并且是默认关闭的.</li>
+<li>TCP keepalive 机制依赖于操作系统的实现, 默认的 keepalive 心跳时间是 <strong>两个小时</strong>, 并且对 keepalive 的修改需要系统调用(或者修改系统配置), 灵活性不够.</li>
+<li>TCP keepalive 与 TCP 协议绑定, 因此如果需要更换为 UDP 协议时, keepalive 机制就失效了.</li>
+</ol>
+<p>Netty 中提供了 <code>IdleStateHandler</code> 类专门用于处理心跳。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">IdleStateHandler</span><span class="token punctuation">(</span><span class="token keyword">long</span> readerIdleTime<span class="token punctuation">,</span> <span class="token keyword">long</span> writerIdleTime<span class="token punctuation">,</span> 
+                        <span class="token keyword">long</span> allIdleTime<span class="token punctuation">,</span><span class="token class-name">TimeUnit</span> unit<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>第一个参数是隔多久检查一下读事件是否发生，如果 <code>channelRead()</code> 方法超过 readerIdleTime 时间未被调用则会触发超时事件调用 <code>userEventTrigger()</code> 方法；</p>
+<p>第二个参数是隔多久检查一下写事件是否发生，writerIdleTime 写空闲超时时间设定，如果 <code>write()</code> 方法超过 writerIdleTime 时间未被调用则会触发超时事件调用 <code>userEventTrigger()</code> 方法；</p>
+<p>第三个参数是全能型参数，隔多久检查读写事件；</p>
+<p>第四个参数表示当前的时间单位。</p>
+<p>所以这里可以分别控制读，写，读写超时的时间，单位为秒，如果是0表示不检测，所以如果全是0，则相当于没添加这个 IdleStateHandler，连接是个普通的短连接。</p>
+<h2 id="牛客-雨鱼羽"><a href="#牛客-雨鱼羽" class="headerlink" title="牛客-雨鱼羽"></a>牛客-雨鱼羽</h2><h3 id="为什么用Zookeeper做注册中心？"><a href="#为什么用Zookeeper做注册中心？" class="headerlink" title="为什么用Zookeeper做注册中心？"></a>为什么用Zookeeper做注册中心？</h3><p>就是各种类似的问题，比如什么zk的好处啊，优点啊什么的</p>
+<ul>
+<li><p>Zookeeper的数据模型很简单，有一系列被称为ZNode的数据节点组成，与传统的磁盘文件系统不同的是，zk将全量数据存储在内存中，可谓是高性能，而且支持集群，可谓高可用，另外支持事件监听。这些特点决定了zk特别适合作为注册中心(数据发布&#x2F;订阅)。</p>
+</li>
+<li><p>为什么不用redis？：zookeeper临时节点自动宕机自动清除</p>
+</li>
+<li><p>和nacos的区别：Zookeeper采用CP保证数据的一致性的问题，原理采用(ZAP原子广播协议)，当我们ZK领导者因为某种情况下部分节点出现了故障，会自动重新实现选举新的领导角色，整个选举的过程中为了保证数据一致性的问题，客户端暂时无法使用我们的Zookeeper，那么这以为着整个微服务无法实现通讯。而Nacos从1.0版本选择Ap和CP混合形式实现注册中心，默认情况下采用Ap，CP则采用Raft协议实现保持数据的一致性。<br> 如果选择为Ap模式，注册服务的实例仅支持临时模式，在网络分区的的情况允许注册服务实例<br> 选择CP模式可以支持注册服务的实例为持久模式，在网络分区的产生了抖动情况下不允许注册服务实例。</p>
+</li>
+</ul>
+<h3 id="Zookeeper和Eureka分别是满足CAP中的哪些"><a href="#Zookeeper和Eureka分别是满足CAP中的哪些" class="headerlink" title="Zookeeper和Eureka分别是满足CAP中的哪些"></a>Zookeeper和Eureka分别是满足CAP中的哪些</h3><p>CAP：一致性（Consistency）、可用性（Availability）、分区容忍性（Partition tolerance）。CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。</p>
+<p>Zookeeper采用CP保证数据的一致性的问题，原理采用(ZAP原子广播协议)，当我们ZK领导者因为某种情况下部分节点出现了故障，会自动重新实现选举新的领导角色，整个选举的过程中为了保证数据一致性的问题，客户端暂时无法使用我们的Zookeeper，那么这以为着整个微服务无法实现通讯。</p>
+<p>Eureka采用AP设计思想实现分布式注册中心，完全去中心化、每个节点都是相等，采用你中有我、我中有你相互注册设计思想， 只要最后有一台Eureka节点存在整个微服务就可以实现通讯。在eureka集群中，如果某个节点发生宕机，eureka不会有类似zookeeper选举的行为,即不会对外停止服务。客户端请求会切换到别的eureka节点，当宕机的服务器重新恢复后会被再次加入集群管理中同步别的eureka server保存的注册信息。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/rpc/">
+                                    <span class="chip bg-color">rpc</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                    <span class="chip bg-color">面试</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/12/15/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="算法专题之动态规划">
+                        
+                        <span class="card-title">算法专题之动态规划</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-15
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/12/12/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%9B%9E%E6%BA%AF%E4%B8%93%E9%A2%98/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="算法之回溯专题">
+                        
+                        <span class="card-title">算法之回溯专题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">G</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/GuSmallwhite" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
