@@ -534,10 +534,11 @@
 <p>在触发写空闲事件后，在 userEventTriggered方法中，我们获取到的IdleStateEvent就会是WRITER_IDLE表示写空闲，那么客户端会发送心跳请求，维持和服务端的链接 </p>
 <p>同样的再服务端channel也添加这样的handler，但是关注的是读事件，如果30秒没有从客户端读取，那么就发送心跳请求，维持和客户端的链接</p>
 <h3 id="使用zk做服务注册和发现中心，具体实现流程"><a href="#使用zk做服务注册和发现中心，具体实现流程" class="headerlink" title="使用zk做服务注册和发现中心，具体实现流程"></a>使用zk做服务注册和发现中心，具体实现流程</h3><p>这个和pdd的问法一样啊</p>
-<h3 id="zk的一致性算法（原理"><a href="#zk的一致性算法（原理" class="headerlink" title="zk的一致性算法（原理"></a>zk的一致性算法（原理</h3><p>你以为他要问的是你选择的一致性哈希？不是，他问的是zab !是zookeeper自己选择的那个算法！</p>
+<h3 id="zk的一致性算法（ZAB原理"><a href="#zk的一致性算法（ZAB原理" class="headerlink" title="zk的一致性算法（ZAB原理"></a>zk的一致性算法（ZAB原理</h3><p>你以为他要问的是你选择的一致性哈希？不是，他问的是zab !是zookeeper自己选择的那个算法！</p>
 <p><a target="_blank" rel="noopener" href="https://houbb.github.io/2018/10/30/zab">ZAB-一致性算法 | Echo Blog (houbb.github.io)</a></p>
 <p><a target="_blank" rel="noopener" href="https://xie.infoq.cn/article/70472178edd0a86fbf4a42785">面试官zookeeper 是如何实现一致性的？我大意了，让我回去等通知_Java_InfoQ写作社区</a></p>
 <p>有一说一有点复杂，后面在总结</p>
+<p>面试的时候你要说：讲了ZAB是paxos的改版，Mysql是paxos、redis sentinel是raft、zookeeper是ZAB、ZAB的具体实现）</p>
 <h3 id="针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案"><a href="#针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案" class="headerlink" title="针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案"></a>针对游戏客户端登录服务器的问题，每个客户端进行登录都要先去服务端申请id，当出现大量客户同时登录如何处理，当登录失败如何处理，如何提高id申请的可用性解决方案</h3><p>我草这什么玩意，一个一个看吧</p>
 <p><strong>并发登录请求处理</strong></p>
 <ul>
@@ -729,7 +730,7 @@
 <p>第三个参数是全能型参数，隔多久检查读写事件；</p>
 <p>第四个参数表示当前的时间单位。</p>
 <p>所以这里可以分别控制读，写，读写超时的时间，单位为秒，如果是0表示不检测，所以如果全是0，则相当于没添加这个 IdleStateHandler，连接是个普通的短连接。</p>
-<h2 id="牛客-雨鱼羽"><a href="#牛客-雨鱼羽" class="headerlink" title="牛客-雨鱼羽"></a>牛客-雨鱼羽</h2><h3 id="为什么用Zookeeper做注册中心？"><a href="#为什么用Zookeeper做注册中心？" class="headerlink" title="为什么用Zookeeper做注册中心？"></a>为什么用Zookeeper做注册中心？</h3><p>就是各种类似的问题，比如什么zk的好处啊，优点啊什么的</p>
+<h2 id="牛客-雨鱼羽-zk部分"><a href="#牛客-雨鱼羽-zk部分" class="headerlink" title="牛客-雨鱼羽-zk部分"></a>牛客-雨鱼羽-zk部分</h2><h3 id="为什么用Zookeeper做注册中心？"><a href="#为什么用Zookeeper做注册中心？" class="headerlink" title="为什么用Zookeeper做注册中心？"></a>为什么用Zookeeper做注册中心？</h3><p>就是各种类似的问题，比如什么zk的好处啊，优点啊什么的</p>
 <ul>
 <li><p>Zookeeper的数据模型很简单，有一系列被称为ZNode的数据节点组成，与传统的磁盘文件系统不同的是，zk将全量数据存储在内存中，可谓是高性能，而且支持集群，可谓高可用，另外支持事件监听。这些特点决定了zk特别适合作为注册中心(数据发布&#x2F;订阅)。</p>
 </li>
@@ -741,6 +742,153 @@
 <h3 id="Zookeeper和Eureka分别是满足CAP中的哪些"><a href="#Zookeeper和Eureka分别是满足CAP中的哪些" class="headerlink" title="Zookeeper和Eureka分别是满足CAP中的哪些"></a>Zookeeper和Eureka分别是满足CAP中的哪些</h3><p>CAP：一致性（Consistency）、可用性（Availability）、分区容忍性（Partition tolerance）。CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。</p>
 <p>Zookeeper采用CP保证数据的一致性的问题，原理采用(ZAP原子广播协议)，当我们ZK领导者因为某种情况下部分节点出现了故障，会自动重新实现选举新的领导角色，整个选举的过程中为了保证数据一致性的问题，客户端暂时无法使用我们的Zookeeper，那么这以为着整个微服务无法实现通讯。</p>
 <p>Eureka采用AP设计思想实现分布式注册中心，完全去中心化、每个节点都是相等，采用你中有我、我中有你相互注册设计思想， 只要最后有一台Eureka节点存在整个微服务就可以实现通讯。在eureka集群中，如果某个节点发生宕机，eureka不会有类似zookeeper选举的行为,即不会对外停止服务。客户端请求会切换到别的eureka节点，当宕机的服务器重新恢复后会被再次加入集群管理中同步别的eureka server保存的注册信息。</p>
+<h3 id="如果让你设计一个服务注册中心，怎么设计"><a href="#如果让你设计一个服务注册中心，怎么设计" class="headerlink" title="如果让你设计一个服务注册中心，怎么设计"></a>如果让你设计一个服务注册中心，怎么设计</h3><p>这个注册中心需要有如下功能：</p>
+<p><strong>服务注册接口</strong>：服务提供者通过调用服务注册接口来完成服务注册。</p>
+<p><strong>服务注销接口</strong>：服务提供者通过调用服务反注册接口来完成服务注销。</p>
+<p><strong>心跳汇报接口</strong>：服务提供者通过调用心跳汇报接口完成节点存活状态上报。</p>
+<p><strong>服务订阅接口</strong>：服务消费者通过调用服务订阅接口完成服务订阅，获取可用的服务提供者节点列表。</p>
+<p><strong>服务变更查询接口</strong>：服务消费者通过调用服务变更查询接口，获取最新的可用服务节点列表。</p>
+<p><strong>服务查询接口</strong>：查询注册中心当前注册了哪些服务信息。</p>
+<p><strong>服务修改接口</strong>：修改注册中心中某一服务的信息。</p>
+<h3 id="集群一般有几个节点，为什么"><a href="#集群一般有几个节点，为什么" class="headerlink" title="集群一般有几个节点，为什么"></a>集群一般有几个节点，为什么</h3><p>5个，宕机后选举要大于一半成为leader。</p>
+<h3 id="socket过程中发生的系统调用"><a href="#socket过程中发生的系统调用" class="headerlink" title="socket过程中发生的系统调用"></a>socket过程中发生的系统调用</h3><p>服务器：</p>
+<p>​		socket();&#x2F;&#x2F;socket要求必须绑定socket；</p>
+<p>​       bind();&#x2F;&#x2F;绑定端口和IP，这样我们才知道是那台主机；</p>
+<p>​       listen();&#x2F;&#x2F;监听，看有没有请求连接</p>
+<p>​       accept();&#x2F;&#x2F;接收请求</p>
+<p>​       send()||rev();&#x2F;&#x2F;接收和发送消息</p>
+<p>客户端：</p>
+<p>​		socket();&#x2F;&#x2F;socket要求必须绑定socket；</p>
+<p>​       connect();&#x2F;&#x2F;请求连接</p>
+<h3 id="zookeeper服务容灾？"><a href="#zookeeper服务容灾？" class="headerlink" title="zookeeper服务容灾？"></a>zookeeper服务容灾？</h3><p>容灾：在集群若干台故障后，整个集群仍然可以对外提供可用的服务。</p>
+<p>解决多数据中心容灾的方案有单机房增加节点、同城多机房、两地三中心(异地容灾)等</p>
+<img src="https://static001.geekbang.org/infoq/0e/0ee39def8788e01afb738eac9419cb21.png" alt="img" style="zoom: 67%;">
+
+<p>1）单机房多节点</p>
+<p>对于单机房增加节点将其部署在不同的机柜中可以一定程度提高高可用性，避免多个节点同时出现问题</p>
+<p><img src="https://static001.geekbang.org/infoq/fd/fd1319e01e2d3739ec2849e2652e2bb0.png" alt="img"></p>
+<p>节点选举及事务性请求都需要半数以上成功则算是成功，因此多增加节点对写请求及选举过程的影响都比较大，并且这种方案不能解决整个机房出现故障的容灾问题。</p>
+<p>2）同城多机房</p>
+<p>单机房做不到容灾，在同城进行多机房的部署，如下图所示：</p>
+<p><img src="https://static001.geekbang.org/infoq/e4/e4f53ad6b64b624bc18668b355c3ceae.png" alt="img"></p>
+<p>多机房部署要考虑某机房故障情况下，保证有半数以上的 Zookeeper 节点正常工作，如果仅两个机房的情况下无法保证，上例中三机房部署是可以实现任意一个机房故障情况下，满足正常节点上大于半数以上，保证机房容灾。</p>
+<h3 id="zookeeper服务节点挂掉之后，怎么删除它"><a href="#zookeeper服务节点挂掉之后，怎么删除它" class="headerlink" title="zookeeper服务节点挂掉之后，怎么删除它"></a>zookeeper服务节点挂掉之后，怎么删除它</h3><p>删除：使用临时节点，会话失效，节点自动清除。</p>
+<h3 id="Zookeeper有几种角色"><a href="#Zookeeper有几种角色" class="headerlink" title="Zookeeper有几种角色"></a>Zookeeper有几种角色</h3><p>群首（leader），追随者（follower），观察者（observer），这个在ZAP算法里，好好看看</p>
+<h3 id="CAP理论解释下？P是什么？"><a href="#CAP理论解释下？P是什么？" class="headerlink" title="CAP理论解释下？P是什么？"></a>CAP理论解释下？P是什么？</h3><p>一致性（<strong>C</strong>onsistency）多个副本之间的数据一致性</p>
+<p>可用性（<strong>A</strong>vailability）在合理规定的时间内，是否能返回一个明确的结果。</p>
+<p>分区容错性（<strong>P</strong>artition tolerance）在分区故障下，仍然可以对外提供正常的服务。</p>
+<p>一个分布式系统在以上三个特性中：最多满足其中的两个特性</p>
+<h3 id="Zookeeper集群节点宕机了怎么发现剔除的"><a href="#Zookeeper集群节点宕机了怎么发现剔除的" class="headerlink" title="Zookeeper集群节点宕机了怎么发现剔除的"></a>Zookeeper集群节点宕机了怎么发现剔除的</h3><p>通过watcher机制</p>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=zookeeper&spm=1001.2101.3001.7020">zookeeper</a>引入了watcher机制来实现发布&#x2F;订阅功能，能够让多个订阅者同时监听某一个主题对象，当这个主题对象自身状态发生变化时，会通知所有订阅者。当一个集群宕机，其他的集群会通过这个机制得到宕机的消息。</p>
+<p>剔除：不知道，貌似是临时节点自动剔除？</p>
+<h3 id="服务熔断和服务降级有什么区别"><a href="#服务熔断和服务降级有什么区别" class="headerlink" title="服务熔断和服务降级有什么区别"></a>服务熔断和服务降级有什么区别</h3><p><strong>服务熔断：</strong>如果某个目标服务调用慢或者有大量超时，此时，熔断该服务的调用，对于后续调用请求，不在继续调用目标服务，直接返回，快速释放资源。如果目标服务情况好转则恢复调用。</p>
+<p><strong>服务降级：</strong>当服务器压力剧增的情况下，根据当前业务情况及流量对一些服务和页面有策略的降级，以此释放服务器资源以保证核心任务的正常运行。</p>
+<ul>
+<li><p>延迟持久化：页面访问照常，但是涉及记录变更，会提示稍晚能看到结果，将数据记录到异步队列或log，服务恢复后执行。</p>
+</li>
+<li><p>随机拒绝服务：服务接口随机拒绝服务，让用户重试，目前较少有人采用。因为用户体验不佳。</p>
+</li>
+<li><p>服务接口拒绝服务：页面能访问，但是添加删除操作提示服务器繁忙。页面内容也可在Varnish或CDN内获取。</p>
+</li>
+<li><p>页面拒绝服务：页面提示由于服务繁忙此服务暂停。跳转到varnish或nginx的一个静态页面。</p>
+</li>
+</ul>
+<h3 id="zk羊群效应？怎么解决（Zookeeper的分布式锁实现方式"><a href="#zk羊群效应？怎么解决（Zookeeper的分布式锁实现方式" class="headerlink" title="zk羊群效应？怎么解决（Zookeeper的分布式锁实现方式"></a>zk羊群效应？怎么解决（Zookeeper的分布式锁实现方式</h3><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Zookeeper&spm=1001.2101.3001.7020">Zookeeper</a>分布式锁场景中的羊群效应指的是所有的客户端都尝试对一个临时节点去加锁，当一个锁被占有的时候，其他的客户端都会监听这个临时节点。一旦锁被释放，Zookeeper反向通知添加监听的客户端，然后大量的客户端都尝试去对同一个临时节点创建锁，最后也只有一个客户端能获得锁，但是大量的请求造成了很大的网络开销，加重了网络的负载，影响Zookeeper的性能。</p>
+<p>解决：</p>
+<p>首先得了解什么是临时顺序节点：</p>
+<ul>
+<li>第一，节点的生命周期和client回话绑定，即创建节点的客户端回话一旦失效，那么这个节点就会被删除。（临时性）</li>
+<li>第二，每个父节点都会维护子节点创建的先后顺序，自动为子节点分配一个整形数值，以后缀的形式自动追加到节点名称中，作为这个节点最终的节点名称。（顺序性）</li>
+</ul>
+<p>所以实现分布式锁的一般思路是什么：</p>
+<ol>
+<li>client调用create()方法创建“&#x2F;zk-locks”节点，注意节点类型是EPHEMERAL_SEQUENTIAL</li>
+<li>client调用getChildren(“&#x2F;zk-locks”,watch)来获取所有已经创建的子节点，并同时在这个节点上注册子节点变更通知的Watcher</li>
+<li>客户端获取到所有子节点Path后，如果发现自己在步骤1中创建的节点是所有节点中最小的，那么就认为这个客户端获得了锁</li>
+<li>如果在步骤3中，发现不是最小的，那么等待，直到下次子节点变更通知的时候，在进行子节点的获取，判断是否获取到锁</li>
+<li>释放锁也比较容易，就是删除自己创建的那个节点即可</li>
+</ol>
+<p>而这种思路因为每个子节点都被注册了watcher，会导致羊群效应</p>
+<p>那么如何解决呢？</p>
+<p>其实客户端的核心诉求在于判断自己是否是最小的节点，所以说每个节点的创建者其实不用关心所有的节点变更，<strong>它真正关心的应该是比自己序号小的那个节点是否存在</strong></p>
+<p>所以修改步骤：</p>
+<ol>
+<li>client调用create()方法创建“&#x2F;zk-locks”节点，注意节点类型是EPHEMERAL_SEQUENTIAL</li>
+<li>client调用getChildren(“&#x2F;zk-locks”,false)来获取所有已经创建的子节点，这里并不注册任何Watcher</li>
+<li>客户端获取到所有子节点Path后，如果发现自己在步骤1中创建的节点是所有节点中最小的，那么就认为这个客户端获得了锁</li>
+<li>如果在步骤3中，发现不是最小的，<strong>那么找到比自己小的那个节点，然后对其调用exist()方法注册事件监听</strong></li>
+<li>之后一旦这个被关注的节点移除，客户端会收到相应的通知，这个时候客户端需要再次调用getChildren(“&#x2F;zk-locks”,false)来确保自己是最小的节点，然后进入步骤3</li>
+</ol>
+<h3 id="zk的分布式算法zab，如果选举的时候zxid都相同呢"><a href="#zk的分布式算法zab，如果选举的时候zxid都相同呢" class="headerlink" title="zk的分布式算法zab，如果选举的时候zxid都相同呢"></a>zk的分布式算法zab，如果选举的时候zxid都相同呢</h3><p>这个还是在zab里，后面单独总结</p>
+<h3 id="Zookeeper-是如何保证一致性的"><a href="#Zookeeper-是如何保证一致性的" class="headerlink" title="Zookeeper 是如何保证一致性的"></a>Zookeeper 是如何保证一致性的</h3><p>这个问题也是在问zab协议</p>
+<h3 id="ZooKeeper的作用"><a href="#ZooKeeper的作用" class="headerlink" title="ZooKeeper的作用"></a>ZooKeeper的作用</h3><p>项目答：注册中心。</p>
+<p>扩展答：</p>
+<ul>
+<li><p>数据发布：数据发布&#x2F;订阅（Publish&#x2F;Subscribe）系统，即所谓的配置中心，顾明思义就是发布者将数据发布到zookeeper的一个或一系列的节点上，供订阅者进行数据订阅，进而达到动态获取数据的目的，实现配置信息的集中式管理和数据的动态更新。</p>
+</li>
+<li><p>命名服务：zookeeper的命名服务功能主要是根据指定名字来获取资源或服务的地址，提供者等信息，利用其znode的特点和watcher机制，将其作为动态注册和获取服务信息的配置中心，统一管理服务名称和其对应的服务器列表信息，我们能够近乎实时地感知到后端服务器的状态(上线、下线、宕机)。</p>
+</li>
+<li><p>全局唯一ID生成器：我们可以利用 ZooKeeper 数据模型中的顺序节点作为 ID 编码。客户端通过调用 create 函数创建顺序节点。服务器成功创建节点后，会响应客户端请求，把创建好的节点信息发送给客户端。客户端用数据节点名称作为 ID 编码，进行之后的本地业务操作。</p>
+</li>
+<li><p>master选举：主从模式，正常情况下主机提供服务，备机负责监听主机状态，当主机异常时，可以自动切换到备机继续提供服务，这个切换过程中选出下一个主机的过程就是master选举。传统的方法会导致双master情况，而zk利用节点创建的全局唯一性和临时节点的特性，在服务器启动的时候，去zookeeper特定的一个目录下注册一个临时节点(这个节点作为master，谁注册了这个节点谁就是master)，注册的时候，如果发现该节点已经存在，则说明已经有别的服务器注册了(也就是有别的服务器已经抢主成功)，那么当前服务器只能放弃抢主，作为从机存在。同时，抢主失败的当前服务器需要订阅该临时节点的删除事件，以便该节点删除时(也就是注册该节点的服务器宕机了或者网络断了之类的)进行再次抢主操作。从机具体需要去哪里注册服务器列表的临时节点，节点保存什么信息，根据具体的业务不同自行约定。选主的过程，其实就是简单的争抢在zookeeper注册临时节点的操作，谁注册了约定的临时节点，谁就是master。</p>
+</li>
+<li><p>分布式队列：创建&#x2F;queue作为一个队列，然后每创建一个顺序节点，视为一条消息(节点存储的数据即为消息内容)，生产者每次创建一个新节点，做为消息发送，消费者监听queue的子节点变化（或定时轮询)，每次取最小节点当做消费消息，处理完后，删除该节点。相当于实现了一个FIFO(先进先出)的队列。</p>
+</li>
+</ul>
+<h3 id="服务下线还有没有别的实现方法"><a href="#服务下线还有没有别的实现方法" class="headerlink" title="服务下线还有没有别的实现方法"></a>服务下线还有没有别的实现方法</h3><p>沃特玛怎么知道</p>
+<h3 id="如果注册中心服务器宕机怎么保证高可用"><a href="#如果注册中心服务器宕机怎么保证高可用" class="headerlink" title="如果注册中心服务器宕机怎么保证高可用"></a>如果注册中心服务器宕机怎么保证高可用</h3><p>主要考虑***容灾和扩容***两方面提高高可用。容灾刚刚说过了</p>
+<h3 id="分布式数据一致性协议都知道哪些"><a href="#分布式数据一致性协议都知道哪些" class="headerlink" title="分布式数据一致性协议都知道哪些"></a>分布式数据一致性协议都知道哪些</h3><p>2PC 3PC Paxos</p>
+<h3 id="zookeeper的节点类型"><a href="#zookeeper的节点类型" class="headerlink" title="zookeeper的节点类型?"></a>zookeeper的节点类型?</h3><p>持久，临时，顺序</p>
+<h3 id="了解过zookeeper的问题吗"><a href="#了解过zookeeper的问题吗" class="headerlink" title="了解过zookeeper的问题吗"></a>了解过zookeeper的问题吗</h3><ol>
+<li>zookeeper master就只能照顾一个机房，其他机房运行的业务模块由于没有master都只能停掉，对网络抖动非常敏感。</li>
+<li>选举过程速度很慢且zk选举期间无法对外提供服务。</li>
+<li>zk的性能有限:典型的zookeeper的tps大概是一万多，无法覆盖系统内部每天动辄几十亿次的调用。因此每次请求都去zookeeper获取业务系统master信息是不可能的。因此zookeeper的client必须自己缓存业务系统的master地址。</li>
+</ol>
+<h2 id="牛客-雨鱼羽-序列化协议部分"><a href="#牛客-雨鱼羽-序列化协议部分" class="headerlink" title="牛客-雨鱼羽-序列化协议部分"></a>牛客-雨鱼羽-序列化协议部分</h2><h3 id="各个序列化算法的特性？"><a href="#各个序列化算法的特性？" class="headerlink" title="各个序列化算法的特性？"></a>各个序列化算法的特性？</h3><p><strong>json</strong>：</p>
+<ul>
+<li><p>JSON 进行序列化的额外空间开销比较大，对于大数据量服务这意味着需要巨大的内存和磁盘开销； </p>
+</li>
+<li><p>JSON 没有类型，但像 Java 这种强类型语言，需要通过反射统一解决，所以性能不会太好（比如反序列化时先反序列化为String类，要自己通过反射还原）。</p>
+</li>
+</ul>
+<p><strong>Kryo</strong>：这个前面也有总结过</p>
+<ul>
+<li><p>使用变长的int和long保证这种基本数据类型序列化后尽量小 </p>
+</li>
+<li><p>需要传入完整类名或者利用 register() 提前将类注册到Kryo上，其类与一个int型的ID相关联，序列中只存放这个ID，因此序列体积就更小 </p>
+</li>
+<li><p>不是线程安全的，要通过ThreadLocal或者创建Kryo线程池来保证线程安全 </p>
+</li>
+<li><p>不需要实现Serializable接口 </p>
+</li>
+<li><p>字段增、减，序列化和反序列化时无法兼容 </p>
+</li>
+<li><p>必须拥有无参构造函数</p>
+</li>
+</ul>
+<p><strong>Hessian</strong>：</p>
+<ul>
+<li>使用固定长度存储int和long </li>
+<li>将所有类字段信息都放入序列化字节数组中，直接利用字节数组进行反序列化，不需要其他参与，因为存的东西多处理速度就会慢点。 </li>
+<li>把复杂对象的所有属性存储在一个Map中进行序列化。所以在父类、子类存在同名成员变量的情况下，Hessian序列化时，先序列化子类，然后序列化父类，因此反序列化结果会导致子类同名成员变量被父类的值覆盖 </li>
+<li>需要实现Serializable接口 </li>
+<li>兼容字段增、减，序列化和反序列化 </li>
+<li>必须拥有无参构造函数 </li>
+<li>Java 里面一些常见对象的类型不支持，比如：<ul>
+<li>Linked 系列，LinkedHashMap、LinkedHashSet 等； </li>
+<li>Locale 类，可以通过扩展 ContextSerializerFactory 类修复； </li>
+<li>Byte&#x2F;Short 反序列化的时候变成 Integer。</li>
+</ul>
+</li>
+</ul>
+<p><strong>Protobuf</strong>：</p>
+<ul>
+<li>序列化后体积相比 JSON、Hessian 小很多</li>
+<li>IDL 能清晰地描述语义，所以足以帮助并保证应用程序之间的类型不会丢失，无需类似XML 解析器；</li>
+<li>序列化反序列化速度很快，不需要通过反射获取类型；</li>
+<li>打包生成二进制流</li>
+<li>预编译过程不是必须的</li>
+</ul>
 
                 
             </div>
