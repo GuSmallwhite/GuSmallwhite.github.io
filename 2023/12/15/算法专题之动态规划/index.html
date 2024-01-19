@@ -451,11 +451,40 @@
 <h2 id="96-不同的二叉搜索树-力扣（LeetCode）"><a href="#96-不同的二叉搜索树-力扣（LeetCode）" class="headerlink" title="96. 不同的二叉搜索树 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">96. 不同的二叉搜索树 - 力扣（LeetCode）</a></h2><p>一开始尝试找规律没找到</p>
 <p>思路</p>
 <h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>01背包问题<code>dp[i][j]</code>是什么：0-i的物品放大哦容量为j的背包的最大价值</p>
-<p>换成一维：<code>**dp[i][j] = max(dp[i][j], dp[i][j - weight[i]] + value[i]);**</code></p>
-<p>然后便利背包是倒序便利</p>
+<p>二维数组：<code>**dp[i][j] = max(dp[i][j], dp[i][j - weight[i]] + value[i]);**</code></p>
+<p>换成一维就是：<code> dp[j]=max(dp[j],dp[j-weight[i]]+value[i])</code></p>
 <p>一维01背包必须先遍历物品</p>
-<p>而完全背包问题，如果是纯完全背包问题，都可以</p>
-<p>如果是装满背包有多少种方法，要分是排列数还是组合数：组合数：先物品，排列数：先背包</p>
+<p>然后遍历背包时是倒序便利</p>
+<p>套路：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F;先遍历物品，再倒序遍历背包
+        for(int i&#x3D;0;i&lt;weight.length;i++)
+        &#123;
+            for(int j&#x3D;sumweight;j&gt;&#x3D;weight[i];j--)
+            &#123;
+                dp[j]&#x3D;Math.max(dp[j], dp[j-weight[i]]+value[i]);
+            &#125;
+        &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有时候weight和value是同一个数组</p>
+<p>而完全背包问题，如果是纯完全背包问题，无所谓遍历顺序</p>
+<p>如果是装满背包有多少种方法，<strong>要分是排列数还是组合数：组合数：先物品，排列数：先背包</strong></p>
+<p>完全背包问题套路：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 先遍历物品，再遍历背包</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> weight<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 遍历物品</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> bagWeight <span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 遍历背包容量，因为是无限取，所以可以正序遍历</span>
+        dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>j <span class="token operator">-</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//先背包，再物品</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> bagWeight<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 遍历背包容量</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> weight<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 遍历物品</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">-</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>j <span class="token operator">-</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h3 id="416-分割等和子集-力扣（LeetCode）"><a href="#416-分割等和子集-力扣（LeetCode）" class="headerlink" title="416. 分割等和子集 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-equal-subset-sum/">416. 分割等和子集 - 力扣（LeetCode）</a></h3><p>就是给你物品列表，价值就是具体的数，然后容量也没确定，反正就是看你能不能使价值等于所有数加起来的&#x2F;2</p>
 <p>0-1背包问题，因为每个数只能用一次</p>
 <p>卡尔的思路是重量就等于价值，这样的好处是什么，就是背包的容量是可以被确定的</p>
@@ -610,23 +639,25 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="139-单词拆分-力扣（LeetCode）"><a href="#139-单词拆分-力扣（LeetCode）" class="headerlink" title="139. 单词拆分 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/word-break/">139. 单词拆分 - 力扣（LeetCode）</a></h3><p>可以重复使用，一眼完全背包啊吗，因为这里其实是排列数，就是你的字符得有顺序，所以先遍历背包</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//物品就是单词的list，然后背包就是String s 啊，长度就是重量，也等于价值</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//也是背包问题背包就就是给的String s，</span>
+<span class="token comment">//物品列表就是wordDICT</span>
+<span class="token comment">//然后可以重复使用，说明是完全背包问题</span>
+<span class="token comment">//但是单词有顺序，是排列数，所以是先遍历背包</span>
 <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">wordBreak</span><span class="token punctuation">(</span><span class="token class-name">String</span> s<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> wordDict<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span>st<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>wordDict<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span>dp<span class="token operator">=</span><span class="token keyword">new</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token keyword">boolean</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>dp<span class="token operator">=</span><span class="token keyword">new</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//dp[i]:长度为i能否背凑成</span>
+    dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>i<span class="token operator">&amp;&amp;</span><span class="token operator">!</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token comment">//遍历物品，注意，这里是遍历字符串并且判断他是不是物品</span>
         <span class="token punctuation">&#123;</span>
-            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>i<span class="token operator">&amp;&amp;</span><span class="token operator">!</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>wordDict<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>j<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
             <span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>st<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>j<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">&#123;</span>
-                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> dp<span class="token punctuation">[</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> dp<span class="token punctuation">[</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="打家劫舍和股票问题"><a href="#打家劫舍和股票问题" class="headerlink" title="打家劫舍和股票问题"></a>打家劫舍和股票问题</h2><h3 id="198-打家劫舍-力扣（LeetCode）"><a href="#198-打家劫舍-力扣（LeetCode）" class="headerlink" title="198. 打家劫舍 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber/">198. 打家劫舍 - 力扣（LeetCode）</a></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//每个房间都有两个选择：偷和不偷</span>
 <span class="token comment">//dp[i]:走到这个房间能偷到的最高金额</span>
@@ -1204,7 +1235,7 @@ dp[i][4]第二次不持有，要么是今天卖了dp[i-1][3]+prives[i]，要么�
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2023</span>
+                <span id="year">2019-2024</span>
             
             <span id="year">2019</span>
             <a href="/about" target="_blank">G</a>
