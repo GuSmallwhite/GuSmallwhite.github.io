@@ -884,11 +884,82 @@
 <p><strong>Protobuf</strong>：</p>
 <ul>
 <li>序列化后体积相比 JSON、Hessian 小很多</li>
-<li>IDL 能清晰地描述语义，所以足以帮助并保证应用程序之间的类型不会丢失，无需类似XML 解析器；</li>
 <li>序列化反序列化速度很快，不需要通过反射获取类型；</li>
 <li>打包生成二进制流</li>
 <li>预编译过程不是必须的</li>
 </ul>
+<h3 id="序列化和反序列化有什么作用"><a href="#序列化和反序列化有什么作用" class="headerlink" title="序列化和反序列化有什么作用"></a>序列化和反序列化有什么作用</h3><p>（1）<strong>实现了数据的持久化</strong>：永久性保存对象，保存对象的字节序列到本地文件或者数据库中；<br>（2）<strong>序列化实现远程通</strong>：通过序列化以字节流的形式使对象在网络中进行传递和接收；<br>（3）通过序列化在进程间传递对象；</p>
+<h3 id="Serializable和Externalizable懂吗"><a href="#Serializable和Externalizable懂吗" class="headerlink" title="Serializable和Externalizable懂吗"></a>Serializable和Externalizable懂吗</h3><p>1、Serializable序列化时不会调用默认的构造器，而Externalizable序列化时会调用默认构造器的！</p>
+<p>2、Serializable：一个对象想要被序列化，它的类就要实现此接口，这个对象的所有属性都可以被序列化和反序列化来保存、传递。 </p>
+<p>​      Externalizable：自定义序列化可以控制序列化的过程和决定哪些属性不被序列化。</p>
+<p>3、使用Externalizable时，必须按照写入时的确切顺序读取所有字段状态。否则会产生异常。</p>
+<h3 id="serializable关键字的作用（实现原理）"><a href="#serializable关键字的作用（实现原理）" class="headerlink" title="serializable关键字的作用（实现原理）"></a>serializable关键字的作用（实现原理）</h3><p>Serializable 用来标识当前类可以被 ObjectOutputStream 序列化，以及被 ObjectInputStream 反序列化。</p>
+<p>因为 Java IO 是一种装饰者模式，因此可以通过 ObjectOutStream 包装 FileOutStream 将数据写入到文件中或者包装 ByteArrayOutStream 将数据写入到内存中。同理，可以通过 ObjectInputStream 将数据从磁盘 FileInputStream 或者内存 ByteArrayInputStream 读取出来然后转化为指定的对象即可。</p>
+<p>静态成员变量是不能被序列化,序列化是针对对象属性的，而静态成员变量是属于类的。</p>
+<p>然后序列化步骤就是：</p>
+<ul>
+<li>将对象实例相关的类元数据输出。</li>
+<li>递归地输出类的超类描述直到不再有超类。</li>
+<li>类元数据完了以后，开始从最顶层的超类开始输出对象实例的实际数据值。</li>
+<li>从上至下递归输出实例的数据</li>
+</ul>
+<h3 id="序列化传输"><a href="#序列化传输" class="headerlink" title="序列化传输"></a>序列化传输</h3><ul>
+<li>进程之间要通过网络传输结构化的数据，需要通过序列化和反序列化来实现结构化数据和二进制数据的双向转换。在选择序列化实现的时候，需要综合考虑数据可读性，实现复杂度，性能和信息密度这四个因素。</li>
+<li>大多数情况下，选择一个高性能的通用序列化框架都可以满足要求，在性能可以满足需求的前提下，推荐优先选择 JSON 这种可读性好的序列化方法。</li>
+<li>如果说我们需要超高的性能，或者是带宽有限的情况下，可以使用专用的序列化方法，来提升序列化性能，节省传输流量。不过实现起来很复杂，大部分情况下并不划算。</li>
+</ul>
+<h3 id="为什么不能直接把内存中对象对应的二进制数据直接通过网络发送出去。为什么还需要序列化和反序列化呢"><a href="#为什么不能直接把内存中对象对应的二进制数据直接通过网络发送出去。为什么还需要序列化和反序列化呢" class="headerlink" title="为什么不能直接把内存中对象对应的二进制数据直接通过网络发送出去。为什么还需要序列化和反序列化呢"></a><strong>为什么不能直接把内存中对象对应的二进制数据直接通过网络发送出去。为什么还需要序列化和反序列化呢</strong></h3><p>内存里存的东西，不通用， 不同系统， 不同语言的组织可能都是不一样的， 而且还存在很多引用， 指针，并不是直接数据块。</p>
+<p>序列化， 反序列化， 其实是约定一种标准吧， 大家都按这个标准去弄， 就能跨平台 ， 跨语言。</p>
+<p>虽然都是二进制的数据，但是序列化的二进制数据是通过一定的协议将数据字段进行拼接。第一个优势是：不同的语言都可以遵循这种协议进行解析，实现了跨语言。第二个优势是：这种数据可以直接持久化到磁盘，从磁盘读取后也可以通过这个协议解析出来。</p>
+<h3 id="RPC-不同序列化协议了解吗？优缺点是？各种序列号协议的特点？序列化方式有哪几个，区别是什么，自己写过吗"><a href="#RPC-不同序列化协议了解吗？优缺点是？各种序列号协议的特点？序列化方式有哪几个，区别是什么，自己写过吗" class="headerlink" title="RPC 不同序列化协议了解吗？优缺点是？各种序列号协议的特点？序列化方式有哪几个，区别是什么，自己写过吗"></a>RPC 不同序列化协议了解吗？优缺点是？各种序列号协议的特点？序列化方式有哪几个，区别是什么，自己写过吗</h3><p><img src="1.png"></p>
+<h3 id="为什么选KRYO序列化？（面试官提示了压缩-，java-的压缩算法"><a href="#为什么选KRYO序列化？（面试官提示了压缩-，java-的压缩算法" class="headerlink" title="为什么选KRYO序列化？（面试官提示了压缩)，java 的压缩算法"></a>为什么选KRYO序列化？（面试官提示了压缩)，java 的压缩算法</h3><ul>
+<li><p>使用变长的int和long保证这种基本数据类型序列化后尽量小 </p>
+</li>
+<li><p>需要传入完整类名或者利用 register() 提前将类注册到Kryo上，其类与一个int型的ID相关联，序列中只存放这个ID，因此序列体积就更小 </p>
+</li>
+<li><p>不是线程安全的，要通过ThreadLocal或者创建Kryo线程池来保证线程安全 </p>
+</li>
+<li><p>不需要实现Serializable接口 </p>
+</li>
+<li><p>字段增、减，序列化和反序列化时无法兼容 </p>
+</li>
+<li><p>必须拥有无参构造函数</p>
+</li>
+</ul>
+<h3 id="Kryo原理"><a href="#Kryo原理" class="headerlink" title="Kryo原理"></a>Kryo原理</h3><p>Kryo 通过使用类似于 Java 自带的 ObjectOutputStream 和 ObjectInputStream 的方式来进行对象的序列化和反序列化。但是，Kryo 采用了一些优化策略来提高性能和减小序列化结果的尺寸。</p>
+<p>Kryo 的核心实现包括以下几个方面：</p>
+<ul>
+<li><strong>注册机制</strong>：Kryo 可以预先注册需要序列化的类，以避免在序列化过程中写入完整的类名。这样可以减少序列化结果的尺寸。     </li>
+<li><strong>缓存机制</strong>：Kryo 使用缓存来存储已经序列化或反序列化过的对象，以便复用对象的状态和减少内存分配开销。     </li>
+<li><strong>压缩算法</strong>：Kryo 支持对序列化结果进行压缩，以进一步减小网络传输的负载。</li>
+</ul>
+<h3 id="你说到你自定义了一个简单协议，自定义的协议头里包括哪些内容，多少字节，各自的作用是什么"><a href="#你说到你自定义了一个简单协议，自定义的协议头里包括哪些内容，多少字节，各自的作用是什么" class="headerlink" title="你说到你自定义了一个简单协议，自定义的协议头里包括哪些内容，多少字节，各自的作用是什么"></a>你说到你自定义了一个简单协议，自定义的协议头里包括哪些内容，多少字节，各自的作用是什么</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">*</span>   <span class="token number">0</span>     <span class="token number">1</span>     <span class="token number">2</span>     <span class="token number">3</span>     <span class="token number">4</span>        <span class="token number">5</span>     <span class="token number">6</span>     <span class="token number">7</span>     <span class="token number">8</span>         <span class="token number">9</span>          <span class="token number">10</span>      <span class="token number">11</span>     <span class="token number">12</span>  <span class="token number">13</span>  <span class="token number">14</span>   <span class="token number">15</span> <span class="token number">16</span>
+<span class="token operator">*</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span> <span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>   magic   code        <span class="token operator">|</span>version <span class="token operator">|</span> full length         <span class="token operator">|</span> messageType<span class="token operator">|</span> codec<span class="token operator">|</span>compress<span class="token operator">|</span>    <span class="token class-name">RequestId</span>       <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">+</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                                                                                       <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                         body                                                          <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                                                                                       <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">|</span>                                        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>                                                        <span class="token operator">|</span>
+<span class="token operator">*</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">+</span>
+<span class="token operator">*</span> <span class="token number">4</span>B  magic code（魔法数）   <span class="token number">1</span>B version（版本）   <span class="token number">4</span>B full length（消息长度）    <span class="token number">1</span>B messageType（消息类型）
+<span class="token operator">*</span> <span class="token number">1</span>B compress（压缩类型） <span class="token number">1</span>B codec（序列化类型）    <span class="token number">4</span>B  requestId（请求的<span class="token class-name">Id</span>）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先包含4个字节的魔数，用于筛选消息是否符合自定义协议</p>
+<p>然后是1字节的版本号</p>
+<p>然后是4字节的消息长度位，用来表示消息长度</p>
+<p>然后是1字节的消息类型，表示是请求消息，响应消息还是心跳消息</p>
+<p>然后是一字节的序列化类型，表示采用什么序列化协议</p>
+<p>然后是一字节的压缩类型，表示使用了什么压缩算法</p>
+<p>然后是4字节的请求id，用于判断请求和响应是否对应</p>
+<p>最后是请求体，也就是内容</p>
+<p>本项目采用了kryo进行序列化，我自定义了编码器和解码器，编码就是将消息先按照协议写入魔数等等，然后再将消息体的内容进行序列化，再压缩，最后存入bytebuf中</p>
+<p>解码就是将消息从bytebuf中读取，先按照协议检查魔数等是否对应，如果对应则进行解压缩和反序列化</p>
+<h3 id="对象有一个属性是对象引用，怎么序列化"><a href="#对象有一个属性是对象引用，怎么序列化" class="headerlink" title="对象有一个属性是对象引用，怎么序列化"></a>对象有一个属性是对象引用，怎么序列化</h3><p>首先被引用的那个对象也必须是可序列化的</p>
+<p>而如果多个对象引用了同一个对象b，有可能导致反序列化后，反序列化出多个b对象</p>
+<p>java为了解决这种问题，提供了如下机制：</p>
+<p><img src="2.png"></p>
+<h3 id="如何实现跨语言的序列化或者RPC框架"><a href="#如何实现跨语言的序列化或者RPC框架" class="headerlink" title="如何实现跨语言的序列化或者RPC框架"></a>如何实现跨语言的序列化或者RPC框架</h3><p>RPC框架要想跨语言，本质是在解决<strong>序列化&#x2F;反序列化</strong>的跨语言问题</p>
 
                 
             </div>
