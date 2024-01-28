@@ -559,7 +559,7 @@
 <h3 id="假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡"><a href="#假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡" class="headerlink" title="假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡"></a>假设有3台服务器，性能比为1：2：3，设计一个负载均衡算法能合理进行负载均衡</h3><p>我们可以使用加权轮询算法</p>
 <p>我们按照性能给3个服务器分别设置权重为10,20,30总和权重为60，这样每个服务器就在0-60里占有一部分空间，然后我们取0-60的随机数，落入哪个区间就分配给哪个服务器，这样只要服务次数够多，就会无线接近权重分配.缺点是如果一个服务器权重过大，那么一段时间就会有大部分请求落入其中，造成不平衡。</p>
 <p>在此基础上，平滑加权算法来了.</p>
-<p>每个服务器不仅有不变的配置权重，还有当前权重，每次请求到达时，所有节点就在当前权重基础上加一个配置权重值，然后选择当前权重最大的节点，当处理完毕后，处理的那个节点权重值需要减去总“配置权重值”，在这里也就是60，然后重复这个过程,nginx就是这个算法</p>
+<p>每个服务器不仅有不变的配置权重，还有当前权重，每次请求到达时，所有节点就在当前权重基础上加一个配置权重值那就是60，然后选择当前权重最大的节点，当处理完毕后，处理的那个节点权重值需要减去总“配置权重值”，在这里也就是60，然后重复这个过程,nginx就是这个算法</p>
 <h3 id="针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法"><a href="#针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法" class="headerlink" title="针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法"></a>针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法</h3><p>我超，不会</p>
 <h2 id="来自牛客高启盛-携程面试"><a href="#来自牛客高启盛-携程面试" class="headerlink" title="来自牛客高启盛-携程面试"></a>来自牛客高启盛-携程面试</h2><h3 id="客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗"><a href="#客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗" class="headerlink" title="客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗"></a>客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗</h3><p>并不是实际访问了注册中心，我设计了SERVICE_ADDRESS_MAP，缓存了每个服务对应的子节点列表，当客户端进行远程调用的时候，会先去这个缓存里寻找，通过一致性哈希算法选择一个节点。</p>
 <h3 id="获取结果是同步还是异步的"><a href="#获取结果是同步还是异步的" class="headerlink" title="获取结果是同步还是异步的"></a>获取结果是同步还是异步的</h3><p>目前是异步的，我使用了CompletableFuture对象来包装RpcResponse,然后将他存入一个名为unprocessedRequests的map里，一开始future里并没有内容，等客户端调用complete方法后，才会在方法内执行future.complete，这才获得了具体的rpc返回响应</p>
@@ -640,7 +640,6 @@
 <p><strong>总结</strong>：<br>  RPC 的 TCP 方式主要用于公司内部的服务调用，性能消耗低，传输效率高。HTTP主要用于对外的异构环境，浏览器接口调用，APP接口调用，第三方接口调用等。</p>
 <h3 id="调用如何在客户端无感（动态代理）"><a href="#调用如何在客户端无感（动态代理）" class="headerlink" title="调用如何在客户端无感（动态代理）"></a>调用如何在客户端无感（动态代理）</h3><p>项目中使用了JDK动态代理，具体流程被包含在了通过注解自动注册服务的过程当中，对每一个bean检查他是否有@RpcReference注解，如果有说明他是一个消费服务，需要调用远程方法，那么就通过RpcClientProxy创建了一个代理对象 clientProxy，通过反射将clientProxy映射到原来的字段值上，然后会在方法调用时委托给invoke方法，invoke方法负责执行远程调用，而对于客户端来讲，和调用本地方法的外观是一样的。</p>
 <h3 id="动态代理和静态代理的区别"><a href="#动态代理和静态代理的区别" class="headerlink" title="动态代理和静态代理的区别"></a>动态代理和静态代理的区别</h3><p>静态代理的代理对象和被代理对象在代理之前就已经确定，它们都实现相同的接口或继承相同的抽象类。<strong>静态代理中，我们对目标对象的每个方法的增强都是手动完成的</strong></p>
-<p>静态代理模式一般由业务实现类和业务代理类组成，业务实现类里面实现主要的业务逻辑，业务代理类负责在业务方法调用的前后作一些你需要的处理，以实现业务逻辑与业务方法外的功能解耦，减少了对业务方法的入侵。</p>
 <p><strong>从 JVM 角度来说，动态代理是在运行时动态生成类字节码，并加载到 JVM 中的。</strong></p>
 <p>JDK 动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用业务方法前调用<code>InvocationHandler</code> 处理。代理类必须实现 <code>InvocationHandler</code> 接口，并且，JDK 动态代理只能代理实现了接口的类</p>
 <h3 id="如果想代理没有实现接口的对象"><a href="#如果想代理没有实现接口的对象" class="headerlink" title="如果想代理没有实现接口的对象"></a>如果想代理没有实现接口的对象</h3><p><a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>(Code Generation Library)是一个基于<a target="_blank" rel="noopener" href="http://www.baeldung.com/java-asm">ASM</a>的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB 通过继承方式实现代理。很多知名的开源框架都使用到了<a target="_blank" rel="noopener" href="https://github.com/cglib/cglib">CGLIB</a>， 例如 Spring 中的 AOP 模块中：如果目标对象实现了接口，则默认采用 JDK 动态代理，否则采用 CGLIB 动态代理。</p>
@@ -693,7 +692,7 @@
 </li>
 </ul>
 <h3 id="简单说下-Netty-中的重要组件"><a href="#简单说下-Netty-中的重要组件" class="headerlink" title="简单说下 Netty 中的重要组件"></a>简单说下 Netty 中的重要组件</h3><ul>
-<li><p>Channel：Netty 网络操作抽象类，它除了包括基本的 I&#x2F;O 操作，如 bind、connect、read、write 等。 </p>
+<li><p>Channel：Netty 网络操作抽象类，它包括基本的 I&#x2F;O 操作，如 bind、connect、read、write 等。 </p>
 </li>
 <li><p>EventLoop：主要是配合 Channel 处理 I&#x2F;O 操作，用来处理连接的生命周期中所发生的事情。 </p>
 </li>
@@ -960,6 +959,96 @@
 <p>java为了解决这种问题，提供了如下机制：</p>
 <p><img src="2.png"></p>
 <h3 id="如何实现跨语言的序列化或者RPC框架"><a href="#如何实现跨语言的序列化或者RPC框架" class="headerlink" title="如何实现跨语言的序列化或者RPC框架"></a>如何实现跨语言的序列化或者RPC框架</h3><p>RPC框架要想跨语言，本质是在解决<strong>序列化&#x2F;反序列化</strong>的跨语言问题</p>
+<h2 id="牛客-雨余羽-Netty部分"><a href="#牛客-雨余羽-Netty部分" class="headerlink" title="牛客-雨余羽-Netty部分"></a>牛客-雨余羽-Netty部分</h2><h3 id="TCP-的粘包的概念是对的吗"><a href="#TCP-的粘包的概念是对的吗" class="headerlink" title="TCP 的粘包的概念是对的吗"></a>TCP 的粘包的概念是对的吗</h3><p>TCP 是面向字节流的，所以这个概念本身是一个伪概念，本身就是可以粘的。但是这种现象还是要解决的</p>
+<h3 id="简述AIO、BIO、NIO的具体使用、区别及原理"><a href="#简述AIO、BIO、NIO的具体使用、区别及原理" class="headerlink" title="简述AIO、BIO、NIO的具体使用、区别及原理"></a>简述AIO、BIO、NIO的具体使用、区别及原理</h3><ul>
+<li><p>BIO (Blocking I&#x2F;O): 同步阻塞 I&#x2F;O 模式，数据的读取写入必须阻塞在一个线程内等待其完成。在客户端连接数量不高的情况下，是没问题的。但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I&#x2F;O 处理模型来应对更高的并发量。</p>
+</li>
+<li><p>NIO (Non-blocking&#x2F;New I&#x2F;O): NIO 是一种同步非阻塞的 I&#x2F;O 模型，服务器实现模式为一个线程处理多个请求(连接)，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有 I&#x2F;O 请求就进行处理。对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发</p>
+</li>
+<li><p>AIO (Asynchronous I&#x2F;O): AIO 也就是 NIO 2。AIO 是异步 IO 的缩写，虽然 NIO 在网络操作中，提供了非阻塞的方法，但是 NIO 的 IO 行为还是同步的。对于 NIO 来说，我们的业务线程是在 IO 操作准备好时，得到通知，接着就由这个线程自行进行 IO 操作，IO 操作本身是同步的。而AIO中，客户端的I&#x2F;O请求都是由OS先完成了再通知服务器应用去启动线程进行处理。我发现就目前来说 AIO 的应用还不是很广泛，Netty 之前也尝试使用过 AIO，不过又放弃了。</p>
+</li>
+</ul>
+<h3 id="假设有100个连接，采用NIO的方式要服务端要分配几个线程，采用BIO的方式呢"><a href="#假设有100个连接，采用NIO的方式要服务端要分配几个线程，采用BIO的方式呢" class="headerlink" title="假设有100个连接，采用NIO的方式要服务端要分配几个线程，采用BIO的方式呢"></a>假设有100个连接，采用NIO的方式要服务端要分配几个线程，采用BIO的方式呢</h3><p>1,100</p>
+<h3 id="为啥要AIO不用多线程，不是一样可以加速吗"><a href="#为啥要AIO不用多线程，不是一样可以加速吗" class="headerlink" title="为啥要AIO不用多线程，不是一样可以加速吗"></a>为啥要AIO不用多线程，不是一样可以加速吗</h3><p>缺点是线程的创建和切换会带来额外的开销，而且随着连接数的增加，线程数量也会增加，可能导致系统资源不足。</p>
+<h3 id="NIO中Channel的作用"><a href="#NIO中Channel的作用" class="headerlink" title="NIO中Channel的作用"></a>NIO中Channel的作用</h3><p>Channel是一个通道，可以通过它读取和写入数据，它就像是水管一样，网络数据通过 Channel 进行读取和写入。通道和流的不同之处在与通道是双向的，流只是在一个方向上移动（一个流必须是 InputStream 或者 OutputStram 的子类），而且通道上可以用于读，写或者同事用于读写。因为 Channel 是全双工的，所以它可以比流更好的映射底层操作系统的 API。</p>
+<p>NIO 中通过 Channel 封装了对数据源的操作，通过channel 我们可以操作数据源， 但是又不关心数据源的具体数据结构。这个数据源可能是很多种，比如，可以是文件，也可是网络 socket 。 在大多数应用中，channel 与文件描述符或者 socket 是一一对应的。 channel 在字节缓冲区和位于通道另一侧的实体（通常是一个文件或套接字）之间有效的传输数据。</p>
+<h3 id="NIO中的重要组件？"><a href="#NIO中的重要组件？" class="headerlink" title="NIO中的重要组件？"></a>NIO中的重要组件？</h3><p>Java NIO上有三个重要组件： <code>Channel</code>（通道），Buffer（缓冲区），Selector（选择器）。</p>
+<ul>
+<li>Channel</li>
+</ul>
+<p>在IO中，java的IO操作通过输入流（Input Stream）和输出流（Output Stream）进行输入和输出。JavaNIO中，Channel相当于输入流和输出流的结合体。既可以从Channel（通道）中读取，也可以向Channel（通道）写入。</p>
+<ul>
+<li>Buffer</li>
+</ul>
+<p>对Channel（通道）的读取操作，就是把数据从通道读取到缓冲区；</p>
+<p>对Channel（通道）的写入操作，就是将数据从缓冲区写入通道中；</p>
+<ul>
+<li>Selector</li>
+</ul>
+<p>Selector对应“IO多路复用”模型中的select。它是一个IO事件的查询器，通过选择器，一个线程可以查询多个通道的IO事件的就绪状态。</p>
+<h3 id="为什么选用Netty来做通信框架？还知道其他网络通信框架"><a href="#为什么选用Netty来做通信框架？还知道其他网络通信框架" class="headerlink" title="为什么选用Netty来做通信框架？还知道其他网络通信框架"></a>为什么选用Netty来做通信框架？还知道其他网络通信框架</h3><p>这个问题相当于是问：netty有哪些优点：</p>
+<ul>
+<li>统一的 API，支持多种传输类型，阻塞和非阻塞的。</li>
+<li>简单而强大的线程模型。</li>
+<li>自带编解码器解决 TCP 粘包&#x2F;拆包问题。</li>
+<li>自带各种协议栈。</li>
+<li>真正的无连接数据包套接字支持。</li>
+<li>比直接使用 Java 核心 API 有更高的吞吐量、更低的延迟、更低的资源消耗和更少的内存复制。</li>
+<li>安全性不错，有完整的 SSL&#x2F;TLS 以及 StartTLS 支持。</li>
+<li>社区活跃、</li>
+<li>成熟稳定，经历了大型项目的使用和考验，而且很多开源项目都使用到了 Netty， 比如我们经常接触的 Dubbo、RocketMQ 等等。</li>
+</ul>
+<p><strong>Apache MINA</strong></p>
+<p><strong>Node.js</strong></p>
+<p><strong>gRPC</strong></p>
+<h3 id="为什么Netty快，性能高xxx"><a href="#为什么Netty快，性能高xxx" class="headerlink" title="为什么Netty快，性能高xxx"></a>为什么Netty快，性能高xxx</h3><ul>
+<li>IO 线程模型：同步非阻塞，用最少的资源做更多的事。 </li>
+<li>内存零拷贝：尽量减少不必要的内存拷贝，实现了更高效率的传输。 </li>
+<li>内存池设计：申请的内存可以重用，主要指直接内存。内部实现是用一颗二叉查找树管理内存分配情况。 </li>
+<li>串行化处理读写：避免使用锁带来的性能开销。 </li>
+<li>高性能序列化协议：支持 protobuf 等高性能序列化协议。</li>
+</ul>
+<h3 id="netty-bytebuf工作原理，和NIO里buffer区别"><a href="#netty-bytebuf工作原理，和NIO里buffer区别" class="headerlink" title="netty bytebuf工作原理，和NIO里buffer区别"></a>netty bytebuf工作原理，和NIO里buffer区别</h3><p>那就先回答他的零拷贝那些东西吧，然后区别呢</p>
+<p>就是：</p>
+<ol>
+<li><strong>池化：</strong> Netty 的 <code>ByteBuf</code> 支持池化，而 Java NIO 的 <code>ByteBuffer</code> 不支持。池化可以提高内存使用效率，减轻 GC 压力。</li>
+<li><strong>可扩容：</strong> <code>ByteBuf</code> 可以自动扩容，而 <code>ByteBuffer</code> 在创建时需要指定容量，无法自动扩容。</li>
+<li><strong>读写索引分离：</strong> <code>ByteBuf</code> 允许读写索引分离移动，提供更灵活的读写操作，而 <code>ByteBuffer</code> 的读写索引总是一起移动。</li>
+<li><strong>引用计数：</strong> <code>ByteBuf</code> 支持引用计数，可以更好地管理内存，防止内存泄漏。</li>
+</ol>
+<h3 id="Netty的使用场景"><a href="#Netty的使用场景" class="headerlink" title="Netty的使用场景"></a>Netty的使用场景</h3><ul>
+<li><p>作为 RPC 框架的网络通信工具 ： 我们在分布式系统中，不同服务节点之间经常需要相互调用，这个时候就需要 RPC 框架了。不同服务节点的通信是如何做的呢？可以使用 Netty 来做。比如我调用另外一个节点的方法的话，至少是要让对方知道我调用的是哪个类中的哪个方法以及相关参数吧！</p>
+</li>
+<li><p>实现一个自己的 HTTP 服务器 ：通过 Netty 我们可以自己实现一个简单的 HTTP 服务器，这个大家应该不陌生。说到 HTTP 服务器的话，作为 Java 后端开发，我们一般使用 Tomcat 比较多。一个最基本的 HTTP 服务器可要以处理常见的 HTTP Method 的请求，比如 POST 请求、GET 请求等等。</p>
+</li>
+<li><p>实现一个即时通讯系统 ： 使用 Netty 我们可以实现一个可以聊天类似微信的即时通讯系统，这方面的开源项目还蛮多的，可以自行去 Github 找一找。</p>
+</li>
+<li><p>实现消息推送系统 ：市面上有很多消息推送系统都是基于 Netty 来做的。</p>
+</li>
+</ul>
+<h3 id="RPC过程网络上发生了什么"><a href="#RPC过程网络上发生了什么" class="headerlink" title="RPC过程网络上发生了什么"></a>RPC过程网络上发生了什么</h3><p>不知道</p>
+<h3 id="RPC多个请求是在一个连接完成的吗"><a href="#RPC多个请求是在一个连接完成的吗" class="headerlink" title="RPC多个请求是在一个连接完成的吗"></a>RPC多个请求是在一个连接完成的吗</h3><ol>
+<li><strong>短连接模型：</strong> 每次RPC请求都会建立一个新的连接，请求处理完成后连接立即关闭。这样的模型类似于HTTP的短连接模型，每个请求都是相互独立的。在这种模型下，多个请求可能会通过不同的连接完成。</li>
+<li><strong>长连接模型：</strong> 通过一个长期存在的连接（通常是TCP连接），多个RPC请求可以在同一个连接上复用。连接在一段时间内保持打开状态，多个请求和响应可以通过这个连接来回传递。这样可以减少连接的建立和关闭开销，提高效率。</li>
+</ol>
+<h3 id="Netty服务调用如何变成同步的"><a href="#Netty服务调用如何变成同步的" class="headerlink" title="Netty服务调用如何变成同步的"></a>Netty服务调用如何变成同步的</h3><p>它们可以用于异步操作的同步化。你可以通过调用<code>sync()</code>方法来等待一个Future完成，或者通过<code>await()</code>方法等待Promise完成。这种方式在Netty的异步模型中是比较常见的。</p>
+<h3 id="Netty异步编程怎么做的"><a href="#Netty异步编程怎么做的" class="headerlink" title="Netty异步编程怎么做的"></a>Netty异步编程怎么做的</h3><p><code>Future</code>表示一个异步操作的结果，而<code>Promise</code>是<code>Future</code>的扩展，它允许设置异步操作的结果。通过<code>Future</code>和<code>Promise</code>，你可以实现异步操作的监听和等待。 在Netty中，你可以通过回调机制注册监听器来处理异步操作的结果。例如，在写数据完成后触发回调，或者在接收到新连接时触发回调。</p>
+<h3 id="基于Netty实现通信，使用了哪些TCP优化参数"><a href="#基于Netty实现通信，使用了哪些TCP优化参数" class="headerlink" title="基于Netty实现通信，使用了哪些TCP优化参数"></a>基于Netty实现通信，使用了哪些TCP优化参数</h3><p><strong>TCP_NODELAY：</strong> 关闭Nagle算法，减少延迟。Nagle算法通过将小的数据包合并成一个大的数据包来提高网络的利用率，但是对于低延迟要求的应用，可以通过禁用Nagle算法来减小延迟。</p>
+<p><strong>SO_KEEPALIVE：</strong> 开启TCP keepalive机制，用于检测连接是否还存活。通过定期发送TCP的Keepalive探测包，可以及时发现连接断开，避免因连接长时间不活跃而被中断。</p>
+<p><strong>SO_BACKLOG：</strong> 设置TCP连接的等待队列大小。当服务器处理连接请求的速度不够快时，连接请求将被放入等待队列，这个参数就是设置等待队列的大小。</p>
+<p><strong>TCP_FASTOPEN：</strong> 开启TCP Fast Open特性，允许在三次握手的同时发送数据。可以减少连接建立的延迟。</p>
+<h3 id="Netty中的select过程"><a href="#Netty中的select过程" class="headerlink" title="Netty中的select过程"></a>Netty中的select过程</h3><p><strong>Selector 的创建：</strong> 在 Netty 中，创建 Selector 是通过 <code>SelectorProvider</code> 提供的工厂方法实现的。</p>
+<p><strong>Channel 的注册：</strong> 在 Netty 中，Channel（比如 <code>ServerSocketChannel</code>、<code>SocketChannel</code>）被注册到 Selector 上，以便 Selector 监听这些 Channel 上的事件。</p>
+<p><strong>事件监听：</strong> Selector 通过 <code>select</code> 方法监听已注册的 Channel 上发生的事件。<code>select</code> 方法是一个阻塞方法，直到有感兴趣的事件发生或超时。</p>
+<p><strong>处理事件：</strong> 一旦 <code>select</code> 方法返回，就可以通过 <code>selectedKeys</code> 获取已经就绪的 SelectionKey 集合，然后可以迭代这个集合，处理每个就绪的 Channel。</p>
+<p><strong>取消注册：</strong> 在处理完一个事件后，通常会取消对应 Channel 的注册，以防止该 Channel 的事件再次被触发。</p>
+<h3 id="怎么实现保持长连接的"><a href="#怎么实现保持长连接的" class="headerlink" title="怎么实现保持长连接的"></a>怎么实现保持长连接的</h3><p>TCP_KEEP_ALIVE</p>
+<h3 id="多少个线程，为什么这么设置？"><a href="#多少个线程，为什么这么设置？" class="headerlink" title="多少个线程，为什么这么设置？"></a>多少个线程，为什么这么设置？</h3><p>netty自带的，默认CPU核心数*2</p>
+<p>为什么：</p>
+<ul>
+<li>在 I&#x2F;O 密集型任务中，可能存在部分线程阻塞在 I&#x2F;O 操作上，等待数据的读取或写入。为了充分利用 CPU，可以增加 workerGroup 的线程数。</li>
+<li>对于 CPU 密集型任务，如果线程数多于 CPU 核心数，由于线程切换的开销，可能会导致性能下降。因此，一般不会将线程数设置得太多。</li>
+</ul>
 
                 
             </div>

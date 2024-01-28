@@ -421,7 +421,8 @@
 <h2 id="上海三菱"><a href="#上海三菱" class="headerlink" title="上海三菱"></a>上海三菱</h2><h3 id="为什么用redis存储session而不是spring-session？"><a href="#为什么用redis存储session而不是spring-session？" class="headerlink" title="为什么用redis存储session而不是spring session？"></a>为什么用redis存储session而不是spring session？</h3><p>因为我有三台机器，轮询策略下可能会把请求负载均衡到没session那台</p>
 <h3 id="那用spring-session可以通过配置nginx避免用redis吗"><a href="#那用spring-session可以通过配置nginx避免用redis吗" class="headerlink" title="那用spring session可以通过配置nginx避免用redis吗"></a>那用spring session可以通过配置nginx避免用redis吗</h3><p>用ip_hash策略</p>
 <h2 id="某小厂"><a href="#某小厂" class="headerlink" title="某小厂"></a>某小厂</h2><h3 id="自定义全局Id是怎么实现的"><a href="#自定义全局Id是怎么实现的" class="headerlink" title="自定义全局Id是怎么实现的"></a>自定义全局Id是怎么实现的</h3><p>项目中全局id由三部分组成：符号位+32位时间戳+32位序列号，符号位默认为0，时间戳为当前时间以秒为单位减去一个开始时间戳，序列号存放在redis当中，的键为固定前缀拼接上当前日期，值设置为自增，这样使得不同天的序列号对应不同的key，保证id不被用完</p>
-<h3 id="Id为什么不会重复？不会同时有多个线程从redis中取吗？"><a href="#Id为什么不会重复？不会同时有多个线程从redis中取吗？" class="headerlink" title="Id为什么不会重复？不会同时有多个线程从redis中取吗？"></a>Id为什么不会重复？不会同时有多个线程从redis中取吗？</h3><h3 id="怎么用乐观锁解决超卖问题的"><a href="#怎么用乐观锁解决超卖问题的" class="headerlink" title="怎么用乐观锁解决超卖问题的"></a>怎么用乐观锁解决超卖问题的</h3><p>乐观锁其实就是不加锁，而是在更新数据时区判断数据有没有被其他线程修改，项目里的使用方式一开始是，当扣减库存时，先去判断现在数据库内的库存和先前查找到的库存值是否相同，如果不同则说明被其他线程修改过，这种方法保证了安全，但是会带来很多线程扣减失败的问题。</p>
+<h3 id="Id为什么不会重复？不会同时有多个线程从redis中取吗？"><a href="#Id为什么不会重复？不会同时有多个线程从redis中取吗？" class="headerlink" title="Id为什么不会重复？不会同时有多个线程从redis中取吗？"></a>Id为什么不会重复？不会同时有多个线程从redis中取吗？</h3><p><strong>INCR 命令</strong>是原子操作，这意味着当多个客户端同时对同一个键执行 INCR 命令时，Redis 会确保操作的原子性。</p>
+<h3 id="怎么用乐观锁解决超卖问题的"><a href="#怎么用乐观锁解决超卖问题的" class="headerlink" title="怎么用乐观锁解决超卖问题的"></a>怎么用乐观锁解决超卖问题的</h3><p>乐观锁其实就是不加锁，而是在更新数据时区判断数据有没有被其他线程修改，项目里的使用方式一开始是，当扣减库存时，先去判断现在数据库内的库存和先前查找到的库存值是否相同，如果不同则说明被其他线程修改过，这种方法保证了安全，但是会带来很多线程扣减失败的问题。</p>
 <p>所以新的解决办法是，只判断库存是否大于0，如果大于0则可以扣减，否则说明超卖</p>
 <h3 id="Redis关注取关是怎么设计的？"><a href="#Redis关注取关是怎么设计的？" class="headerlink" title="Redis关注取关是怎么设计的？"></a>Redis关注取关是怎么设计的？</h3><p>关注取关本身是用mysql实现的，在follow表中有user_id和follow_user_id字段，一个用户可以有多个关注他的用户，当关注时就插入一条数据，取关就删除一条数据</p>
 <p>而共同关注是用redis的set数据类型实现，将两个人的关注分别放到set中，再使用set的求交集方法intersect，得到共同关注的人</p>
@@ -513,7 +514,8 @@
 <p>当使用ziplist时，逻辑是将score和element连续存储</p>
 <h3 id="ZSet的范围查询的时间复杂度是多少"><a href="#ZSet的范围查询的时间复杂度是多少" class="headerlink" title="ZSet的范围查询的时间复杂度是多少"></a>ZSet的范围查询的时间复杂度是多少</h3><p><code>ZRANGE</code> 或 <code>ZRANGEBYSCORE</code>，其时间复杂度是 O(log N + M)，其中 N 是有序集合中的元素数量，M 是返回的元素数量。</p>
 <p>这是因为 Redis 内部使用了跳跃表（skip list）实现有序集合，而跳跃表的查询时间复杂度是 O(log N)。在执行范围查询时，Redis首先定位到开始的元素，然后按顺序移动到结束的元素，因此时间复杂度还取决于返回的元素数量 M。</p>
-<h2 id="借贷宝"><a href="#借贷宝" class="headerlink" title="借贷宝"></a>借贷宝</h2><h3 id="项目中怎么使用Redis实现登录的"><a href="#项目中怎么使用Redis实现登录的" class="headerlink" title="项目中怎么使用Redis实现登录的"></a>项目中怎么使用Redis实现登录的</h3><p>项目里是使用string类型来存储，key是前端带来的随机token，value是对应的验证码，在登录的时候，首先提交手机号和验证码，校验验证码，如果一致那么从redis当中找是否有对应的用户，如果存在则登录成功，如果不存在则视为注册，创建新用户，将信息保存到数据库，再保存到redis，流程结束。</p>
+<h2 id="借贷宝"><a href="#借贷宝" class="headerlink" title="借贷宝"></a>借贷宝</h2><h3 id="项目中怎么使用Redis实现登录的"><a href="#项目中怎么使用Redis实现登录的" class="headerlink" title="项目中怎么使用Redis实现登录的"></a>项目中怎么使用Redis实现登录的</h3><p>mysql当中存放用户id和手机号</p>
+<p>项目里是使用hash类型来存储用户，key随机生成的登录令牌，value是由手机号等信息包装成的user对象，在登录的时候，首先提交手机号和验证码，以手机号为key读取验证码并且校验验证码，如果一致那么从mysql当中找是否有对应的用户，如果存在则登录成功，如果不存在则视为注册，创建新用户，将信息保存到数据库，再包装成user对象保存到redis，流程结束。</p>
 <h3 id="怎么定义热点数据的-使用哪种数据结构？"><a href="#怎么定义热点数据的-使用哪种数据结构？" class="headerlink" title="怎么定义热点数据的?使用哪种数据结构？"></a>怎么定义热点数据的?使用哪种数据结构？</h3><p>热点数据在项目中就是秒杀优惠券，用string来存储</p>
 <h2 id="美团优选"><a href="#美团优选" class="headerlink" title="美团优选"></a>美团优选</h2><h3 id="超卖问题为何放在redis里判断"><a href="#超卖问题为何放在redis里判断" class="headerlink" title="超卖问题为何放在redis里判断"></a>超卖问题为何放在redis里判断</h3><h3 id="分布式锁为什么选择redission"><a href="#分布式锁为什么选择redission" class="headerlink" title="分布式锁为什么选择redission"></a>分布式锁为什么选择redission</h3><p>因为redission是可重入并且提供了锁重试和看门狗机制，可以自动实现续期，然后就讲看门狗机制的实现。。。</p>
 <h2 id="几个问题"><a href="#几个问题" class="headerlink" title="几个问题"></a>几个问题</h2><h3 id="点赞排行用MySQL可以吗"><a href="#点赞排行用MySQL可以吗" class="headerlink" title="点赞排行用MySQL可以吗"></a>点赞排行用MySQL可以吗</h3><p>也可以，但是我认为还是用redis更好，如果用string类型内存过大的话，可以尝试使用bitmap来保存点赞，bitmap以位的形式保存数据，可以有效的压缩空间。</p>
@@ -558,7 +560,11 @@
 <h3 id="点赞排行你是如何实现的"><a href="#点赞排行你是如何实现的" class="headerlink" title="点赞排行你是如何实现的"></a>点赞排行你是如何实现的</h3><p>之前的点赞是放到set集合，那么要做排行，显示最近点赞的前五个用户，需要用到sortedset数据结构，也就是说，按照score值进行排名</p>
 <p>socre值是使用系统时间</p>
 <p>那么查询点赞的前五个用户时只要使用opsforzset.range即可</p>
-<h3 id><a href="#" class="headerlink" title></a></h3>
+<h2 id="傻逼编程满天星网站"><a href="#傻逼编程满天星网站" class="headerlink" title="傻逼编程满天星网站"></a>傻逼编程满天星网站</h2><h3 id="为什么要用-ThreadLocal-存储用户信息"><a href="#为什么要用-ThreadLocal-存储用户信息" class="headerlink" title="为什么要用 ThreadLocal 存储用户信息"></a>为什么要用 ThreadLocal 存储用户信息</h3><p>很多项目中需要在代码中使用当前登录用户的信息，但是又不方便把保存用户信息的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=session&spm=1001.2101.3001.7020">session</a>对象传来传去，这种情况下，就可以考虑使用 ThreadLocal。ThreadLocal是一个依附于本地线程的变量，按照我的理解，每次对<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E6%9C%8D%E5%8A%A1%E5%99%A8&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">服务器</a>请求，都会使用到一个线程，<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=ThreadLocal&spm=1001.2101.3001.7020">ThreadLocal</a>的作用就是在这个线程的使用过程中只为这个线程所用。</p>
+<p>ThreadLocal(线程本地变量)通常理解为“采用了空间换时间的设计思想，主要用来实现在多线程环境下的线程安全和保存线程上下文中的变量”。在实际的项目开发中（比如2C APP程序的服务器端程序），通常在APP调用服务端API接口的时候，需要token（登录）验证并且在具体的方法中可能会使用到当前登录账户的更多信息（比如当前登录账户的用户ID）。以前的做法，我们喜欢把（通过token获取）用户登录信息放在http请求的request请求对象中，但是这样做是耦合性很强，比较相同的代码重复使用。这种情况使用ThreadLocal来实现会很合适。</p>
+<h3 id="关注功能是如何实现的"><a href="#关注功能是如何实现的" class="headerlink" title="关注功能是如何实现的"></a>关注功能是如何实现的</h3><p>关注和取关是基于mysql实现的，follow表当中记录了用户和关注他的用户的信息，关注就添加一条，取消关注就删除一条记录即可</p>
+<p>共同关注功能是基于set类型实现的，intersect方法</p>
+
                 
             </div>
             <hr/>
