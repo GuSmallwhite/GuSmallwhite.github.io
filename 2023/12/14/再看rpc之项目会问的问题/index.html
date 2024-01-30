@@ -1049,6 +1049,96 @@
 <li>在 I&#x2F;O 密集型任务中，可能存在部分线程阻塞在 I&#x2F;O 操作上，等待数据的读取或写入。为了充分利用 CPU，可以增加 workerGroup 的线程数。</li>
 <li>对于 CPU 密集型任务，如果线程数多于 CPU 核心数，由于线程切换的开销，可能会导致性能下降。因此，一般不会将线程数设置得太多。</li>
 </ul>
+<h2 id="牛客-雨余羽-负载均衡"><a href="#牛客-雨余羽-负载均衡" class="headerlink" title="牛客-雨余羽-负载均衡"></a>牛客-雨余羽-负载均衡</h2><h3 id="项目中负载均衡算法用到那些"><a href="#项目中负载均衡算法用到那些" class="headerlink" title="项目中负载均衡算法用到那些"></a>项目中负载均衡算法用到那些</h3><p>随机和一致性哈希</p>
+<h3 id="解释一下什么是负载均衡"><a href="#解释一下什么是负载均衡" class="headerlink" title="解释一下什么是负载均衡"></a>解释一下什么是负载均衡</h3><p>指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行</p>
+<p>之后结合算法回答</p>
+<h3 id="负载均衡有哪些策略"><a href="#负载均衡有哪些策略" class="headerlink" title="负载均衡有哪些策略"></a>负载均衡有哪些策略</h3><ol>
+<li>RandomLoadBalance:随机负载均衡。随机的选择一个。是Dubbo的<strong>默认</strong>负载均衡策略(Dubbo 中的随机负载是按照权重设置随机概率)。</li>
+</ol>
+<p>问题：存在慢的提供者请求的问题，比如：第二胎机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上</p>
+<ol start="2">
+<li><p>RoundRobinLoadBalance:轮询负载均衡。轮询选择一个，其实是平滑加权算法，也就是说轮询到的节点执行后要减去全部权重</p>
+</li>
+<li><p>LeastActiveLoadBalance:最少活跃调用数，相同活跃数的随机。活跃数指调用前后计数差（针对特定提供者：请求发送数 - 响应返回数）。</p>
+</li>
+</ol>
+<p>好处：使慢的 Provider 收到更少请求，因为越慢的 Provider 的调用前后计数差会越大。</p>
+<ol start="4">
+<li>ConsistentHashLoadBalance:一致性哈希负载均衡。一致性hash：添加删除机器前后映射关系一致，当然，不是严格一致。实现的关键是环形Hash空间。将数据和机器都hash到环上，数据映射到顺时针离自己最近的机器中。</li>
+</ol>
+<p>好处：当某一台提供者挂时，原本该发往该提供者的请求，基于虚拟节点，平摊到其他提供者，不会引起剧烈变动</p>
+<h3 id="RPC调用中使用随机算法和轮转算法做负载均衡的优缺点"><a href="#RPC调用中使用随机算法和轮转算法做负载均衡的优缺点" class="headerlink" title="RPC调用中使用随机算法和轮转算法做负载均衡的优缺点"></a>RPC调用中使用随机算法和轮转算法做负载均衡的优缺点</h3><p>优点：实现简单，水平扩展方便</p>
+<p>缺点：因为相同的请求会被落到不同的机器上，浪费内存啊，内存有限，Cache会被淘汰，频繁淘汰，当然使得命中率低下啊。</p>
+<h3 id="dubbo中一致性哈希算法的实现（你的项目中"><a href="#dubbo中一致性哈希算法的实现（你的项目中" class="headerlink" title="dubbo中一致性哈希算法的实现（你的项目中"></a>dubbo中一致性哈希算法的实现（你的项目中</h3><p>我的 项目的一致性哈希算法是参考了dubbo的实现</p>
+<p>dubbo的实现流程是这样的，其实主要就是解决一个映射和选择的问题</p>
+<p><strong>ConsistentHashLoadBalance类：</strong></p>
+<ul>
+<li><code>ConsistentHashLoadBalance</code>类是Dubbo中一致性哈希负载均衡算法的入口。</li>
+<li>通过调用<code>doSelect</code>方法实现结点的选择。在<code>doSelect</code>方法中，根据调用的方法名和调用列表的hashCode，获取或创建了<code>ConsistentHashSelector</code>对象。</li>
+<li><code>ConsistentHashSelector</code>对象负责具体的结点选择。</li>
+</ul>
+<p><strong>ConsistentHashSelector类：</strong></p>
+<ul>
+<li><code>ConsistentHashSelector</code>类内部维护了一个<code>TreeMap&lt;Long, Invoker&lt;T&gt;&gt; virtualInvokers</code>，其中<code>Long</code>表示虚拟结点的哈希值，<code>Invoker&lt;T&gt;</code>表示服务提供者。</li>
+<li>在构造函数中，通过MD5算法为每个服务提供者生成一定数量（<code>replicaNumber</code>）的虚拟结点，并将它们放入<code>virtualInvokers</code>中。这些虚拟结点分布在哈希环上。</li>
+<li>在<code>select</code>方法中，根据调用参数生成key，key默认是invoker的第一个参数，再通过MD5算法生成哈希值。然后调用<code>sekectForKey</code>方法选择最终的服务提供者。</li>
+</ul>
+<p><strong>sekectForKey方法：</strong></p>
+<ul>
+<li><code>sekectForKey</code>方法负责根据哈希值在哈希环上选择服务提供者。</li>
+<li>如果哈希值直接匹配到某个虚拟结点的key，则直接返回对应的服务提供者。</li>
+<li>如果没有直接匹配，找到一个最小上界的key所对应的结点。这通过<code>SortedMap&lt;Long, Invoker&lt;T&gt;&gt; tailMap = virtualInvokers.tailMap(key);</code> 实现，即找到哈希环上大于等于当前哈希值的部分。</li>
+<li>如果<code>tailMap</code>为空，说明当前哈希值位于环的末尾，需要选择环的起始处，即<code>virtualInvokers</code>的第一个结点。</li>
+</ul>
+<h3 id="Dubbo为什么推荐基于随机的负载均衡"><a href="#Dubbo为什么推荐基于随机的负载均衡" class="headerlink" title="Dubbo为什么推荐基于随机的负载均衡"></a>Dubbo为什么推荐基于随机的负载均衡</h3><p>1.实现简单，水平扩展方便</p>
+<p>2.在一个截面上碰撞的概率高，但调用越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重</p>
+<h3 id="负载均衡的作用"><a href="#负载均衡的作用" class="headerlink" title="负载均衡的作用"></a>负载均衡的作用</h3><p>（1）根据集群中每个节点的负载情况将用户请求转发到合适的节点上, 以避免单点压力过大的问题</p>
+<p>（2）负载均衡可实现集群高可用及伸缩性</p>
+<p>​        高可用：某个节点故障时，负载均衡器会将用户请求转发到其他节点,从而保证所有服务持续可用.</p>
+<p>​        伸缩性：根据系统整体负载情况，可以很容易地添加或移除节点。</p>
+<h3 id="如何设计负载均衡器"><a href="#如何设计负载均衡器" class="headerlink" title="如何设计负载均衡器"></a>如何设计负载均衡器</h3><p>负载均衡器工作原理有两大方法：</p>
+<ol>
+<li>接收客户端请求，将请求转发给集群中的各台服务器处理，服务器将处理结果返回给负载均衡器，负载均衡器将处理结果转发给相应的客户端。</li>
+<li>接收客户端请求，将请求转发给集群中的各台服务器处理，服务器将处理结果直接返回给相应的客户端。</li>
+</ol>
+<h3 id="负载均衡如何保证健壮性"><a href="#负载均衡如何保证健壮性" class="headerlink" title="负载均衡如何保证健壮性"></a>负载均衡如何保证健壮性</h3><p>心跳检测</p>
+<h2 id="牛客-雨余羽-HTTP和RPC"><a href="#牛客-雨余羽-HTTP和RPC" class="headerlink" title="牛客-雨余羽-HTTP和RPC"></a>牛客-雨余羽-HTTP和RPC</h2><h3 id="RPC-有没有可能会用-HTTP-协议"><a href="#RPC-有没有可能会用-HTTP-协议" class="headerlink" title="RPC 有没有可能会用 HTTP 协议"></a>RPC 有没有可能会用 HTTP 协议</h3><p>可能，比如grpc</p>
+<h3 id="RPC-和-HTTP的对比？为什么要用-RPC"><a href="#RPC-和-HTTP的对比？为什么要用-RPC" class="headerlink" title="RPC 和 HTTP的对比？为什么要用 RPC"></a>RPC 和 HTTP的对比？为什么要用 RPC</h3><ol>
+<li>传输协议：</li>
+</ol>
+<p>　　RPC：基于HTTP协议，TCP协议</p>
+<p>　　HTTP：基于HTTP协议</p>
+<ol start="2">
+<li>传输效率：</li>
+</ol>
+<p>　　RPC：(1)使用自定义的TCP协议，请求报文体积更小，</p>
+<p>​                   (2)使用HTTP2协议，也可以很好的减小报文体积，提高传输效率</p>
+<p>　　HTTP：(1)基于http1.1的协议，请求中会包含很多无用的内容，</p>
+<p>​                     (2)基于HTTP2.0，那么简单的封装下可以作为一个RPC来使用，这时标准的RPC框架更多的是服务治理。</p>
+<ol start="3">
+<li>性能消耗：</li>
+</ol>
+<p>　　RPC：可以基于thrift实现高效的二进制传输</p>
+<p>　　HTTP：大部分是基于JSON实现的，字节大小和序列化耗时都比thrift要更消耗性能</p>
+<ol start="4">
+<li>负载均衡：</li>
+</ol>
+<p>　　RPC：基本自带了负载均衡策略</p>
+<p>　　HTTP：需要配置Nginx、HAProxy配置</p>
+<ol start="5">
+<li>服务治理：（下游服务新增，重启，下线时如何不影响上游调用者）</li>
+</ol>
+<p>　　RPC：能做到自动通知，不影响上游</p>
+<p>　　HTTP：需要事先通知，如修改NGINX配置。</p>
+<h3 id="RPC-传输速度比-HTTP-更快吗"><a href="#RPC-传输速度比-HTTP-更快吗" class="headerlink" title="RPC 传输速度比 HTTP 更快吗"></a>RPC 传输速度比 HTTP 更快吗</h3><p>不一定，但一般会快。取决于序列化协议和传输协议，</p>
+<p>比如二进制编码肯定比 JSON 节省体积，自定义 tcp 协议&#x2F;HTTP2.0 比 tcp&#x2F;HTTP1.1 要快</p>
+<h3 id="用的TCP还是HTTP2传输的"><a href="#用的TCP还是HTTP2传输的" class="headerlink" title="用的TCP还是HTTP2传输的"></a>用的TCP还是HTTP2传输的</h3><p>自己项目、DUBBO：TCP</p>
+<p>grpc：http2.0</p>
+<h3 id="为什么spring-cloud用的是http"><a href="#为什么spring-cloud用的是http" class="headerlink" title="为什么spring cloud用的是http"></a>为什么spring cloud用的是http</h3><p>HTTP Restful本身轻量，易用，适用性强，可以很容易的跨语言，跨平台，或者与已有系统交互，</p>
+<p>目前很多大型项目多语言共存，http是最通用的协议，可以很好地解决跨语言跨平台兼容性</p>
+<h3 id="RPC-是用的时候连一次，还是连一次后就长连接"><a href="#RPC-是用的时候连一次，还是连一次后就长连接" class="headerlink" title="RPC 是用的时候连一次，还是连一次后就长连接"></a>RPC 是用的时候连一次，还是连一次后就长连接</h3><p>自己的RPC是长连接（<a target="_blank" rel="noopener" href="https://gw-c.nowcoder.com/api/sparta/jump/link?link=https://www.nowcoder.com/jump/super-jump/word?word=Netty">Netty</a> 中提供了 <code>IdleStateHandler</code> 类专门用于处理心跳，所以是长连接</p>
+<p> 没有这个，默认一般是短连接）</p>
+<p>（这个被问过好几次，我猜是长连接，有大佬知道吗）</p>
 
                 
             </div>
