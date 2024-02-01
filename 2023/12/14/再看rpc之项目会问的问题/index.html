@@ -1139,6 +1139,30 @@
 <h3 id="RPC-是用的时候连一次，还是连一次后就长连接"><a href="#RPC-是用的时候连一次，还是连一次后就长连接" class="headerlink" title="RPC 是用的时候连一次，还是连一次后就长连接"></a>RPC 是用的时候连一次，还是连一次后就长连接</h3><p>自己的RPC是长连接（<a target="_blank" rel="noopener" href="https://gw-c.nowcoder.com/api/sparta/jump/link?link=https://www.nowcoder.com/jump/super-jump/word?word=Netty">Netty</a> 中提供了 <code>IdleStateHandler</code> 类专门用于处理心跳，所以是长连接</p>
 <p> 没有这个，默认一般是短连接）</p>
 <p>（这个被问过好几次，我猜是长连接，有大佬知道吗）</p>
+<h2 id="网易有道"><a href="#网易有道" class="headerlink" title="网易有道"></a>网易有道</h2><h3 id="注册中心如何感知服务的变化？"><a href="#注册中心如何感知服务的变化？" class="headerlink" title="注册中心如何感知服务的变化？"></a>注册中心如何感知服务的变化？</h3><p>对节点设置监听器，注册了之后，这个结点的子节点发生了变化后，可以自定义回调操作</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">registerWatcher</span><span class="token punctuation">(</span><span class="token class-name">String</span> rpcServiceName<span class="token punctuation">,</span> <span class="token class-name">CuratorFramework</span> zkClient<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> servicepath<span class="token operator">=</span><span class="token constant">ZK_REGISTER_ROOT_PATH</span><span class="token operator">+</span>rpcServiceName<span class="token punctuation">;</span>
+    <span class="token class-name">PathChildrenCache</span> pathChildrenCache<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">PathChildrenCache</span><span class="token punctuation">(</span>zkClient<span class="token punctuation">,</span>servicepath<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">PathChildrenCacheListener</span> pathChildrenCacheListener<span class="token operator">=</span><span class="token punctuation">(</span><span class="token punctuation">(</span>curatorFramework<span class="token punctuation">,</span> pathChildrenCacheEvent<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> serviceAddresses <span class="token operator">=</span> curatorFramework<span class="token punctuation">.</span><span class="token function">getChildren</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forPath</span><span class="token punctuation">(</span>servicepath<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//子节点出现变化了，那么就更新对应 的map</span>
+        <span class="token constant">SERVICE_ADDRESS_MAP</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>rpcServiceName<span class="token punctuation">,</span> serviceAddresses<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pathChildrenCache<span class="token punctuation">.</span><span class="token function">getListenable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span>pathChildrenCacheListener<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//添加这个监听器</span>
+    pathChildrenCache<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我设置的回调操作是更新 SERVICE_ADDRESS_MAP，保持最新的节点列表</p>
+<h3 id="如果注册中心和客户端之间的连接出现问题，没有能通知客户端更新缓存列表，会发生什么"><a href="#如果注册中心和客户端之间的连接出现问题，没有能通知客户端更新缓存列表，会发生什么" class="headerlink" title="如果注册中心和客户端之间的连接出现问题，没有能通知客户端更新缓存列表，会发生什么"></a>如果注册中心和客户端之间的连接出现问题，没有能通知客户端更新缓存列表，会发生什么</h3><p>因为原生watcher是一次性的，每次触发后需要我们手动重新注册，所以如果这次连接出现问题，那么这个watcher就掉了，而客户端也不知道</p>
+<h3 id="服务怎么注册到注册中心"><a href="#服务怎么注册到注册中心" class="headerlink" title="服务怎么注册到注册中心"></a>服务怎么注册到注册中心</h3><p>先扯根据注解自动注册</p>
+<p>然后具体来说就是<strong>所谓注册服务，就是在zk里面创建一个对应的持久节点</strong></p>
+<p>当我们的服务被注册进 zookeeper 的时候，我们将完整的服务名称 rpcServiceName （class name+group+version）作为根节点 ，子节点是对应的服务地址（ip+端口号）。</p>
+<p>根节点是持久节点，子节点是临时节点</p>
+<p>如果我们要获得某个服务对应的地址的话，就直接根据完整的服务名称来获取到其下的所有子节点，然后通过具体的负载均衡策略取出一个就可以了。</p>
+<h2 id="小红书"><a href="#小红书" class="headerlink" title="小红书"></a><a target="_blank" rel="noopener" href="https://www.nowcoder.com/discuss/576054109338398720?sourceSSR=search">小红书</a></h2><h3 id="RPC有服务注册中心，HTTP中有类似的东西吗？"><a href="#RPC有服务注册中心，HTTP中有类似的东西吗？" class="headerlink" title="RPC有服务注册中心，HTTP中有类似的东西吗？"></a>RPC有服务注册中心，HTTP中有类似的东西吗？</h3><p>RESTful API和服务注册：</p>
+<ul>
+<li>在基于RESTful风格的架构中，服务可以通过RESTful API提供。服务的信息可以注册到某个中心（例如ZooKeeper、Consul、etcd等）或者通过服务发现服务来提供。</li>
+</ul>
 
                 
             </div>
