@@ -604,6 +604,37 @@
 <p>当我们去设置了多个锁时，redission会将多个锁添加到一个集合中，然后用while循环去不停去尝试拿锁，但是会有一个总共的加锁时间，这个时间是用需要加锁的个数 * 1500ms ，假设有3个锁，那么时间就是4500ms，假设在这4500ms内，所有的锁都加锁成功， 那么此时才算是加锁成功，如果在4500ms有线程加锁失败，则会再次去进行重试.</p>
 <img src="Users\Gu\AppData\Roaming\Typora\typora-user-images\image-20240131134829476.png" alt="image-20240131134829476" style="zoom:150%;">
 
+<h2 id="消息队列部分"><a href="#消息队列部分" class="headerlink" title="消息队列部分"></a>消息队列部分</h2><h3 id="为什么用Stream"><a href="#为什么用Stream" class="headerlink" title="为什么用Stream"></a>为什么用Stream</h3><p>如果用List：缺点：</p>
+<ul>
+<li>无法避免消息丢失</li>
+<li>只支持单消费者</li>
+</ul>
+<p>如果用PubSub：</p>
+<p>缺点：</p>
+<ul>
+<li>不支持数据持久化</li>
+<li>无法避免消息丢失</li>
+<li>消息堆积有上限，超出时数据丢失</li>
+</ul>
+<p>Stream：</p>
+<ul>
+<li>消息可回溯</li>
+<li>一个消息可以被多个消费者读取</li>
+<li>获取消息后消息存入pendinglist，处理结束确认之后才移除</li>
+<li>可以阻塞读取</li>
+<li>有消息漏读的风险</li>
+</ul>
+<h3 id="异步秒杀的流程"><a href="#异步秒杀的流程" class="headerlink" title="异步秒杀的流程"></a>异步秒杀的流程</h3><p>将</p>
+<p>1、查询优惠卷</p>
+<p>2、判断秒杀库存是否足够</p>
+<p>3、查询订单</p>
+<p>4、校验是否是一人一单</p>
+<p>5、扣减库存</p>
+<p>6、创建订单</p>
+<p>这些过程封装在lua脚本当中，将保存订单信息的流程使用异步的方式执行</p>
+<p>lua脚本最后将用户id，优惠券id等信息发送到Stream队列中，然后项目启动时开启一个线程，从消息队列当中读取</p>
+<p>如果读取过程当中存在异常，那么从pendinglist当中读取，防止消息丢失</p>
+
                 
             </div>
             <hr/>
