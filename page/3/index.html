@@ -288,55 +288,6 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2023/11/26/%E8%87%AA%E5%AD%A6rpc%E4%B9%8BCuratorUtils/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="自学rpc之CuratorUtils">
-                            
-                            <span class="card-title">自学rpc之CuratorUtils</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                前言有一说一这个比较简单，会curator的那些api就能看懂
-成员变量private static final int BASE_SLEEP_TIME = 1000;//基础等待时间，也就是过多少秒重试
-private static fi
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/rpc/">
-                            <span class="chip bg-color">rpc</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
                     <a href="/2023/11/26/%E8%87%AA%E5%AD%A6rpc%E4%B9%8B%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/">
                         <div class="card-image">
                             
@@ -402,10 +353,10 @@ private static fi
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言傻逼guide，也不讲，草拟吗
+                                前言自己看的
 传输协议部分为什么要有传输协议？
 通过设计协议，我们定义需要传输哪些类型的数据， 并且还会规定每一种类型的数据应该占多少字节。这样我们在接收到二进制数据之后，就可以正确的解析出我们需要的数据。
-通常一些标
+通常一些标准的 RPC 协议包含
                             
                         </div>
                         <div class="publish-info">
@@ -416,8 +367,8 @@ private static fi
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                                <a href="/categories/rpc%E9%A1%B9%E7%9B%AE/" class="post-category">
+                                    rpc项目
                                 </a>
                                 
                                 
@@ -430,6 +381,10 @@ private static fi
                         
                         <a href="/tags/rpc/">
                             <span class="chip bg-color">rpc</span>
+                        </a>
+                        
+                        <a href="/tags/netty/">
+                            <span class="chip bg-color">netty</span>
                         </a>
                         
                     </div>
@@ -553,8 +508,8 @@ Util包也不用动，这部分就是发送http请求到model
                             
                                 前言guide讲的不行，我来
 有一说一对于代理模式作为南软学生，十分简单
-但是java动态代理我没学过，我是傻逼
-代理模式我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能
+但是java动态代理我没学过
+代理模式我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展
                             
                         </div>
                         <div class="publish-info">
@@ -565,8 +520,8 @@ Util包也不用动，这部分就是发送http请求到model
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                                <a href="/categories/rpc%E9%A1%B9%E7%9B%AE/" class="post-category">
+                                    rpc项目
                                 </a>
                                 
                                 
@@ -601,11 +556,13 @@ Util包也不用动，这部分就是发送http请求到model
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言傻逼javaguide的netty部分讲的不好，我来重写！
+                                前言无
 序列化自定义序列化接口就是一个接口
 public interface Serializer &#123;
     
-    byte[] serialize(Object ob
+    byte[] serialize(Object obj);
+    &#x2F;*
+    	将给定的对象 
                             
                         </div>
                         <div class="publish-info">
@@ -616,8 +573,8 @@ public interface Serializer &#123;
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                                <a href="/categories/rpc%E9%A1%B9%E7%9B%AE/" class="post-category">
+                                    rpc项目
                                 </a>
                                 
                                 
@@ -630,6 +587,10 @@ public interface Serializer &#123;
                         
                         <a href="/tags/rpc/">
                             <span class="chip bg-color">rpc</span>
+                        </a>
+                        
+                        <a href="/tags/Netty/">
+                            <span class="chip bg-color">Netty</span>
                         </a>
                         
                     </div>
@@ -666,8 +627,8 @@ public int[] twoSum(int[] num
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                                <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                                 
                                 
@@ -702,9 +663,9 @@ public int[] twoSum(int[] num
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言开个新坑，学习6.824
+                                前言看看分布式
 第一步就是看这个论文
-背景在 20 世纪初，包括本文作者在内的 Google 的很多程序员，为了处理海量的原始数据，已经实现了数以百计的、专用的计算方法。这些计算方法用来处理大量的原始数据，比如，文档抓取（类似
+背景在 20 世纪初，包括本文作者在内的 Google 的很多程序员，为了处理海量的原始数据，已经实现了数以百计的、专用的计算方法。这些计算方法用来处理大量的原始数据，比如，文档抓取（类似网络爬虫的程序
                             
                         </div>
                         <div class="publish-info">
@@ -715,8 +676,8 @@ public int[] twoSum(int[] num
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/824/" class="post-category">
-                                    824
+                                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" class="post-category">
+                                    分布式
                                 </a>
                                 
                                 
@@ -777,6 +738,55 @@ public int[] twoSum(int[] num
                         
                         <a href="/tags/%E7%9E%8E%E5%86%99/">
                             <span class="chip bg-color">瞎写</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/10/07/java%E7%AE%97%E6%B3%95%E5%B8%B8%E7%94%A8/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="java算法常用">
+                            
+                            <span class="card-title">java算法常用</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                PriorityQueue与普通队列不同，优先队列元素是按排序顺序检索的。
+假设我们想以升序检索元素。在这种情况下，优先队列的头是最小的元素。检索到该元素后，下一个最小的元素将成为队列的头。
+PriorityQueue&lt;Integer
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-07
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/java/">
+                            <span class="chip bg-color">java</span>
                         </a>
                         
                     </div>

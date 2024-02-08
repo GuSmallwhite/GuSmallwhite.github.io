@@ -380,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/rpc/" class="post-category">
-                                rpc
+                            <a href="/categories/rpc%E9%A1%B9%E7%9B%AE/" class="post-category">
+                                rpc项目
                             </a>
                         
                     </div>
@@ -418,7 +418,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>简历上写了spi，我就得搞明白，项目里的spi是怎么用的，当然是参考了dubbo，那么今天来看看如何使用和理解</p>
-<h2 id="SPI是什么勾八"><a href="#SPI是什么勾八" class="headerlink" title="SPI是什么勾八"></a>SPI是什么勾八</h2><p>SPI 全称为 Service Provider Interface，是一种服务发现机制。SPI 的本质是将接口实现类的全限定名配置在文件中，并由服务加载器读取配置文件，加载实现类。这样可以在运行时，动态为接口替换实现类。</p>
+<h2 id="SPI是什么"><a href="#SPI是什么" class="headerlink" title="SPI是什么"></a>SPI是什么</h2><p>SPI 全称为 Service Provider Interface，是一种服务发现机制。SPI 的本质是将接口实现类的全限定名配置在文件中，并由服务加载器读取配置文件，加载实现类。这样可以在运行时，动态为接口替换实现类。</p>
 <h2 id="我的spi（dubbo的"><a href="#我的spi（dubbo的" class="headerlink" title="我的spi（dubbo的"></a>我的spi（dubbo的</h2><p>Dubbo 并未使用 Java SPI，而是重新实现了一套功能更强的 SPI 机制。</p>
 <p>Dubbo SPI 的相关逻辑被封装在了 ExtensionLoader 类中，通过 ExtensionLoader，我们可以加载指定的实现类。Dubbo SPI 所需的配置文件需放置在 META-INF&#x2F;dubbo 路径下，配置内容示例如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">optimusPrime <span class="token operator">=</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>spi<span class="token punctuation">.</span></span>OptimusPrime</span>
@@ -736,8 +736,8 @@ bumblebee <span class="token operator">=</span> <span class="token class-name"><
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/rpc/">
-                        <span class="chip bg-color">rpc</span>
+                    <a href="/tags/zk/">
+                        <span class="chip bg-color">zk</span>
                     </a>
                     
                 </div>
