@@ -631,9 +631,7 @@ public @interface RpcScan &#123;
 <p><strong>为什么不扫描RpcReference?</strong></p>
 <p>RpcReference里面是@Target({ElementType.FIELD})</p>
 <blockquote>
-<p><code>RpcReference</code> 注解通常用于标记服务的引用，而不是服务的实现。在服务提供方，我们主要关注服务的实现，因此扫描 <code>RpcService</code> 注解可以找到被标记的服务实现类。而在服务消费方，我们主要关注服务的引用，即使用 <code>RpcReference</code> 注解标记的字段或方法参数。</p>
-<p>在上下文中，通过扫描 <code>RpcService</code> 注解，框架能够找到服务的实现类并进行相应的处理。而对于 <code>RpcReference</code> 注解，框架可能会在服务消费方的代码中进行处理，以便在运行时动态生成代理对象，实现服务的远程调用。扫描 <code>RpcReference</code> 注解可能更适合在服务消费方的上下文中进行，以便找到需要生成代理的地方。</p>
-<p>因此，框架选择性地扫描 <code>RpcService</code> 注解可能是为了满足服务提供方的需求，而在服务消费方的上下文中处理 <code>RpcReference</code> 注解。</p>
+<p>RpcReference是标记在字段上的，本身的类被@Componet标记，所以也含在里面了</p>
 </blockquote>
 <p>因为你的</p>
 <h4 id="资源加载器设置到-CustomScanner-实例中"><a href="#资源加载器设置到-CustomScanner-实例中" class="headerlink" title="资源加载器设置到 CustomScanner 实例中"></a>资源加载器设置到 CustomScanner 实例中</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>resourceLoader <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -653,6 +651,13 @@ log<span class="token punctuation">.</span><span class="token function">info</sp
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><code>CustomScanner</code> 和 <code>CustomScannerRegistrar</code> 的组合起到了扫描指定注解的作用，并将扫描到的类注册为 Spring Bean。</p>
 <p><code>CustomScanner</code> ：主要功能就是调用父类进行扫描的实际操作</p>
 <p><code>CustomScannerRegistrar</code>：主要功能就是 实现了 <code>ImportBeanDefinitionRegistrar</code> 接口，重写了<code>registerBeanDefinitions</code>函数，来定义要扫描哪些包，扫描有哪些注解的类</p>
+<p>所以逻辑是这样的</p>
+<ul>
+<li>当开始时，因为我们@Import了<code>@Import(CustomScannerRegistrar.class)</code>，所以此时就会触发<code>CustomScannerRegistrar</code>的加载和初始化</li>
+<li>这个类初始化的过程中<code>registerBeanDefinitions</code>又是被自动调用</li>
+<li><code>registerBeanDefinitions</code>方法里面，扫描@Componet注解和@RpcService注解的类，并且注册为bean</li>
+<li>那么注册前后就会有<code>postProcessBeforeInitialization()</code>方法和<code>postProcessAfterInitialization()</code>的执行了</li>
+</ul>
 <h2 id="SpringBeanPostProcessor"><a href="#SpringBeanPostProcessor" class="headerlink" title="SpringBeanPostProcessor"></a>SpringBeanPostProcessor</h2><p>傻逼guide说的原理：</p>
 <blockquote>
 <p>我们实现需要 BeanPostProcessor 接口并重写 postProcessBeforeInitialization()方法和 postProcessAfterInitialization() 方法。</p>
