@@ -532,7 +532,7 @@
 <p>从总耗时而言：Kryo 序列化注册模式耗时最短</p>
 <h3 id="Netty通信的心跳机制如何实现的"><a href="#Netty通信的心跳机制如何实现的" class="headerlink" title="Netty通信的心跳机制如何实现的"></a>Netty通信的心跳机制如何实现的</h3><p>在客户端channel的pipeline里添加IdleStateHandler，用于处理空闲状态，本项目设置的是如果5秒内没有写操作，也就是服务端没有向客户端发送内容，那么就触发写空闲事件</p>
 <p>在触发写空闲事件后，在 userEventTriggered方法中，我们获取到的IdleStateEvent就会是WRITER_IDLE表示写空闲，那么客户端会发送心跳请求，维持和服务端的链接 </p>
-<p>同样的再服务端channel也添加这样的handler，但是关注的是读事件，如果30秒没有从客户端读取，那么就发送心跳请求，维持和客户端的链接</p>
+<p>同样的再服务端channel也添加这样的handler，但是关注的是读事件，如果30秒没有从客户端读取就关闭连接，所以一个是维持，一个是关闭</p>
 <h3 id="使用zk做服务注册和发现中心，具体实现流程"><a href="#使用zk做服务注册和发现中心，具体实现流程" class="headerlink" title="使用zk做服务注册和发现中心，具体实现流程"></a>使用zk做服务注册和发现中心，具体实现流程</h3><p>这个和pdd的问法一样啊</p>
 <h3 id="zk的一致性算法（ZAB原理"><a href="#zk的一致性算法（ZAB原理" class="headerlink" title="zk的一致性算法（ZAB原理"></a>zk的一致性算法（ZAB原理</h3><p>你以为他要问的是你选择的一致性哈希？不是，他问的是zab !是zookeeper自己选择的那个算法！</p>
 <p><a target="_blank" rel="noopener" href="https://houbb.github.io/2018/10/30/zab">ZAB-一致性算法 | Echo Blog (houbb.github.io)</a></p>
@@ -562,19 +562,13 @@
 <p>每个服务器不仅有不变的配置权重，还有当前权重，每次请求到达时，所有节点就在当前权重基础上加一个配置权重值那就是60，然后选择当前权重最大的节点，当处理完毕后，处理的那个节点权重值需要减去总“配置权重值”，在这里也就是60，然后重复这个过程,nginx就是这个算法</p>
 <h3 id="针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法"><a href="#针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法" class="headerlink" title="针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法"></a>针对每个接口，业务执行的时间在某一个范围之内随机跳动，你如何去设计负载均衡算法</h3><p>我超，不会</p>
 <h2 id="来自牛客高启盛-携程面试"><a href="#来自牛客高启盛-携程面试" class="headerlink" title="来自牛客高启盛-携程面试"></a>来自牛客高启盛-携程面试</h2><h3 id="客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗"><a href="#客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗" class="headerlink" title="客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗"></a>客户端进行远程调用的时候是每一次都要去访问注册中心进行服务发现吗</h3><p>并不是实际访问了注册中心，我设计了SERVICE_ADDRESS_MAP，缓存了每个服务对应的子节点列表，当客户端进行远程调用的时候，会先去这个缓存里寻找，通过一致性哈希算法选择一个节点。</p>
-<h3 id="获取结果是同步还是异步的"><a href="#获取结果是同步还是异步的" class="headerlink" title="获取结果是同步还是异步的"></a>获取结果是同步还是异步的</h3><p>目前是异步的，我使用了CompletableFuture对象来包装RpcResponse,然后将他存入一个名为unprocessedRequests的map里，一开始future里并没有内容，等客户端调用complete方法后，才会在方法内执行future.complete，这才获得了具体的rpc返回响应</p>
+<h3 id="获取结果是同步还是异步的"><a href="#获取结果是同步还是异步的" class="headerlink" title="获取结果是同步还是异步的"></a>获取结果是同步还是异步的</h3><p>目前是异步的，我使用了CompletableFuture对象来包装RpcResponse,然后将他存入一个名为unprocessedRequests的map里，一开始future里并没有内容，在客户端Handler的channelread方法中，判断出是rpcResponse消息，才使用complete方法，将CompletableFuture的结果设置为这个Response</p>
 <h3 id="客户端是否知道什么时候结果已经返回了"><a href="#客户端是否知道什么时候结果已经返回了" class="headerlink" title="客户端是否知道什么时候结果已经返回了"></a>客户端是否知道什么时候结果已经返回了</h3><p>当服务器处理完请求并返回响应时，响应中包含了相同的<code>requestId</code>。Netty RPC客户端的处理程序会从响应中取出<code>requestId</code>，然后根据<code>requestId</code>找到对应的<code>CompletableFuture</code>，将响应设置到<code>CompletableFuture</code>中</p>
 <p>有一说一 还是没有回答这个问题</p>
-<h2 id="来自牛客高启盛-美团一面"><a href="#来自牛客高启盛-美团一面" class="headerlink" title="来自牛客高启盛-美团一面"></a>来自牛客高启盛-美团一面</h2><h3 id="Netty的线程模型，主从线程模型"><a href="#Netty的线程模型，主从线程模型" class="headerlink" title="Netty的线程模型，主从线程模型"></a>Netty的线程模型，主从线程模型</h3><p><a target="_blank" rel="noopener" href="https://klose911.github.io/html/netty/thread.html#org927b7aa">Netty 多线程模型 (klose911.github.io)</a></p>
-<p>客户端线程模型如下：</p>
-<ol>
-<li>由用户线程负责初始化客户端资源，发起连接操作</li>
-<li>如果连接成功，将SocketChannel注册到IO线程组的NioEventLoop线程中，监听读操作位</li>
-<li>如果没有立即连接成功，将SocketChannel注册到IO线程组的NioEventLoop线程中，监听连接操作位</li>
-<li>连接成功之后，修改监听位为READ，但是不需要切换线程</li>
-</ol>
-<p>然后看这个文章总结吧，要面试的时候说呢，就这么说：</p>
-<p>主从多线程模型：Acceptor 线程用于绑定监听端口，接收客户端连接，将SocketChannel 从主线程池的 Reactor 线程的多路复用器上移除，重新注册到Sub 线程池的线程上，用于处理I&#x2F;O 的读写等操作，从而保证 mainReactor 只负责接入认证、握手等操作；</p>
+<h2 id="来自牛客高启盛-美团一面"><a href="#来自牛客高启盛-美团一面" class="headerlink" title="来自牛客高启盛-美团一面"></a>来自牛客高启盛-美团一面</h2><h3 id="Netty的线程模型，主从线程模型"><a href="#Netty的线程模型，主从线程模型" class="headerlink" title="Netty的线程模型，主从线程模型"></a>Netty的线程模型，主从线程模型</h3><p>就是主从线程模型，具体来说是多Reactor多线程的一种实现</p>
+<p>bossgroup负责建立连接</p>
+<p>workergroup负责监听事件</p>
+<p>然后将handlergroup注册到handler上，由handlergroup中的线程执行业务逻辑</p>
 <h3 id="了解Netty当中的时间轮吗"><a href="#了解Netty当中的时间轮吗" class="headerlink" title="了解Netty当中的时间轮吗"></a>了解Netty当中的时间轮吗</h3><p>上面那个文章也提到了</p>
 <p>[21 技巧篇：延迟任务处理神器之时间轮 HashedWheelTimer (lianglianglee.com)](<a target="_blank" rel="noopener" href="https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Netty">https://learn.lianglianglee.com/专栏/Netty</a> 核心原理剖析与 RPC 实践-完&#x2F;21  技巧篇：延迟任务处理神器之时间轮 HashedWheelTimer.md)</p>
 <p>这个也可以看看</p>
