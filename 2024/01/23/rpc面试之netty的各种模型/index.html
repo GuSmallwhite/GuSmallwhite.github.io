@@ -451,14 +451,36 @@ try &#123;
   b.group(bossGroup, workerGroup)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>主从多线程模型</strong></p>
-<p>从一个 主线程 NIO 线程池中选择一个线程作为 Acceptor 线程，绑定监听端口，接收客户端连接的连接，其他线程负责后续的接入认证等工作。连接建立完成后，Sub NIO 线程池负责具体处理 I&#x2F;O 读写。</p>
-<pre class="line-numbers language-none"><code class="language-none">EventLoopGroup bossGroup &#x3D; new NioEventLoopGroup();
-EventLoopGroup workerGroup &#x3D; new NioEventLoopGroup();
-try &#123;
-  &#x2F;&#x2F;2.创建服务端启动引导&#x2F;辅助类：ServerBootstrap
-  ServerBootstrap b &#x3D; new ServerBootstrap();
-  &#x2F;&#x2F;3.给引导类配置两大线程组,确定了线程模型
-  b.group(bossGroup, workerGroup)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>针对单 Reactor 多线程模型中，Reactor 在单线程中运 行，高并发场景下容易成为性能瓶颈，可以让 Reactor 在多线程中运行</p>
+<p>方案说明</p>
+<ol>
+<li>Reactor主线程 MainReactor 对象通过select 监听连接事件, 收 到事件后，通过Acceptor 处理连接事件</li>
+<li>当 Acceptor 处理连接事件后，MainReactor 将连接分配给 SubReactor</li>
+<li>subreactor 将连接加入到连接队列进行监听,并创建handler 进行各种事件处理</li>
+<li>当有新事件发生时， subreactor 就会调用对应的handler处理</li>
+<li>handler 通过read 读取数据，分发给后面的worker 线程处理</li>
+<li>worker 线程池分配独立的worker 线程进行业务处理，并返回结果</li>
+<li>handler 收到响应的结果后，再通过send 将结果返</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EventLoopGroup</span> bossGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建了用于接收客户端连接的主事件循环组 bossGroup，参数 1 表示线程数为 1。</span>
+        <span class="token class-name">EventLoopGroup</span> workerGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建了用于处理客户端请求的工作事件循环组 workerGroup，采用默认线程数。</span>
+
+        <span class="token class-name">DefaultEventExecutorGroup</span> serviceHandlerGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultEventExecutorGroup</span><span class="token punctuation">(</span>
+                <span class="token class-name">RuntimeUtil</span><span class="token punctuation">.</span><span class="token function">cpus</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span>
+                <span class="token class-name">ThreadPoolFactoryUtil</span><span class="token punctuation">.</span><span class="token function">createThreadFactory</span><span class="token punctuation">(</span><span class="token string">"service-handler-group"</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>/
+         <span class="token punctuation">.</span><span class="token function">childHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInitializer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">SocketChannel</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        <span class="token annotation punctuation">@Override</span>
+                        <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initChannel</span><span class="token punctuation">(</span><span class="token class-name">SocketChannel</span> ch<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                            <span class="token comment">// 30 秒之内没有收到客户端请求的话就关闭连接</span>
+                            <span class="token class-name">ChannelPipeline</span> p <span class="token operator">=</span> ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            p<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">IdleStateHandler</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            p<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RpcMessageEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            p<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RpcMessageDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            p<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span>serviceHandlerGroup<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">NettyRpcServerHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//这个handler就会在serviceHandlerGroup上执行</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h2><p>我们可以把发请求的动作比作成注水到桶中，我们处理请求的过程可以比喻为漏桶漏水。我们往桶中以任意速率流入水，以一定速率流出水。当水超过桶流量则丢弃，因为桶容量是不变的，保证了整体的速率。</p>
 <p>如果想要实现这个算法的话也很简单，准备一个队列用来保存请求，然后我们定期从队列中拿请求来执行就好了（和消息队列削峰&#x2F;限流的思想是一样的）。</p>
