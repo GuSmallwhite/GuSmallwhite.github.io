@@ -515,7 +515,8 @@
 <h3 id="ZSet的范围查询的时间复杂度是多少"><a href="#ZSet的范围查询的时间复杂度是多少" class="headerlink" title="ZSet的范围查询的时间复杂度是多少"></a>ZSet的范围查询的时间复杂度是多少</h3><p><code>ZRANGE</code> 或 <code>ZRANGEBYSCORE</code>，其时间复杂度是 O(log N + M)，其中 N 是有序集合中的元素数量，M 是返回的元素数量。</p>
 <p>这是因为 Redis 内部使用了跳跃表（skip list）实现有序集合，而跳跃表的查询时间复杂度是 O(log N)。在执行范围查询时，Redis首先定位到开始的元素，然后按顺序移动到结束的元素，因此时间复杂度还取决于返回的元素数量 M。</p>
 <h2 id="借贷宝"><a href="#借贷宝" class="headerlink" title="借贷宝"></a>借贷宝</h2><h3 id="项目中怎么使用Redis实现登录的"><a href="#项目中怎么使用Redis实现登录的" class="headerlink" title="项目中怎么使用Redis实现登录的"></a>项目中怎么使用Redis实现登录的</h3><p>mysql当中存放用户id和手机号</p>
-<p>项目里是使用hash类型来存储用户，key随机生成的登录令牌，value是由手机号等信息包装成的user对象，在登录的时候，首先提交手机号和验证码，以手机号为key读取验证码并且校验验证码，如果一致那么从mysql当中找是否有对应的用户，如果存在则登录成功，如果不存在则视为注册，创建新用户，将信息保存到数据库，再包装成user对象保存到redis，流程结束。</p>
+<p>发送验证码的时候将手机号和验证码存到redis当中</p>
+<p>项目里是使用hash类型来存储用户，key随机生成的登录令牌，value是由手机号等信息包装成的user对象，在登录的时候，首先提交手机号和验证码，以手机号为key读取验证码并且校验验证码，如果一致那么从mysql当中找是否有对应的用户，如果存在则登录成功，如果不存在则视为注册，创建新用户，将信息保存到数据库，再包装成user对象保存到redis，并将token返回给前端，(然后前端面每次请求都会携带这个token）流程结束。</p>
 <h3 id="怎么定义热点数据的-使用哪种数据结构？"><a href="#怎么定义热点数据的-使用哪种数据结构？" class="headerlink" title="怎么定义热点数据的?使用哪种数据结构？"></a>怎么定义热点数据的?使用哪种数据结构？</h3><p>热点数据在项目中就是秒杀优惠券，用string来存储</p>
 <h2 id="美团优选"><a href="#美团优选" class="headerlink" title="美团优选"></a>美团优选</h2><h3 id="超卖问题为何放在redis里判断"><a href="#超卖问题为何放在redis里判断" class="headerlink" title="超卖问题为何放在redis里判断"></a>超卖问题为何放在redis里判断</h3><h3 id="分布式锁为什么选择redission"><a href="#分布式锁为什么选择redission" class="headerlink" title="分布式锁为什么选择redission"></a>分布式锁为什么选择redission</h3><p>因为redission是可重入并且提供了锁重试和看门狗机制，可以自动实现续期，然后就讲看门狗机制的实现。。。</p>
 <h2 id="几个问题"><a href="#几个问题" class="headerlink" title="几个问题"></a>几个问题</h2><h3 id="点赞排行用MySQL可以吗"><a href="#点赞排行用MySQL可以吗" class="headerlink" title="点赞排行用MySQL可以吗"></a>点赞排行用MySQL可以吗</h3><p>也可以，但是我认为还是用redis更好，如果用string类型内存过大的话，可以尝试使用bitmap来保存点赞，bitmap以位的形式保存数据，可以有效的压缩空间。</p>
@@ -733,12 +734,12 @@
                         <span class="chip bg-color">rpc</span>
                     </a>
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                        <span class="chip bg-color">面试</span>
-                    </a>
-                    
                     <a href="/tags/zk/">
                         <span class="chip bg-color">zk</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                        <span class="chip bg-color">面试</span>
                     </a>
                     
                 </div>

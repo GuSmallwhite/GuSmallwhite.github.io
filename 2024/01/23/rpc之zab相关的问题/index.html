@@ -372,12 +372,12 @@
                                 <span class="chip bg-color">rpc</span>
                             </a>
                         
-                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                <span class="chip bg-color">面试</span>
-                            </a>
-                        
                             <a href="/tags/zk/">
                                 <span class="chip bg-color">zk</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                <span class="chip bg-color">面试</span>
                             </a>
                         
                     </div>
@@ -511,7 +511,16 @@
 </li>
 </ol>
 <p>总之，<code>3PC</code> 通过一系列的超时机制很好的缓解了阻塞问题，但是最重要的一致性并没有得到根本的解决，比如在 <code>DoCommit</code> 阶段，当一个参与者收到了请求之后其他参与者和协调者挂了或者出现了网络分区，这个时候收到消息的参与者都会进行事务提交，这就会出现数据不一致性问题。</p>
-<h2 id="Paxos算法"><a href="#Paxos算法" class="headerlink" title="Paxos算法"></a>Paxos算法</h2>
+<h2 id="Paxos算法"><a href="#Paxos算法" class="headerlink" title="Paxos算法"></a>Paxos算法</h2><p>不知道</p>
+<h2 id="zk崩溃恢复如何保证一致性？"><a href="#zk崩溃恢复如何保证一致性？" class="headerlink" title="zk崩溃恢复如何保证一致性？"></a>zk崩溃恢复如何保证一致性？</h2><p>一个是要保证Leader 提交的提案最终能够被所有的 Follower 提交是什么意思呢</p>
+<ul>
+<li>这个简单，因为最终提交的提案收到的一方zxid肯定比没收到的一方zxid大，所以没收到的那一方不可能成为新的leader</li>
+</ul>
+<p>另一个就是要跳过那些已经被丢弃的提案</p>
+<ul>
+<li>就是leader挂掉又加入后，要丢弃自己已经同意但是还没提交的事务</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -529,12 +538,12 @@
                                     <span class="chip bg-color">rpc</span>
                                 </a>
                             
-                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                    <span class="chip bg-color">面试</span>
-                                </a>
-                            
                                 <a href="/tags/zk/">
                                     <span class="chip bg-color">zk</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                    <span class="chip bg-color">面试</span>
                                 </a>
                             
                         </div>
