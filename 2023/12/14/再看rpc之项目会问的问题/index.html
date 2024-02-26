@@ -766,6 +766,11 @@
 <p>单机房做不到容灾，在同城进行多机房的部署，如下图所示：</p>
 <p><img src="https://static001.geekbang.org/infoq/e4/e4f53ad6b64b624bc18668b355c3ceae.png" alt="img"></p>
 <p>多机房部署要考虑某机房故障情况下，保证有半数以上的 Zookeeper 节点正常工作，如果仅两个机房的情况下无法保证，上例中三机房部署是可以实现任意一个机房故障情况下，满足正常节点上大于半数以上，保证机房容灾。</p>
+<p>3）</p>
+<p>两地三中心</p>
+<p>”同城双活，异地备份“</p>
+<p>多机房级别的容灾对于一般的业务是足够的，但是无法解决服务的异地容灾问题，这里就需要两地三中心的方案来实现，如下图所示</p>
+<p><img src="https://static001.geekbang.org/infoq/91/919a248bb3fcc5b2097a36e1d9069984.png" alt="img"></p>
 <h3 id="zookeeper服务节点挂掉之后，怎么删除它"><a href="#zookeeper服务节点挂掉之后，怎么删除它" class="headerlink" title="zookeeper服务节点挂掉之后，怎么删除它"></a>zookeeper服务节点挂掉之后，怎么删除它</h3><p>删除：使用临时节点，会话失效，节点自动清除。</p>
 <h3 id="Zookeeper有几种角色"><a href="#Zookeeper有几种角色" class="headerlink" title="Zookeeper有几种角色"></a>Zookeeper有几种角色</h3><p>群首（leader），追随者（follower），观察者（observer），这个在ZAP算法里，好好看看</p>
 <h3 id="CAP理论解释下？P是什么？"><a href="#CAP理论解释下？P是什么？" class="headerlink" title="CAP理论解释下？P是什么？"></a>CAP理论解释下？P是什么？</h3><p>一致性（<strong>C</strong>onsistency）多个副本之间的数据一致性</p>
