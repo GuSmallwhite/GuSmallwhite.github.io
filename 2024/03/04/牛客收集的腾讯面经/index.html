@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="腾讯QQ面经, 顾的博客">
+    <meta name="keywords" content="牛客收集的腾讯面经, 顾的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>腾讯QQ面经 | 顾的博客</title>
+    <title>牛客收集的腾讯面经 | 顾的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">腾讯QQ面经</h1>
+                    <h1 class="description center-align post-title">牛客收集的腾讯面经</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F/">
-                                <span class="chip bg-color">实习面经</span>
+                            <a href="/tags/%E9%9D%A2%E7%BB%8F/">
+                                <span class="chip bg-color">面经</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%85%BE%E8%AE%AF/">
+                                <span class="chip bg-color">腾讯</span>
                             </a>
                         
                     </div>
@@ -380,8 +384,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%9C%AC%E4%BA%BA%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                本人面经
+                            <a href="/categories/%E5%88%AB%E4%BA%BA%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                别人面经
                             </a>
                         
                     </div>
@@ -393,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-03
+                    2024-03-04
                 </div>
                 
 
@@ -417,22 +421,133 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><p>20分钟，电话面，无手撕，主要聊的项目，这里记录几个印象深刻的问题</p>
-<h3 id="RPC部分"><a href="#RPC部分" class="headerlink" title="RPC部分"></a>RPC部分</h3><h4 id="为什么一致性哈希要虚拟节点？"><a href="#为什么一致性哈希要虚拟节点？" class="headerlink" title="为什么一致性哈希要虚拟节点？"></a>为什么一致性哈希要虚拟节点？</h4><p>(我是弱智，这么重要的东西，我也知道他很重要，但是就是没看)</p>
-<p>因为一致性哈希并不能保证节点在环上的均匀分布</p>
-<p>要想解决节点能在哈希环上分配不均匀的问题，就是要有大量的节点，节点数越多，哈希环上的节点分布的就越均匀。</p>
-<p>但问题是，实际中我们没有那么多节点。所以这个时候我们就加入<strong>虚拟节点</strong>，也就是对一个真实节点做多个副本。</p>
-<p><strong>节点数量多了后，节点在哈希环上的分布就相对均匀了</strong>。这时候，如果有访问请求寻址到「A-01」这个虚拟节点，接着再通过「A-01」虚拟节点找到真实节点 A，这样请求就能访问到真实节点 A 了。</p>
-<h4 id="Netty为什么要异步？说说具体场景不异步会怎么样"><a href="#Netty为什么要异步？说说具体场景不异步会怎么样" class="headerlink" title="Netty为什么要异步？说说具体场景不异步会怎么样"></a>Netty为什么要异步？说说具体场景不异步会怎么样</h4><ol>
-<li><strong>资源利用率低</strong>：在同步模型中，当线程被阻塞时，会导致系统的CPU和内存资源无法充分利用，因为线程被阻塞时处于空闲状态，无法执行其他任务。这会影响系统的响应速度和吞吐量。</li>
-<li><strong>易引发死锁</strong>：在高并发环境下，同步IO模型容易出现死锁情况。例如，如果一个线程在等待某个IO操作完成时被阻塞，而其他线程又在等待该线程释放资源，就可能导致死锁。</li>
-<li><strong>不利于扩展性</strong>：同步IO模型不利于系统的扩展，因为每个连接都需要一个独立的线程来处理，当连接数增加时，线程数量也会增加，系统的性能和稳定性就会受到限制。</li>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>收集腾讯的面经，不包含自己面的，只记录不会的问题</p>
+<h2 id="不知道什么G"><a href="#不知道什么G" class="headerlink" title="不知道什么G"></a>不知道什么G</h2><h3 id="键入一个网站，会发生什么"><a href="#键入一个网站，会发生什么" class="headerlink" title="键入一个网站，会发生什么"></a>键入一个网站，会发生什么</h3><ul>
+<li>域名解析；</li>
+<li>发起TCP的3次握手；</li>
+<li>建立TCP连接后发起http请求；</li>
+<li>服务器响应http请求，浏览器得到html代码；</li>
+<li>浏览器解析html代码，并请求html代码中的资源（如js、css、图片等）；</li>
+<li>浏览器对页面进行渲染呈现给用户。</li>
+</ul>
+<p>该过程使用到的协议？</p>
+<ul>
+<li>DNS协议—-向指定DNS域名服务器发送DNS请求报文，以解析域名<a target="_blank" rel="noopener" href="http://www.baidu.com对应的ip地址./">www.baidu.com对应的IP地址。</a></li>
+<li>UDP协议—DNS基于UDP协议的。</li>
+<li>TCP协议—-TCP连接报文：根据IP地址，与<a target="_blank" rel="noopener" href="http://www.baidu.com服务器建立tcp连接./">www.baidu.com服务器建立TCP连接。</a></li>
+<li>ARP协议—-ARP请求报文：根据默认网关的IP地址查询其MAC地址。</li>
+<li>HTTP协议—HTTP请求报文：向<a target="_blank" rel="noopener" href="http://www.baidu.com网页服务器发送http请求报文,以获取该网站首页的内容./">www.baidu.com网页服务器发送HTTP请求报文，以获取该网站首页的内容。</a></li>
+<li>ICMP协议—提供网络传输中的差错检测。</li>
+</ul>
+<h3 id="MySQL有什么函数"><a href="#MySQL有什么函数" class="headerlink" title="MySQL有什么函数"></a>MySQL有什么函数</h3><p>len、upper、lower</p>
+<p>pow</p>
+<p>datediff</p>
+<h3 id="SpringBoot加载的过程"><a href="#SpringBoot加载的过程" class="headerlink" title="SpringBoot加载的过程"></a>SpringBoot加载的过程</h3><ol>
+<li><p>整个spring框架启动分为两部分，<code>构造SpringBootApplication对象</code>和执行<code>run方法</code></p>
+</li>
+<li><p>核心注解@SpringBootConfiguration标识启动类为配置类，@EnableAutoConfiguration通过内部@Import注解AutoConfigurationImportSelector.class实现自动装配，@ComponentScan默认扫描当前目录及子目录下的bean。</p>
+</li>
+<li><p>SpringBootApplication的构造方法主要做了几件事</p>
+<ul>
+<li><p>根据是否加载servlet类判断是否是web环境</p>
+</li>
+<li><p>获取所有初始化器，扫描所有<code>META-INF/spring.factories</code>下的ApplicationContextInitializer子类通过反射拿到实例，在spring实例启动前后做一些回调工作。</p>
+</li>
+<li><p>获取所有监听器，同2，也是扫描配置加载对应的类实例。</p>
+</li>
+<li><p>定位main方法</p>
+</li>
+</ul>
+</li>
+<li><p>run方法主要创建了配置环境、事件监听、启动应用上下文，其中rfresh方法贯穿springbean的生命周期，执行bean的生命周期的前后置钩子方法，并且处理spring的注解标注的类。在onRefresh中通过Java代码构建出tomcat容器并启动。</p>
+</li>
 </ol>
-<p>（GPT的回答，有一说一现在记不太清他是咋问的了，我当时提了ChannelFuture</p>
-<h4 id="为什么用Netty"><a href="#为什么用Netty" class="headerlink" title="为什么用Netty"></a>为什么用Netty</h4><p>开始吟唱</p>
-<h3 id="点评部分"><a href="#点评部分" class="headerlink" title="点评部分"></a>点评部分</h3><h4 id="redis中的-1-1操作是立即执行还是有延迟的？"><a href="#redis中的-1-1操作是立即执行还是有延迟的？" class="headerlink" title="redis中的+1-1操作是立即执行还是有延迟的？"></a>redis中的+1-1操作是立即执行还是有延迟的？</h4><p>GPT说：</p>
-<p>在 Redis 中，对于 <code>+1</code> 或 <code>-1</code> 这样的操作是立即执行的，不会有延迟。这是因为 Redis 是单线程的，所有的操作都是依次执行的，不会出现并发竞争的情况。当执行一个 <code>+1</code> 或 <code>-1</code> 的操作时，Redis 会立即对对应的键进行增加或减少操作，并且返回操作后的结果。</p>
-
+<h2 id="PCG"><a href="#PCG" class="headerlink" title="PCG"></a>PCG</h2><h3 id="各种排序对比"><a href="#各种排序对比" class="headerlink" title="各种排序对比"></a>各种排序对比</h3><table>
+<thead>
+<tr>
+<th><strong>排序算法</strong></th>
+<th><strong>平均时间复杂度</strong></th>
+<th><strong>最坏时间复杂度</strong></th>
+<th><strong>最好时间复杂度</strong></th>
+<th><strong>空间复杂度</strong></th>
+<th><strong>稳定性</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>冒泡排序</strong></td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td><strong>直接选择排序</strong></td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td><strong>直接插入排序</strong></td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td><strong>快速排序</strong></td>
+<td>O(nlogn)</td>
+<td>O(n²)</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td><strong>堆排序</strong></td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td><strong>希尔排序</strong></td>
+<td>O(nlogn)</td>
+<td>O(ns)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td><strong>归并排序</strong></td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(nlogn)</td>
+<td>O(n)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td><strong>计数排序</strong></td>
+<td>O(n+k)</td>
+<td>O(n+k)</td>
+<td>O(n+k)</td>
+<td>O(n+k)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td><strong>基数排序</strong></td>
+<td>O(N*M)</td>
+<td>O(N*M)</td>
+<td>O(N*M)</td>
+<td>O(M)</td>
+<td>稳定</td>
+</tr>
+</tbody></table>
+<h3 id="MySQL-的存储引擎有哪些，常用的是哪个"><a href="#MySQL-的存储引擎有哪些，常用的是哪个" class="headerlink" title="MySQL 的存储引擎有哪些，常用的是哪个"></a>MySQL 的存储引擎有哪些，常用的是哪个</h3><p><a target="_blank" rel="noopener" href="https://xiaolincoding.com/mysql/index/index_interview.html#%E6%8C%89%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%88%86%E7%B1%BB">索引常见面试题 | 小林coding (xiaolincoding.com)</a></p>
+<h3 id="IOC底层是怎么实现的"><a href="#IOC底层是怎么实现的" class="headerlink" title="IOC底层是怎么实现的"></a>IOC底层是怎么实现的</h3>
                 
             </div>
             <hr/>
@@ -446,8 +561,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F/">
-                                    <span class="chip bg-color">实习面经</span>
+                                <a href="/tags/%E9%9D%A2%E7%BB%8F/">
+                                    <span class="chip bg-color">面经</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%85%BE%E8%AE%AF/">
+                                    <span class="chip bg-color">腾讯</span>
                                 </a>
                             
                         </div>
@@ -488,9 +607,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/03/04/%E7%89%9B%E5%AE%A2%E6%94%B6%E9%9B%86%E7%9A%84%E8%85%BE%E8%AE%AF%E9%9D%A2%E7%BB%8F/">
                     <div class="card-image">
@@ -508,9 +628,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -523,6 +643,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -545,13 +666,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/02/22/Java%E4%B9%8BACM%E6%A8%A1%E5%BC%8F/">
+                <a href="/2024/03/03/%E8%85%BE%E8%AE%AFQQ%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Java之ACM模式">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="腾讯QQ面经">
                         
-                        <span class="card-title">Java之ACM模式</span>
+                        <span class="card-title">腾讯QQ面经</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -562,14 +683,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E6%9C%AC%E4%BA%BA%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                    本人面经
                                 </a>
                             
                             
@@ -579,8 +700,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F/">
+                        <span class="chip bg-color">实习面经</span>
                     </a>
                     
                 </div>
