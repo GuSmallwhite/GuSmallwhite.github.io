@@ -585,7 +585,12 @@
 <h3 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h3><p>总结说：redis事务就是<code>一次性、顺序性、排他性</code>的执行一个队列中的一系列命令。</p>
 <p>若在事务队列中存在<code>语法性错误</code>（类似于java的1&#x2F;0的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BC%82%E5%B8%B8&spm=1001.2101.3001.7020">运行时异常</a>），则执行EXEC命令时，其他正确命令会被执行，错误命令抛出异常。</p>
 <p>注意：已经执行完毕的命令对应的数据<code>不会自动回滚</code>，需要程序员自己在代码中实现回滚</p>
-<h2 id="算法合集"><a href="#算法合集" class="headerlink" title="算法合集"></a>算法合集</h2><h3 id="2-两数相加-力扣（LeetCode）"><a href="#2-两数相加-力扣（LeetCode）" class="headerlink" title="2. 两数相加 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/add-two-numbers/description/">2. 两数相加 - 力扣（LeetCode）</a></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
+<h3 id="解决哈希冲突的办法？"><a href="#解决哈希冲突的办法？" class="headerlink" title="解决哈希冲突的办法？"></a>解决哈希冲突的办法？</h3><p>拉链和线性探测</p>
+<p>以及<strong>二次哈希</strong></p>
+<p>：若当前key与原来key产生相同的哈希地址，则当前key存在该地址后偏移量为（1,2,3…）的二次方地址处<br>key1：hash(key)+0<br>key2：hash(key)+1^2<br>key3：hash(key)+2^2</p>
+<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="腾讯安全"><a href="#腾讯安全" class="headerlink" title="腾讯安全"></a>腾讯安全</h2><h3 id="如何在300万个字符串中找到ip地址，如果找不到，如何找到前一个地址或者后一个地址"><a href="#如何在300万个字符串中找到ip地址，如果找不到，如何找到前一个地址或者后一个地址" class="headerlink" title="如何在300万个字符串中找到ip地址，如果找不到，如何找到前一个地址或者后一个地址"></a>如何在300万个字符串中找到ip地址，如果找不到，如何找到前一个地址或者后一个地址</h3><p>正则表达式吧，ip地址都有固定的格式，0-255，无前导0，三个小数点</p>
+<h3 id="如何设计一个高并发网络系统"><a href="#如何设计一个高并发网络系统" class="headerlink" title="如何设计一个高并发网络系统"></a>如何设计一个高并发网络系统</h3><p>io模型，缓存，数据库，容灾，负载均衡，协议等等就这几个方面</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a></h3><h3 id="TEG"><a href="#TEG" class="headerlink" title="TEG"></a>TEG</h3><h2 id="算法合集"><a href="#算法合集" class="headerlink" title="算法合集"></a>算法合集</h2><h3 id="2-两数相加-力扣（LeetCode）"><a href="#2-两数相加-力扣（LeetCode）" class="headerlink" title="2. 两数相加 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/add-two-numbers/description/">2. 两数相加 - 力扣（LeetCode）</a></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         
     <span class="token punctuation">&#125;</span>
@@ -1055,7 +1060,32 @@
     <span class="token keyword">return</span> res<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="压缩字符串abbccc-a1b2c3"><a href="#压缩字符串abbccc-a1b2c3" class="headerlink" title="压缩字符串abbccc-&gt;a1b2c3"></a>压缩字符串abbccc-&gt;a1b2c3</h3><h3 id="LCR-155-将二叉搜索树转化为排序的双向链表-力扣（LeetCode）"><a href="#LCR-155-将二叉搜索树转化为排序的双向链表-力扣（LeetCode）" class="headerlink" title="LCR 155. 将二叉搜索树转化为排序的双向链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/description/">LCR 155. 将二叉搜索树转化为排序的双向链表 - 力扣（LeetCode）</a></h3><p>简单</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">*</span><span class="token operator">/</span>
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Node</span> pre<span class="token punctuation">,</span> head<span class="token punctuation">;</span>
 
+    <span class="token keyword">public</span> <span class="token class-name">Node</span> <span class="token function">treeToDoublyList</span><span class="token punctuation">(</span><span class="token class-name">Node</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        head<span class="token punctuation">.</span>left<span class="token operator">=</span>pre<span class="token punctuation">;</span>
+        pre<span class="token punctuation">.</span>right<span class="token operator">=</span>head<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token class-name">Node</span> cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pre<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span>pre<span class="token punctuation">.</span>right<span class="token operator">=</span>cur<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> head<span class="token operator">=</span>cur<span class="token punctuation">;</span>
+        cur<span class="token punctuation">.</span>left<span class="token operator">=</span>pre<span class="token punctuation">;</span>
+        pre<span class="token operator">=</span>cur<span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="-2"><a href="#-2" class="headerlink" title></a></h3>
                 
             </div>
             <hr/>
@@ -1115,18 +1145,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/03/04/%E7%89%9B%E5%AE%A2%E6%94%B6%E9%9B%86%E7%9A%84%E8%85%BE%E8%AE%AF%E9%9D%A2%E7%BB%8F/">
+                <a href="/2024/03/13/%E7%89%9B%E5%AE%A2%E4%B8%8A%E7%9C%8B%E5%88%B0%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="牛客收集的腾讯面经">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="牛客上看到的项目问题">
                         
-                        <span class="card-title">牛客收集的腾讯面经</span>
+                        <span class="card-title">牛客上看到的项目问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1136,22 +1165,21 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-04
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-13
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%88%AB%E4%BA%BA%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    别人面经
+                            <a href="/categories/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0/" class="post-category">
+                                    暑期实习
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1159,8 +1187,8 @@
                         <span class="chip bg-color">面经</span>
                     </a>
                     
-                    <a href="/tags/%E8%85%BE%E8%AE%AF/">
-                        <span class="chip bg-color">腾讯</span>
+                    <a href="/tags/%E9%A1%B9%E7%9B%AE/">
+                        <span class="chip bg-color">项目</span>
                     </a>
                     
                 </div>
