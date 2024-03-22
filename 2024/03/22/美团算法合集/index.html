@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="牛客收集的八股知识点, 顾的博客">
+    <meta name="keywords" content="美团算法合集, 顾的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>牛客收集的八股知识点 | 顾的博客</title>
+    <title>美团算法合集 | 顾的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">牛客收集的八股知识点</h1>
+                    <h1 class="description center-align post-title">美团算法合集</h1>
                 </div>
             </div>
         </div>
@@ -368,12 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%9D%A2%E7%BB%8F/">
-                                <span class="chip bg-color">面经</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                <span class="chip bg-color">八股</span>
+                            <a href="/tags/%E9%9D%A2%E8%AF%95%EF%BC%8C%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">面试，算法</span>
                             </a>
                         
                     </div>
@@ -384,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                面经
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                学习
                             </a>
                         
                     </div>
@@ -397,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-15
+                    2024-03-22
                 </div>
                 
 
@@ -421,40 +417,54 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><h3 id="怎么用mysql实现乐观锁、悲观锁"><a href="#怎么用mysql实现乐观锁、悲观锁" class="headerlink" title="怎么用mysql实现乐观锁、悲观锁"></a>怎么用mysql实现乐观锁、悲观锁</h3><p>乐观锁简单，就是cas呗</p>
-<p>悲观锁：使用select for update实现吧</p>
-<h3 id="慢查询的原因"><a href="#慢查询的原因" class="headerlink" title="慢查询的原因"></a>慢查询的原因</h3><ol>
-<li>sql没加索引</li>
-<li>索引失效</li>
-<li>单表数据量太大，3层的b+树可以放两千一百万+的数据</li>
-<li>join的数据量较大，如果 <code>join</code> 的数据量比较大时，mysql 会采用在硬盘上创建临时表的方式进行多张表的关联匹配，这种显然效率就极低，本来磁盘的 IO 就不快，还要关联。</li>
-<li>delete+in不走索引，sql没有进行这个的优化</li>
-</ol>
-<h3 id="如何定位慢查询"><a href="#如何定位慢查询" class="headerlink" title="如何定位慢查询"></a>如何定位慢查询</h3><ol>
-<li>通过slow_query_log 设置是否开启慢查询日志</li>
-</ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">slow_query_log ： 开启或关闭慢查询日志。
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>美团算法合集，呃呃</p>
+<h2 id="到店"><a href="#到店" class="headerlink" title="到店"></a>到店</h2><h3 id="8-字符串转换整数-atoi-力扣（LeetCode）"><a href="#8-字符串转换整数-atoi-力扣（LeetCode）" class="headerlink" title="8. 字符串转换整数 (atoi) - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/string-to-integer-atoi/description/">8. 字符串转换整数 (atoi) - 力扣（LeetCode）</a></h3><h3 id="56-合并区间-力扣（LeetCode）"><a href="#56-合并区间-力扣（LeetCode）" class="headerlink" title="56. 合并区间 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-intervals/description/">56. 合并区间 - 力扣（LeetCode）</a></h3><h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><h3 id="215-数组中的第K个最大元素-力扣（LeetCode）"><a href="#215-数组中的第K个最大元素-力扣（LeetCode）" class="headerlink" title="215. 数组中的第K个最大元素 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-largest-element-in-an-array/description/">215. 数组中的第K个最大元素 - 力扣（LeetCode）</a></h3><h3 id="143-重排链表-力扣（LeetCode）"><a href="#143-重排链表-力扣（LeetCode）" class="headerlink" title="143. 重排链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reorder-list/submissions/515244379/">143. 重排链表 - 力扣（LeetCode）</a></h3><h3 id="206-反转链表-力扣（LeetCode）"><a href="#206-反转链表-力扣（LeetCode）" class="headerlink" title="206. 反转链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-linked-list/description/?envType=study-plan-v2&envId=top-100-liked">206. 反转链表 - 力扣（LeetCode）</a></h3><h3 id="到家"><a href="#到家" class="headerlink" title="到家"></a>到家</h3><h3 id="LCR-187-破冰游戏-力扣（LeetCode）"><a href="#LCR-187-破冰游戏-力扣（LeetCode）" class="headerlink" title="LCR 187. 破冰游戏 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solutions/">LCR 187. 破冰游戏 - 力扣（LeetCode）</a></h3><h3 id="1143-最长公共子序列-力扣（LeetCode）"><a href="#1143-最长公共子序列-力扣（LeetCode）" class="headerlink" title="1143. 最长公共子序列 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-common-subsequence/description/">1143. 最长公共子序列 - 力扣（LeetCode）</a></h3><h3 id="21-合并两个有序链表-力扣（LeetCode）"><a href="#21-合并两个有序链表-力扣（LeetCode）" class="headerlink" title="21. 合并两个有序链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-sorted-lists/description/">21. 合并两个有序链表 - 力扣（LeetCode）</a></h3><h3 id="面试题-17-14-最小K个数-力扣（LeetCode）"><a href="#面试题-17-14-最小K个数-力扣（LeetCode）" class="headerlink" title="面试题 17.14. 最小K个数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-k-lcci/description/">面试题 17.14. 最小K个数 - 力扣（LeetCode）</a></h3><h3 id="165-比较版本号-力扣（LeetCode）"><a href="#165-比较版本号-力扣（LeetCode）" class="headerlink" title="165. 比较版本号 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/compare-version-numbers/description/">165. 比较版本号 - 力扣（LeetCode）</a></h3><h2 id="点评"><a href="#点评" class="headerlink" title="点评"></a>点评</h2><h3 id="88-合并两个有序数组-力扣（LeetCode）"><a href="#88-合并两个有序数组-力扣（LeetCode）" class="headerlink" title="88. 合并两个有序数组 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-sorted-array/description/">88. 合并两个有序数组 - 力扣（LeetCode）</a></h3><h2 id="优选"><a href="#优选" class="headerlink" title="优选"></a>优选</h2><h3 id="面试题-17-14-最小K个数-力扣（LeetCode）-1"><a href="#面试题-17-14-最小K个数-力扣（LeetCode）-1" class="headerlink" title="面试题 17.14. 最小K个数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-k-lcci/description/">面试题 17.14. 最小K个数 - 力扣（LeetCode）</a></h3><p>这题有一说一我自己的快排写的超时了</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> k<span class="token punctuation">;</span>
+    <span class="token class-name">Random</span> r<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">smallestK</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>k<span class="token operator">=</span>k<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n<span class="token operator">=</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span>res<span class="token operator">=</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>k<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token keyword">return</span> res<span class="token punctuation">;</span>
+        <span class="token function">partition</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>k<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-slow_query_log_file： 指定生成的慢查询日志路径（未设置则和默认和数据文件放一起）。
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span> <span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        arr<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        arr<span class="token punctuation">[</span>right<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-long_query_time ： 慢查询记录时间阈值，<span class="token constant">SQL</span>执行超过此时间则会被记录到日志（单位：秒，默认<span class="token number">10</span>秒）。
+    <span class="token keyword">void</span> <span class="token function">partition</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>nums<span class="token punctuation">,</span><span class="token keyword">int</span> left<span class="token punctuation">,</span><span class="token keyword">int</span> right<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>   
+        <span class="token keyword">if</span><span class="token punctuation">(</span>left<span class="token operator">>=</span>right<span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i<span class="token operator">=</span>left<span class="token punctuation">,</span>j<span class="token operator">=</span>right<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> pivotIndex<span class="token operator">=</span>r<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>right<span class="token operator">-</span>left<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">+</span>left<span class="token punctuation">;</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> pivotIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token operator">&amp;&amp;</span>nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">>=</span>nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                j<span class="token operator">--</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token operator">&amp;&amp;</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;=</span>nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                i<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span>k<span class="token punctuation">)</span><span class="token function">partition</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>k<span class="token punctuation">)</span><span class="token function">partition</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-log_queries_not_using_indexes ： 是否记录未使用索引的<span class="token constant">SQL</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="2">
-<li>通过explain，得知sql的执行计划，并且针对性优化</li>
-</ol>
-<h3 id="SQL注入预防"><a href="#SQL注入预防" class="headerlink" title="SQL注入预防"></a>SQL注入预防</h3><p>这个应该不太会问</p>
-<ol>
-<li>避免拼接SQL语句</li>
-<li>对输入验证和过滤</li>
-</ol>
-<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="查看内存的命令"><a href="#查看内存的命令" class="headerlink" title="查看内存的命令"></a>查看内存的命令</h3><p>free 命令用来显示系统内存状态,包括系统物理内存、虚拟内存(swap 交换分区)、共享内存和系统缓存的使用情况</p>
-<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="c-有析构函数可以自己回收，java有什么"><a href="#c-有析构函数可以自己回收，java有什么" class="headerlink" title="c++有析构函数可以自己回收，java有什么"></a>c++有析构函数可以自己回收，java有什么</h3><p>我觉得是垃圾回收器，但是这人回答的是try with resource</p>
-<p>其实是finalize()方法</p>
-<p>要给一个类增加收尾（finalizer ），你只要定义finalize ( ) 方法即可。Java 回收该类的一个对象时，就会调用这个方法。在finalize ( )方法中，你要指定在一个对象被撤消前必须执行的操作。垃圾回收周期性地运行，检查对象不再被运行状态引用或间接地通过****其他****对象引用。就在对象被释放之前，Java 运行系统调用该对象的finalize( ) 方法。</p>
-<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="垃圾收集器回收不掉的怎么办"><a href="#垃圾收集器回收不掉的怎么办" class="headerlink" title="垃圾收集器回收不掉的怎么办"></a>垃圾收集器回收不掉的怎么办</h3><p>不知道</p>
-
+<p>用这种莫名其妙不会超时的吧</p>
+<h2 id="未知"><a href="#未知" class="headerlink" title="未知"></a>未知</h2><h3 id="494-目标和-力扣（LeetCode）"><a href="#494-目标和-力扣（LeetCode）" class="headerlink" title="494. 目标和 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/target-sum/">494. 目标和 - 力扣（LeetCode）</a></h3>
                 
             </div>
             <hr/>
@@ -468,12 +478,8 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%9D%A2%E7%BB%8F/">
-                                    <span class="chip bg-color">面经</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%85%AB%E8%82%A1/">
-                                    <span class="chip bg-color">八股</span>
+                                <a href="/tags/%E9%9D%A2%E8%AF%95%EF%BC%8C%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">面试，算法</span>
                                 </a>
                             
                         </div>
@@ -514,9 +520,10 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/03/22/%E7%BE%8E%E5%9B%A2%E7%AE%97%E6%B3%95%E5%90%88%E9%9B%86/">
                     <div class="card-image">
@@ -534,9 +541,9 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -549,6 +556,7 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -567,13 +575,13 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/03/13/%E7%89%9B%E5%AE%A2%E4%B8%8A%E7%9C%8B%E5%88%B0%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/">
+                <a href="/2024/03/15/%E7%89%9B%E5%AE%A2%E6%94%B6%E9%9B%86%E7%9A%84%E5%85%AB%E8%82%A1%E7%9F%A5%E8%AF%86%E7%82%B9/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="牛客上看到的项目问题">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="牛客收集的八股知识点">
                         
-                        <span class="card-title">牛客上看到的项目问题</span>
+                        <span class="card-title">牛客收集的八股知识点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -584,14 +592,14 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9A%91%E6%9C%9F%E5%AE%9E%E4%B9%A0/" class="post-category">
-                                    暑期实习
+                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                    面经
                                 </a>
                             
                             
@@ -605,8 +613,8 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
                         <span class="chip bg-color">面经</span>
                     </a>
                     
-                    <a href="/tags/%E9%A1%B9%E7%9B%AE/">
-                        <span class="chip bg-color">项目</span>
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
                     </a>
                     
                 </div>
