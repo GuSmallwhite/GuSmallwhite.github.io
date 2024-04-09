@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="美团算法合集, 顾的博客">
+    <meta name="keywords" content="ClangAST基础, 顾的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>美团算法合集 | 顾的博客</title>
+    <title>ClangAST基础 | 顾的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">美团算法合集</h1>
+                    <h1 class="description center-align post-title">ClangAST基础</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%9D%A2%E8%AF%95%EF%BC%8C%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">面试，算法</span>
+                            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%8F%98%E5%BC%82/">
+                                <span class="chip bg-color">代码变异</span>
                             </a>
                         
                     </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-22
+                    2024-04-09
                 </div>
                 
 
@@ -417,62 +417,74 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>美团算法合集，呃呃</p>
-<h2 id="到店"><a href="#到店" class="headerlink" title="到店"></a>到店</h2><h3 id="8-字符串转换整数-atoi-力扣（LeetCode）"><a href="#8-字符串转换整数-atoi-力扣（LeetCode）" class="headerlink" title="8. 字符串转换整数 (atoi) - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/string-to-integer-atoi/description/">8. 字符串转换整数 (atoi) - 力扣（LeetCode）</a></h3><h3 id="56-合并区间-力扣（LeetCode）"><a href="#56-合并区间-力扣（LeetCode）" class="headerlink" title="56. 合并区间 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-intervals/description/">56. 合并区间 - 力扣（LeetCode）</a></h3><h3 id="40-组合总和-II-力扣（LeetCode）"><a href="#40-组合总和-II-力扣（LeetCode）" class="headerlink" title="40. 组合总和 II - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-ii/description/">40. 组合总和 II - 力扣（LeetCode）</a></h3><h3 id="20-有效的括号-力扣（LeetCode）"><a href="#20-有效的括号-力扣（LeetCode）" class="headerlink" title="20. 有效的括号 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/description/">20. 有效的括号 - 力扣（LeetCode）</a></h3><h3 id="692-前K个高频单词-力扣（LeetCode）"><a href="#692-前K个高频单词-力扣（LeetCode）" class="headerlink" title="692. 前K个高频单词 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/top-k-frequent-words/description/">692. 前K个高频单词 - 力扣（LeetCode）</a></h3><h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><h3 id="215-数组中的第K个最大元素-力扣（LeetCode）"><a href="#215-数组中的第K个最大元素-力扣（LeetCode）" class="headerlink" title="215. 数组中的第K个最大元素 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-largest-element-in-an-array/description/">215. 数组中的第K个最大元素 - 力扣（LeetCode）</a></h3><h3 id="143-重排链表-力扣（LeetCode）"><a href="#143-重排链表-力扣（LeetCode）" class="headerlink" title="143. 重排链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reorder-list/submissions/515244379/">143. 重排链表 - 力扣（LeetCode）</a></h3><h3 id="206-反转链表-力扣（LeetCode）"><a href="#206-反转链表-力扣（LeetCode）" class="headerlink" title="206. 反转链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-linked-list/description/?envType=study-plan-v2&envId=top-100-liked">206. 反转链表 - 力扣（LeetCode）</a></h3><h3 id="到家"><a href="#到家" class="headerlink" title="到家"></a>到家</h3><h3 id="LCR-187-破冰游戏-力扣（LeetCode）"><a href="#LCR-187-破冰游戏-力扣（LeetCode）" class="headerlink" title="LCR 187. 破冰游戏 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solutions/">LCR 187. 破冰游戏 - 力扣（LeetCode）</a></h3><h3 id="1143-最长公共子序列-力扣（LeetCode）"><a href="#1143-最长公共子序列-力扣（LeetCode）" class="headerlink" title="1143. 最长公共子序列 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-common-subsequence/description/">1143. 最长公共子序列 - 力扣（LeetCode）</a></h3><h3 id="21-合并两个有序链表-力扣（LeetCode）"><a href="#21-合并两个有序链表-力扣（LeetCode）" class="headerlink" title="21. 合并两个有序链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-sorted-lists/description/">21. 合并两个有序链表 - 力扣（LeetCode）</a></h3><h3 id="面试题-17-14-最小K个数-力扣（LeetCode）"><a href="#面试题-17-14-最小K个数-力扣（LeetCode）" class="headerlink" title="面试题 17.14. 最小K个数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-k-lcci/description/">面试题 17.14. 最小K个数 - 力扣（LeetCode）</a></h3><h3 id="141-环形链表-力扣（LeetCode）"><a href="#141-环形链表-力扣（LeetCode）" class="headerlink" title="141. 环形链表 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/linked-list-cycle/description/">141. 环形链表 - 力扣（LeetCode）</a></h3><h3 id="165-比较版本号-力扣（LeetCode）"><a href="#165-比较版本号-力扣（LeetCode）" class="headerlink" title="165. 比较版本号 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/compare-version-numbers/description/">165. 比较版本号 - 力扣（LeetCode）</a></h3><h2 id="点评"><a href="#点评" class="headerlink" title="点评"></a>点评</h2><h3 id="88-合并两个有序数组-力扣（LeetCode）"><a href="#88-合并两个有序数组-力扣（LeetCode）" class="headerlink" title="88. 合并两个有序数组 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-sorted-array/description/">88. 合并两个有序数组 - 力扣（LeetCode）</a></h3><h2 id="优选"><a href="#优选" class="headerlink" title="优选"></a>优选</h2><h3 id="面试题-17-14-最小K个数-力扣（LeetCode）-1"><a href="#面试题-17-14-最小K个数-力扣（LeetCode）-1" class="headerlink" title="面试题 17.14. 最小K个数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-k-lcci/description/">面试题 17.14. 最小K个数 - 力扣（LeetCode）</a></h3><p>这一题注意</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> k<span class="token punctuation">;</span>
-    <span class="token class-name">Random</span> r<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">smallestK</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span> <span class="token keyword">int</span> _k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        k <span class="token operator">=</span> _k<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> n <span class="token operator">=</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> ans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>k <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
-        <span class="token function">partition</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> k<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有一说一看这个项目没咋看懂，clang很多api非常奇妙，所以在这里记录一下一些基本的东西</p>
+<h1 id="clang-ASTConsumer"><a href="#clang-ASTConsumer" class="headerlink" title="clang::ASTConsumer"></a>clang::ASTConsumer</h1><p>对自定义AST处理的统一接口</p>
+<p><code>clang::ASTConsumer</code> 定义了一个纯虚函数 <code>HandleTranslationUnit</code>，用于处理整个翻译单元（Translation Unit）的 AST。在此函数中，可以通过遍历 AST 来执行各种操作，例如查找特定的语法结构、进行静态分析、进行代码转换等。</p>
+<p>项目里六中变异类型就是六个继承了<code>clang::ASTConsumer</code>的类，格式都差不多</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">VarUseSemantic</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">CustomASTConsumer</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">explicit</span> <span class="token function">VarUseSemantic</span><span class="token punctuation">(</span>
+      std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>clang<span class="token double-colon punctuation">::</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span>nums<span class="token punctuation">,</span><span class="token keyword">int</span> left<span class="token punctuation">,</span><span class="token keyword">int</span> right<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> temp<span class="token operator">=</span>nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token operator">=</span>nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        nums<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token operator">=</span>temp<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+  <span class="token keyword">void</span> <span class="token function">HandleTranslationUnit</span><span class="token punctuation">(</span>clang<span class="token double-colon punctuation">::</span>ASTContext <span class="token operator">&amp;</span>Context<span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">void</span> <span class="token function">partition</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span>nums<span class="token punctuation">,</span><span class="token keyword">int</span> left<span class="token punctuation">,</span><span class="token keyword">int</span> right<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>left<span class="token operator">>=</span>right<span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> pivotIndex<span class="token operator">=</span>left<span class="token operator">+</span>r<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>right<span class="token operator">-</span>left<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> pivotIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> i<span class="token operator">=</span>left<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> j<span class="token operator">=</span>right<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;=</span>j<span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;=</span>j<span class="token operator">&amp;&amp;</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;</span>nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">&#123;</span>
-                i<span class="token operator">++</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;=</span>j<span class="token operator">&amp;&amp;</span>nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">></span>nums<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">&#123;</span>
-                j<span class="token operator">--</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span>j<span class="token punctuation">)</span>
-            <span class="token punctuation">&#123;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            i<span class="token operator">++</span><span class="token punctuation">;</span>
-            j<span class="token operator">--</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">></span>k<span class="token punctuation">)</span><span class="token function">partition</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">&lt;</span>k<span class="token punctuation">)</span><span class="token function">partition</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  std<span class="token double-colon punctuation">::</span>string <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="MatchFinder-MatchCallback"><a href="#MatchFinder-MatchCallback" class="headerlink" title="MatchFinder::MatchCallback"></a>MatchFinder::MatchCallback</h1><p>处理AST匹配结果的类，当中的run函数可以被视为回调函数</p>
+<p><code>MatchFinder::MatchCallback</code> 类定义了一个纯虚函数 <code>run</code>，用于执行与匹配结果相关的操作。每当匹配器匹配到一个符合条件的 AST 节点时，就会调用对应 <code>MatchCallback</code> 对象的 <code>run</code> 函数，并将匹配结果传递给它。<code>run</code> 函数则可以根据匹配结果进行相应的处理，例如修改节点、输出信息等。</p>
+<p>所以我们错误类型类的格式基本都是这样的：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//首先是namespace，存放这个类的描述</span>
+<span class="token keyword">namespace</span> <span class="token punctuation">&#123;</span>
+<span class="token comment">//两个常量，描述和id</span>
+<span class="token keyword">const</span> string desc <span class="token operator">=</span>
+    <span class="token string">"This bug is a syntax error caused by incomplete brackets in the code"</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> string id <span class="token operator">=</span> <span class="token string">"parentheses"</span><span class="token punctuation">;</span>
+<span class="token comment">//callback类，存放对应run方法</span>
+<span class="token keyword">class</span> <span class="token class-name">ParenCallback</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> MatchFinder<span class="token double-colon punctuation">::</span><span class="token class-name">MatchCallback</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token comment">//</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span> 
+
+<span class="token class-name">ParenSyntax</span><span class="token double-colon punctuation">::</span><span class="token function">ParenSyntax</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">//构造函数，实例化一个存放返回值类型为void，参数为Rewriter引用的函数，的，vector的引用，名字叫all</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">ParenSyntax</span><span class="token double-colon punctuation">::</span><span class="token function">HandleTranslationUnit</span><span class="token punctuation">(</span>clang<span class="token double-colon punctuation">::</span>ASTContext <span class="token operator">&amp;</span>context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  finder<span class="token punctuation">.</span><span class="token function">matchAST</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//这个都一样</span>
+<span class="token punctuation">&#125;</span>
+
+string <span class="token class-name">ParenSyntax</span><span class="token double-colon punctuation">::</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token string">"ParenSyntax"</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token comment">//名字</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-<h2 id="平台技术部"><a href="#平台技术部" class="headerlink" title="平台技术部"></a>平台技术部</h2><h3 id="102-二叉树的层序遍历-力扣（LeetCode）"><a href="#102-二叉树的层序遍历-力扣（LeetCode）" class="headerlink" title="102. 二叉树的层序遍历 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-level-order-traversal/submissions/515483316/">102. 二叉树的层序遍历 - 力扣（LeetCode）</a></h3><h2 id="未知"><a href="#未知" class="headerlink" title="未知"></a>未知</h2><h3 id="494-目标和-力扣（LeetCode）"><a href="#494-目标和-力扣（LeetCode）" class="headerlink" title="494. 目标和 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/target-sum/">494. 目标和 - 力扣（LeetCode）</a></h3><h3 id="704-二分查找-力扣（LeetCode）"><a href="#704-二分查找-力扣（LeetCode）" class="headerlink" title="704. 二分查找 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-search/submissions/515478598/">704. 二分查找 - 力扣（LeetCode）</a></h3><h3 id="236-二叉树的最近公共祖先-力扣（LeetCode）"><a href="#236-二叉树的最近公共祖先-力扣（LeetCode）" class="headerlink" title="236. 二叉树的最近公共祖先 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/submissions/515479641/">236. 二叉树的最近公共祖先 - 力扣（LeetCode）</a></h3><h3 id="80-删除有序数组中的重复项-II-力扣（LeetCode）"><a href="#80-删除有序数组中的重复项-II-力扣（LeetCode）" class="headerlink" title="80. 删除有序数组中的重复项 II - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array-ii/solutions/702970/gong-shui-san-xie-guan-yu-shan-chu-you-x-glnq/">80. 删除有序数组中的重复项 II - 力扣（LeetCode）</a></h3>
+
+
+<h1 id="MatchFinder-MatchResult"><a href="#MatchFinder-MatchResult" class="headerlink" title="MatchFinder::MatchResult"></a>MatchFinder::MatchResult</h1><p>存放匹配到的AST节点的相关信息</p>
+<p>在 AST Matchers 中，当匹配器匹配到符合条件的节点时，会调用相应的回调函数（即 <code>MatchCallback</code> 对象）并将匹配结果传递给它。这个匹配结果就是一个 <code>MatchResult</code> 对象，包含了匹配到的节点、源码位置等信息。</p>
+<p><strong>项目里的用1</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>Stmt<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>result.Nodes</code>:存储了所有通过匹配规则成功匹配到的节点</p>
+<p><code>getNodeAs&lt;Stmt&gt;(id)</code>:获取名称为id的节点，并且视为Stmt类型。<code>Stmt</code>（Statement）代表了语句，是语法树中的一个重要节点。<code>Stmt</code> 可以是任何有效的 C++ 语句，比如赋值语句、函数调用、条件语句等。</p>
+<p>当然还会有别的类型，比如</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>ForStmt<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//for语句</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> DeclRefExpr <span class="token operator">*</span>bo <span class="token operator">=</span> result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>DeclRefExpr<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//变量或者函数声明</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>项目里的用法2</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm <span class="token operator">=</span> result<span class="token punctuation">.</span>SourceManager<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>SourceManager</code> 负责管理源码文件的位置信息，包括文件名、行号、列号等。在 AST Matchers 中，可以使用 <code>SourceManager</code> 来获取匹配节点的源码位置信息，比如获取节点所在文件、行号、列号等。</p>
+<h1 id="StatementMatcher"><a href="#StatementMatcher" class="headerlink" title="StatementMatcher"></a>StatementMatcher</h1><p><code>StatementMatcher</code> 是 Clang AST Matchers 提供的一种匹配模式，用于匹配语句（statements）的模式。它允许你定义特定的语法结构或语句模式，并在 AST 中查找匹配这些模式的语句。</p>
+<p>我们通过这个来寻找我们想要找到的格式并对他们赋予自定义的id</p>
+<p>比如</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StatementMatcher m <span class="token operator">=</span> <span class="token function">forStmt</span><span class="token punctuation">(</span><span class="token function">isExpansionInMainFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>创建了一个 <code>StatementMatcher</code> 对象 <code>m</code>，用于匹配位于主文件中的 <code>for</code> 循环语句，并将匹配到的语句绑定到名称为 <code>id</code> 的变量上。</p>
+
                 
             </div>
             <hr/>
@@ -486,8 +498,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%9D%A2%E8%AF%95%EF%BC%8C%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">面试，算法</span>
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%8F%98%E5%BC%82/">
+                                    <span class="chip bg-color">代码变异</span>
                                 </a>
                             
                         </div>
@@ -528,9 +540,60 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2024/04/09/ClangAST%E5%9F%BA%E7%A1%80/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="ClangAST基础">
+                        
+                        <span class="card-title">ClangAST基础</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%8F%98%E5%BC%82/">
+                        <span class="chip bg-color">代码变异</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2024/04/08/%E4%BB%A3%E7%A0%81%E5%BC%82%E5%8C%96%E9%A1%B9%E7%9B%AE%E8%A7%A3%E8%AF%BB/">
                     <div class="card-image">
@@ -548,9 +611,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-04-08
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -568,59 +631,6 @@
                     
                     <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">
                         <span class="chip bg-color">实验室</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2024/03/15/%E7%89%9B%E5%AE%A2%E6%94%B6%E9%9B%86%E7%9A%84%E5%85%AB%E8%82%A1%E7%9F%A5%E8%AF%86%E7%82%B9/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="牛客收集的八股知识点">
-                        
-                        <span class="card-title">牛客收集的八股知识点</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-15
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E9%9D%A2%E7%BB%8F/">
-                        <span class="chip bg-color">面经</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%85%AB%E8%82%A1/">
-                        <span class="chip bg-color">八股</span>
                     </a>
                     
                 </div>
