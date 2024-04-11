@@ -490,6 +490,8 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
 
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> NamedDecl <span class="token operator">*</span>nd <span class="token operator">=</span> <span class="token generic-function"><span class="token function">dyn_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>NamedDecl<span class="token operator">></span></span></span><span class="token punctuation">(</span>bo<span class="token operator">-></span><span class="token function">getDecl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//将声明类型转换为名称类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<h1 id="Lexer"><a href="#Lexer" class="headerlink" title="Lexer"></a>Lexer</h1><p>词法分析器（lexer）用于将源代码转换为标记（tokens）序列。标记是编程语言中的基本单元，例如关键字、标识符、操作符、常量等。词法分析器扫描源代码，并将其分解为标记序列，以便进一步的语法分析或处理。</p>
+<h2 id="LexFromRawLexer"><a href="#LexFromRawLexer" class="headerlink" title="LexFromRawLexer"></a>LexFromRawLexer</h2><p><code>LexFromRawLexer</code> 是 <code>Lexer</code> 类的一个成员函数，用于从原始字符流中解析下一个 token，并将其存储在提供的 <code>Token</code> 对象中。这个函数从给定的位置开始向前解析字符，识别并返回下一个 token。</p>
 
                 
             </div>
