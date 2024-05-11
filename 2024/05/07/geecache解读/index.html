@@ -417,10 +417,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了秋招冲刺腾讯我选择再做一个go的项目，我草了</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了秋招冲刺腾讯我选择再做一个go的项目，我草了</p>
 <p>本文依旧是按照day1……7的顺序来做的</p>
-<h1 id="Day1-LRU缓存淘汰"><a href="#Day1-LRU缓存淘汰" class="headerlink" title="Day1 LRU缓存淘汰"></a>Day1 LRU缓存淘汰</h1><p>这一天主要是实现LRU缓存淘汰策略</p>
-<h2 id="数据结构与构造函数"><a href="#数据结构与构造函数" class="headerlink" title="数据结构与构造函数"></a>数据结构与构造函数</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Cache <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+<h2 id="Day1-LRU缓存淘汰"><a href="#Day1-LRU缓存淘汰" class="headerlink" title="Day1 LRU缓存淘汰"></a>Day1 LRU缓存淘汰</h2><p>这一天主要是实现LRU缓存淘汰策略</p>
+<h3 id="数据结构与构造函数"><a href="#数据结构与构造函数" class="headerlink" title="数据结构与构造函数"></a>数据结构与构造函数</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Cache <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	maxBytes <span class="token builtin">int64</span><span class="token comment">//允许使用的最大内存</span>
 	nbytes   <span class="token builtin">int64</span><span class="token comment">//已经使用的内存</span>
 	ll       <span class="token operator">*</span>list<span class="token punctuation">.</span>List<span class="token comment">//双向链表，用于lru中的双向链表</span>
@@ -453,7 +453,7 @@
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="LRU功能函数"><a href="#LRU功能函数" class="headerlink" title="LRU功能函数"></a>LRU功能函数</h2><h3 id="查找函数"><a href="#查找函数" class="headerlink" title="查找函数"></a>查找函数</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Get look ups a key's value</span>
+<h3 id="LRU功能函数"><a href="#LRU功能函数" class="headerlink" title="LRU功能函数"></a>LRU功能函数</h3><h4 id="查找函数"><a href="#查找函数" class="headerlink" title="查找函数"></a>查找函数</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Get look ups a key's value</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>value Value<span class="token punctuation">,</span> ok <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">if</span> ele<span class="token punctuation">,</span> ok <span class="token operator">:=</span> c<span class="token punctuation">.</span>cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> ok <span class="token punctuation">&#123;</span><span class="token comment">//如果找到了key对应的ele</span>
 		c<span class="token punctuation">.</span>ll<span class="token punctuation">.</span><span class="token function">MoveToFront</span><span class="token punctuation">(</span>ele<span class="token punctuation">)</span><span class="token comment">//移动到队头</span>
@@ -463,7 +463,7 @@
 	<span class="token keyword">return</span><span class="token comment">//找不到直接返回</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="缓存淘汰函数"><a href="#缓存淘汰函数" class="headerlink" title="缓存淘汰函数"></a>缓存淘汰函数</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// RemoveOldest removes the oldest item</span>
+<h4 id="缓存淘汰函数"><a href="#缓存淘汰函数" class="headerlink" title="缓存淘汰函数"></a>缓存淘汰函数</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// RemoveOldest removes the oldest item</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">RemoveOldest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	ele <span class="token operator">:=</span> c<span class="token punctuation">.</span>ll<span class="token punctuation">.</span><span class="token function">Back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//找到队尾</span>
 	<span class="token keyword">if</span> ele <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
@@ -477,7 +477,7 @@
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="新增-修改"><a href="#新增-修改" class="headerlink" title="新增&#x2F;修改"></a>新增&#x2F;修改</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Add adds a value to the cache.</span>
+<h4 id="新增-修改"><a href="#新增-修改" class="headerlink" title="新增&#x2F;修改"></a>新增&#x2F;修改</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Add adds a value to the cache.</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Add</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">,</span> value Value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">if</span> ele<span class="token punctuation">,</span> ok <span class="token operator">:=</span> c<span class="token punctuation">.</span>cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> ok <span class="token punctuation">&#123;</span><span class="token comment">//已经存在了那就是修改</span>
 		c<span class="token punctuation">.</span>ll<span class="token punctuation">.</span><span class="token function">MoveToFront</span><span class="token punctuation">(</span>ele<span class="token punctuation">)</span>
@@ -494,10 +494,10 @@
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="Day2-单机并发缓存"><a href="#Day2-单机并发缓存" class="headerlink" title="Day2 单机并发缓存"></a>Day2 单机并发缓存</h1><p>这一天主要是三个部分，第一个是锁，用于并发访问</p>
+<h2 id="Day2-单机并发缓存"><a href="#Day2-单机并发缓存" class="headerlink" title="Day2 单机并发缓存"></a>Day2 单机并发缓存</h2><p>这一天主要是三个部分，第一个是锁，用于并发访问</p>
 <p>第二个是用锁实现并发访问</p>
 <p>第三个就是group类</p>
-<h2 id="sync-Mutex类"><a href="#sync-Mutex类" class="headerlink" title="sync.Mutex类"></a>sync.Mutex类</h2><p>就是一个锁，用法</p>
+<h3 id="sync-Mutex类"><a href="#sync-Mutex类" class="headerlink" title="sync.Mutex类"></a>sync.Mutex类</h3><p>就是一个锁，用法</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> m sync<span class="token punctuation">.</span>Mutex
 <span class="token keyword">var</span> set <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
 
@@ -520,8 +520,8 @@
 	set<span class="token punctuation">[</span>num<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="用锁封装lru的方法"><a href="#用锁封装lru的方法" class="headerlink" title="用锁封装lru的方法"></a>用锁封装lru的方法</h2><p>这样就可以并发访问了</p>
-<h3 id="ByteView"><a href="#ByteView" class="headerlink" title="ByteView"></a>ByteView</h3><p>一个数据结构，用于表示缓存的值</p>
+<h3 id="用锁封装lru的方法"><a href="#用锁封装lru的方法" class="headerlink" title="用锁封装lru的方法"></a>用锁封装lru的方法</h3><p>这样就可以并发访问了</p>
+<h4 id="ByteView"><a href="#ByteView" class="headerlink" title="ByteView"></a>ByteView</h4><p>一个数据结构，用于表示缓存的值</p>
 <p>ByteView实现了上篇定义的Value接口</p>
 <p><strong>在go中，一个类只要实现了一个接口的所有方法，那么就认为他实现了这个接口</strong></p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// A ByteView holds an immutable view of bytes.</span>
@@ -551,7 +551,7 @@
 	<span class="token keyword">return</span> c
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="cache类"><a href="#cache类" class="headerlink" title="cache类"></a>cache类</h3><p>包装了lru类和锁，用于实现并发</p>
+<h4 id="cache类"><a href="#cache类" class="headerlink" title="cache类"></a>cache类</h4><p>包装了lru类和锁，用于实现并发</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> cache <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	mu         sync<span class="token punctuation">.</span>Mutex
 	lru        <span class="token operator">*</span>lru<span class="token punctuation">.</span>Cache<span class="token comment">//包装了lru数据结构</span>
@@ -582,7 +582,7 @@
 	<span class="token keyword">return</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="Group数据结构初见"><a href="#Group数据结构初见" class="headerlink" title="Group数据结构初见"></a>Group数据结构初见</h2><p>Group 是 GeeCache 最核心的数据结构，负责与用户的交互，并且控制缓存值存储和获取的流程。</p>
+<h3 id="Group数据结构初见"><a href="#Group数据结构初见" class="headerlink" title="Group数据结构初见"></a>Group数据结构初见</h3><p>Group 是 GeeCache 最核心的数据结构，负责与用户的交互，并且控制缓存值存储和获取的流程。</p>
 <p>代码框架</p>
 <pre class="line-numbers language-none"><code class="language-none">geecache&#x2F;
     |--lru&#x2F;
@@ -597,7 +597,7 @@
                             |  否
                             |-----&gt; 调用&#96;回调函数&#96;，获取值并添加到缓存 --&gt; 返回缓存值 ⑶<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="回调函数Getter"><a href="#回调函数Getter" class="headerlink" title="回调函数Getter"></a>回调函数Getter</h3><p>一个空函数，让用户自定义如果没有缓存，那么从哪里获取</p>
+<h4 id="回调函数Getter"><a href="#回调函数Getter" class="headerlink" title="回调函数Getter"></a>回调函数Getter</h4><p>一个空函数，让用户自定义如果没有缓存，那么从哪里获取</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// A Getter loads data for a key.</span>
 <span class="token keyword">type</span> Getter <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
 	<span class="token function">Get</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
@@ -616,7 +616,7 @@
 <li>定义函数类型 GetterFunc，并实现 Getter 接口的 <code>Get</code> 方法。</li>
 <li>函数类型实现某一个接口，称之为接口型函数，方便使用者在调用时既能够传入函数作为参数，也能够传入实现了该接口的结构体作为参数。</li>
 </ul>
-<h3 id="Group的定义"><a href="#Group的定义" class="headerlink" title="Group的定义"></a>Group的定义</h3><p>包装了回调函数和cache数据结构，用于控制流程</p>
+<h4 id="Group的定义"><a href="#Group的定义" class="headerlink" title="Group的定义"></a>Group的定义</h4><p>包装了回调函数和cache数据结构，用于控制流程</p>
 <p>以及自己的名字，所以就是缓存分类吧，name缓存， class缓存等等类似的</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Group <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	name      <span class="token builtin">string</span>
@@ -654,7 +654,7 @@
 	<span class="token keyword">return</span> g
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="Get方法"><a href="#Get方法" class="headerlink" title="Get方法"></a>Get方法</h3><p>实现了上面所说的流程，见注释</p>
+<h4 id="Get方法"><a href="#Get方法" class="headerlink" title="Get方法"></a>Get方法</h4><p>实现了上面所说的流程，见注释</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>g <span class="token operator">*</span>Group<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>ByteView<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">if</span> key <span class="token operator">==</span> <span class="token string">" "</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">return</span> ByteView<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
@@ -683,8 +683,8 @@
 	g<span class="token punctuation">.</span>mainCache<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token comment">//这个就是直接push进去就行了</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="DAY3-HTTP服务端"><a href="#DAY3-HTTP服务端" class="headerlink" title="DAY3 HTTP服务端"></a>DAY3 HTTP服务端</h1><p>使用http实现分布式缓存节点之间的通信</p>
-<h2 id="http使用方法"><a href="#http使用方法" class="headerlink" title="http使用方法"></a>http使用方法</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> server <span class="token builtin">int</span>
+<h2 id="DAY3-HTTP服务端"><a href="#DAY3-HTTP服务端" class="headerlink" title="DAY3 HTTP服务端"></a>DAY3 HTTP服务端</h2><p>使用http实现分布式缓存节点之间的通信</p>
+<h3 id="http使用方法"><a href="#http使用方法" class="headerlink" title="http使用方法"></a>http使用方法</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> server <span class="token builtin">int</span>
 
 <span class="token keyword">func</span> <span class="token punctuation">(</span>h <span class="token operator">*</span>server<span class="token punctuation">)</span> <span class="token function">ServeHTTP</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>URL<span class="token punctuation">.</span>Path<span class="token punctuation">)</span>
@@ -701,7 +701,7 @@
 <li>调用 <code>http.ListenAndServe</code> 在 9999 端口启动 http 服务，处理请求的对象为 <code>s server</code>。</li>
 </ul>
 <p><code>http.ListenAndServe</code> 接收 2 个参数，第一个参数是服务启动的地址，第二个参数是 Handler，<strong>任何实现了 <code>ServeHTTP</code> 方法的对象都可以作为 HTTP 的 Handler。</strong></p>
-<h2 id="项目当中的使用"><a href="#项目当中的使用" class="headerlink" title="项目当中的使用"></a>项目当中的使用</h2><h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">const</span> defaultBasePath <span class="token operator">=</span> <span class="token string">"/_geecache/"</span>
+<h3 id="项目当中的使用"><a href="#项目当中的使用" class="headerlink" title="项目当中的使用"></a>项目当中的使用</h3><h4 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">const</span> defaultBasePath <span class="token operator">=</span> <span class="token string">"/_geecache/"</span>
 
 <span class="token comment">// implements PeerPicker for a pool of HTTP peers</span>
 <span class="token keyword">type</span> HTTPPool <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
@@ -714,7 +714,7 @@
 	<span class="token keyword">return</span> <span class="token operator">&amp;</span>HTTPPool<span class="token punctuation">&#123;</span>self<span class="token punctuation">:</span> self<span class="token punctuation">,</span> basePath<span class="token punctuation">:</span> defaultBasePath<span class="token punctuation">&#125;</span><span class="token comment">//构造函数</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>实现ServeHTTP方法，作为HTTP的Handler</p>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>实现ServeHTTP方法，作为HTTP的Handler</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Log info with server name</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>p <span class="token operator">*</span>HTTPPool<span class="token punctuation">)</span> <span class="token function">Log</span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> v <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"[Server %s] %s"</span><span class="token punctuation">,</span> p<span class="token punctuation">.</span>self<span class="token punctuation">,</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span>format<span class="token punctuation">,</span> v<span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -751,7 +751,7 @@
 	w<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>view<span class="token punctuation">.</span><span class="token function">ByteSlice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//以responsebody返回</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="DAY4一致性哈希"><a href="#DAY4一致性哈希" class="headerlink" title="DAY4一致性哈希"></a>DAY4一致性哈希</h1><p>这里的一致性哈希的用途是什么？</p>
+<h2 id="DAY4一致性哈希"><a href="#DAY4一致性哈希" class="headerlink" title="DAY4一致性哈希"></a>DAY4一致性哈希</h2><p>这里的一致性哈希的用途是什么？</p>
 <p>使用一致性哈希，使得每一个key对应相同的节点</p>
 <p>什么意思，我有groupmap对不对，groupmap存储了groupname和group的对应关系</p>
 <p>group又存储了key和value的对应关系</p>
@@ -816,6 +816,114 @@ func (m *Map) Add(keys ...string) &#123;
 <li>第二步，顺时针找到第一个匹配的虚拟节点的下标 <code>idx</code>，从 m.keys 中获取到对应的哈希值。如果 <code>idx == len(m.keys)</code>，说明应选择 <code>m.keys[0]</code>，因为 <code>m.keys</code> 是一个环状结构，所以用取余数的方式来处理这种情况。</li>
 <li>第三步，通过 <code>hashMap</code> 映射得到真实的节点。</li>
 </ul>
+<h2 id="DAY-5分布式节点"><a href="#DAY-5分布式节点" class="headerlink" title="DAY 5分布式节点"></a>DAY 5分布式节点</h2><p>这一天主要是两个工作</p>
+<ul>
+<li>注册节点(Register Peers)，借助一致性哈希算法选择节点。</li>
+<li>实现 HTTP 客户端，与远程节点的服务端通信</li>
+</ul>
+<h3 id="先前留下的流程2"><a href="#先前留下的流程2" class="headerlink" title="先前留下的流程2"></a>先前留下的流程2</h3><p>在这里把流程2补充完整</p>
+<pre class="line-numbers language-none"><code class="language-none">使用一致性哈希选择节点        是                                    是
+    |-----&gt; 是否是远程节点 -----&gt; HTTP 客户端访问远程节点 --&gt; 成功？-----&gt; 服务端返回返回值
+                    |  否                                    ↓  否
+                    |----------------------------&gt; 回退到本地节点处理。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="PeerPicker"><a href="#PeerPicker" class="headerlink" title="PeerPicker"></a>PeerPicker</h3><p>有一说一一直没懂这个peer是什么玩意</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// PeerPicker is the interface that must be implemented to locate</span>
+<span class="token comment">// the peer that owns a specific key.</span>
+<span class="token keyword">type</span> PeerPicker <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">PickPeer</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>peer PeerGetter<span class="token punctuation">,</span> ok <span class="token builtin">bool</span><span class="token punctuation">)</span>
+    
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// PeerGetter is the interface that must be implemented by a peer.</span>
+<span class="token keyword">type</span> PeerGetter <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">Get</span><span class="token punctuation">(</span>group <span class="token builtin">string</span><span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>目测来开，PeerPicker 的 <code>PickPeer()</code> 方法用于根据传入的 key 选择相应节点 PeerGetter。</p>
+<p>然后接口 PeerGetter 的 <code>Get()</code> 方法用于从对应 group 查找缓存值。PeerGetter 就对应于上述流程中的 HTTP 客户端。</p>
+<h3 id="HTTP客户端"><a href="#HTTP客户端" class="headerlink" title="HTTP客户端"></a>HTTP客户端</h3><p>之前写了服务端，就是解析请求然后调用group.get然后把内容写进response里</p>
+<p>这里要写客户端，什么意思呢，就是要和远程节点的服务端通信</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> httpGetter <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	baseURL <span class="token builtin">string</span><span class="token comment">//要访问的远程url地址，比如http://example.com/_geecache/</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//这一步对应从远程节点获取</span>
+<span class="token comment">//httpGetter实现了PeerGetter接口</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>h <span class="token operator">*</span>httpGetter<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>group <span class="token builtin">string</span><span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	u <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span>
+		<span class="token string">"%v%v/%v"</span><span class="token punctuation">,</span>
+		h<span class="token punctuation">.</span>baseURL<span class="token punctuation">,</span>
+		url<span class="token punctuation">.</span><span class="token function">QueryEscape</span><span class="token punctuation">(</span>group<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token comment">//防止特殊字符</span>
+		url<span class="token punctuation">.</span><span class="token function">QueryEscape</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token punctuation">)</span>
+	res<span class="token punctuation">,</span> err <span class="token operator">:=</span> http<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token comment">//发送get请求</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> err
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">defer</span> res<span class="token punctuation">.</span>Body<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">if</span> res<span class="token punctuation">.</span>StatusCode <span class="token operator">!=</span> http<span class="token punctuation">.</span>StatusOK <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> fmt<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"server returned: %v"</span><span class="token punctuation">,</span> res<span class="token punctuation">.</span>Status<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	bytes<span class="token punctuation">,</span> err <span class="token operator">:=</span> ioutil<span class="token punctuation">.</span><span class="token function">ReadAll</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>Body<span class="token punctuation">)</span><span class="token comment">//读取响应，保存在bytes[]当中</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> fmt<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"reading response body: %v"</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> bytes<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="实现节点选择"><a href="#实现节点选择" class="headerlink" title="实现节点选择"></a>实现节点选择</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// HTTPPool implements PeerPicker for a pool of HTTP peers.</span>
+<span class="token keyword">type</span> HTTPPool <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// this peer's base URL, e.g. "https://example.net:8000"</span>
+	self        <span class="token builtin">string</span>
+	basePath    <span class="token builtin">string</span>
+	mu          sync<span class="token punctuation">.</span>Mutex <span class="token comment">// guards peers and httpGetters</span>
+	peers       <span class="token operator">*</span>consistenthash<span class="token punctuation">.</span>Map
+	httpGetters <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">*</span>httpGetter <span class="token comment">// keyed by e.g. "http://10.0.0.2:8008"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>新增成员变量 <code>peers</code>，类型是一致性哈希算法的 <code>Map</code>，用来根据具体的 key 选择节点。</p>
+</li>
+<li><p>新增成员变量 <code>httpGetters</code>，映射远程节点与对应的 httpGetter。每一个远程节点对应一个 httpGetter，因为 httpGetter 与远程节点的地址 <code>baseURL</code> 有关。</p>
+</li>
+</ul>
+<p>还记得一致性哈希算法的 <code>Map</code>是什么样的吗？</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Map constains all hashed keys</span>
+<span class="token keyword">type</span> Map <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	hash     Hash
+	replicas <span class="token builtin">int</span>
+	keys     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// 逻辑环</span>
+	hashMap  <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token comment">//保存哈希值和真实节点名的对应关系</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以把这个Map放到HTTPPool当中，就把一致性哈希和HTTP结合在一起了</p>
+<h3 id="实现PeerPicker接口"><a href="#实现PeerPicker接口" class="headerlink" title="实现PeerPicker接口"></a>实现PeerPicker接口</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Set updates the pool's list of peers.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p <span class="token operator">*</span>HTTPPool<span class="token punctuation">)</span> <span class="token function">Set</span><span class="token punctuation">(</span>peers <span class="token operator">...</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">//添加传入的节点</span>
+	p<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">defer</span> p<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	p<span class="token punctuation">.</span>peers <span class="token operator">=</span> consistenthash<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span>defaultReplicas<span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">)</span>
+	p<span class="token punctuation">.</span>peers<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>peers<span class="token operator">...</span><span class="token punctuation">)</span>
+	p<span class="token punctuation">.</span>httpGetters <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">*</span>httpGetter<span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>peers<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> peer <span class="token operator">:=</span> <span class="token keyword">range</span> peers <span class="token punctuation">&#123;</span>
+		p<span class="token punctuation">.</span>httpGetters<span class="token punctuation">[</span>peer<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>httpGetter<span class="token punctuation">&#123;</span>baseURL<span class="token punctuation">:</span> peer <span class="token operator">+</span> p<span class="token punctuation">.</span>basePath<span class="token punctuation">&#125;</span><span class="token comment">//每个节点对应一个HTTPGetter</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// HTTPPool实现了PeerPicker接口</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p <span class="token operator">*</span>HTTPPool<span class="token punctuation">)</span> <span class="token function">PickPeer</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>PeerGetter<span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	p<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">defer</span> p<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> peer <span class="token operator">:=</span> p<span class="token punctuation">.</span>peers<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">/*包装一致性哈希的get方法，获取节点对应的HTTPGetter*/</span> peer <span class="token operator">!=</span> <span class="token string">""</span> <span class="token operator">&amp;&amp;</span> peer <span class="token operator">!=</span> p<span class="token punctuation">.</span>self <span class="token punctuation">&#123;</span>
+		p<span class="token punctuation">.</span><span class="token function">Log</span><span class="token punctuation">(</span><span class="token string">"Pick peer %s"</span><span class="token punctuation">,</span> peer<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> p<span class="token punctuation">.</span>httpGetters<span class="token punctuation">[</span>peer<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token boolean">true</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
