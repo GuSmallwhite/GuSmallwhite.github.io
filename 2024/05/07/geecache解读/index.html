@@ -924,6 +924,49 @@ func (m *Map) Add(keys ...string) &#123;
 	<span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> <span class="token boolean">false</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="DAY-6防止缓存击穿"><a href="#DAY-6防止缓存击穿" class="headerlink" title="DAY 6防止缓存击穿"></a>DAY 6防止缓存击穿</h2><p><strong>缓存击穿</strong>：一个存在的key，在缓存过期的一刻，同时有大量的请求，这些请求都会击穿到 DB ，造成瞬时DB请求量大、压力骤增。</p>
+<p>我们要解决的是什么问题，就是对一个节点的相同请求，我们只需要发送一次即可</p>
+<h3 id="两个数据结构"><a href="#两个数据结构" class="headerlink" title="两个数据结构"></a>两个数据结构</h3><p>设计call和group两个数据结构，负责管理请求</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// call表示一个请求</span>
+<span class="token keyword">type</span> call <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	wg  sync<span class="token punctuation">.</span>WaitGroup
+	val <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+	err <span class="token builtin">error</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Group 负责管理请求</span>
+<span class="token comment">// units of work can be executed with duplicate suppression.</span>
+<span class="token keyword">type</span> Group <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	mu sync<span class="token punctuation">.</span>Mutex       <span class="token comment">// protects m</span>
+	m  <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">*</span>call <span class="token comment">// lazily initialized</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="do方法"><a href="#do方法" class="headerlink" title="do方法"></a>do方法</h3><p>Do 方法，接收 2 个参数，第一个参数是 <code>key</code>，第二个参数是一个函数 <code>fn</code>。Do 的作用就是，针对相同的 key，无论 Do 被调用多少次，函数 <code>fn</code> 都只会被调用一次，等待 fn 调用结束了，返回返回值或错误。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>g <span class="token operator">*</span>Group<span class="token punctuation">)</span> <span class="token function">Do</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">,</span> fn <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	g<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> g<span class="token punctuation">.</span>m <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+		g<span class="token punctuation">.</span>m <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">*</span>call<span class="token punctuation">)</span><span class="token comment">//懒汉初始化</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">if</span> c<span class="token punctuation">,</span> ok <span class="token operator">:=</span> g<span class="token punctuation">.</span>m<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> ok <span class="token punctuation">&#123;</span>
+		g<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		c<span class="token punctuation">.</span>wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//如果请求在进行中，那么等待结果</span>
+		<span class="token keyword">return</span> c<span class="token punctuation">.</span>val<span class="token punctuation">,</span> c<span class="token punctuation">.</span>err<span class="token comment">//然后直接返回</span>
+	<span class="token punctuation">&#125;</span>
+	c <span class="token operator">:=</span> <span class="token function">new</span><span class="token punctuation">(</span>call<span class="token punctuation">)</span>
+	c<span class="token punctuation">.</span>wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	g<span class="token punctuation">.</span>m<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> c<span class="token comment">//否则添加到map</span>
+	g<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	c<span class="token punctuation">.</span>val<span class="token punctuation">,</span> c<span class="token punctuation">.</span>err <span class="token operator">=</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//调用发起请求的函数</span>
+	c<span class="token punctuation">.</span>wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//请求结束</span>
+
+	g<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token function">delete</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>m<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token comment">//执行完毕后删除map中对应的请求</span>
+	g<span class="token punctuation">.</span>mu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">return</span> c<span class="token punctuation">.</span>val<span class="token punctuation">,</span> c<span class="token punctuation">.</span>err
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -980,18 +1023,17 @@ func (m *Map) Add(keys ...string) &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/05/07/geecache%E8%A7%A3%E8%AF%BB/">
+                <a href="/2024/07/16/FIT%E5%8F%AF%E8%83%BD%E7%9A%84%E7%AE%97%E6%B3%95%E9%A2%98/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="geecache解读">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="FIT可能的算法题">
                         
-                        <span class="card-title">geecache解读</span>
+                        <span class="card-title">FIT可能的算法题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1001,27 +1043,22 @@ func (m *Map) Add(keys ...string) &#123;
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-16
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            G
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%A1%B9%E7%9B%AE%EF%BC%8CGo/">
-                        <span class="chip bg-color">项目，Go</span>
+                    <a href="/tags/leetcode/">
+                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
