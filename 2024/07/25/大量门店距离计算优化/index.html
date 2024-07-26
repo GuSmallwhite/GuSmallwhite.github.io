@@ -418,6 +418,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>实习内容一，大量门店距离计算优化，好好梳理，好好理解</p>
+<h2 id="一些前置问题"><a href="#一些前置问题" class="headerlink" title="一些前置问题"></a>一些前置问题</h2><p>原本的门店列表是什么：根据打分机制返回的可能的门店列表</p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>检索层的机器发现从10点-21点期间，机器的gctime有明显升高，21点后回落</p>
 <p>排查发现是这段时间的广告投放涉及大量门店距离计算，耗费了大量cpu和内存回收</p>
 <p><img src="tt.png"></p>
@@ -478,9 +479,10 @@
 </ul>
 <p>存在风险：</p>
 <ol>
-<li>极端情况下增加系统开销：例如用户在海外浏览美团国内门店，会执行多次（至多三次，geo精度3-&gt;2-&gt;1）门店筛选，最终仍无法缩小门店数量，最终降级为全量遍历</li>
+<li>极端情况下增加系统开销：例如用户在海外浏览美团国内门店，会执行多次（至多三次，geo精度4-&gt;2-&gt;1）门店筛选，最终仍无法缩小门店数量，最终降级为全量遍历</li>
 <li>遍历数量过大，仍然为O(N)，系统开销反而可能更大</li>
 </ol>
+<p>人话：就是多次遍历，根据geohash精度，看能不能缩小到100个门店以内，所以这个方法是要多次遍历门店列表的</p>
 <h3 id="c-二分搜索定位法"><a href="#c-二分搜索定位法" class="headerlink" title="c.二分搜索定位法"></a>c.二分搜索定位法</h3><ul>
 <li>当前主索引的poi按照地理位置信息的lng排序</li>
 <li>大致算法：</li>
@@ -494,6 +496,8 @@
 <p><img src="binary2.png"></p>
 </li>
 </ol>
+<p>**PS:**通过二分查找找到i的逻辑：</p>
+<p>有根据lng排序的店铺列表，有矩阵的范围，lngMin和lngMax，那么直接二分，看lng和lat在不在矩阵范围内就行，找到第一个符合要求的就可以</p>
 <h2 id="优化距离计算"><a href="#优化距离计算" class="headerlink" title="优化距离计算"></a>优化距离计算</h2><p>之前的逻辑会先进行<code>Math.sqrt()</code>，现在是最后，选择了最短距离后才进行开根</p>
 <h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>随机生成N家门店，为了达到97%以上的匹配率，距离和门店数量成反比</p>
 <h2 id="效果回收"><a href="#效果回收" class="headerlink" title="效果回收"></a>效果回收</h2><p><img src="result.png"></p>
@@ -553,18 +557,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/07/25/%E5%A4%A7%E9%87%8F%E9%97%A8%E5%BA%97%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97%E4%BC%98%E5%8C%96/">
+                <a href="/2024/07/25/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F-FIT/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="大量门店距离计算优化">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="秋招面经-FIT">
                         
-                        <span class="card-title">大量门店距离计算优化</span>
+                        <span class="card-title">秋招面经-FIT</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -574,29 +577,16 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-25
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/" class="post-category">
-                                    实习内容
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            G
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
-                        <span class="chip bg-color">实习内容</span>
-                    </a>
-                    
                 </div>
                 
             </div>
