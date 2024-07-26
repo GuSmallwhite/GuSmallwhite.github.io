@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="秋招面经-FIT, 顾的博客">
+    <meta name="keywords" content="点评负反馈新增图片负反馈, 顾的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>秋招面经-FIT | 顾的博客</title>
+    <title>点评负反馈新增图片负反馈 | 顾的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">秋招面经-FIT</h1>
+                    <h1 class="description center-align post-title">点评负反馈新增图片负反馈</h1>
                 </div>
             </div>
         </div>
@@ -366,12 +366,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
+                                <span class="chip bg-color">实习内容</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/" class="post-category">
+                                实习内容
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -380,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-07-25
+                    2024-07-26
                 </div>
                 
 
@@ -404,7 +417,87 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>平台收到屏蔽不成功的case，发现是不同商户的不同投放使用了相似的图片，目前大部分的屏蔽规则是按照投放id屏蔽，因此无法屏蔽这种情况</p>
+<h2 id="现状分析"><a href="#现状分析" class="headerlink" title="现状分析"></a>现状分析</h2><p>根据badcase，可以采用两种方案进行优化</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>扩展屏蔽范围至类目屏蔽</td>
+<td>1.屏蔽彻底，一般不会出现跨类目的素材相似<br>2.引擎改动小</td>
+<td>1.后续细化屏蔽能力需要额外开发<br>2.整体消耗影响大</td>
+<td>见”负反馈分析”</td>
+</tr>
+<tr>
+<td>2</td>
+<td>用phash汉明距离进行屏蔽</td>
+<td>1.精细化屏蔽<br>2.整体消耗影响小</td>
+<td>本来是有的，但是我这边就当没有</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>傻逼产品建议方案二</p>
+<h2 id="技术方案"><a href="#技术方案" class="headerlink" title="技术方案"></a>技术方案</h2><h3 id="方案选型"><a href="#方案选型" class="headerlink" title="方案选型"></a>方案选型</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>方案</th>
+<th>具体实现</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>filter阶段进行负反馈屏蔽</td>
+<td>1.将所有creative信息与负反馈列表进行phash汉明距离计算<br>2.投放中某一创意相似就进行过滤</td>
+<td>1.与历史召回过滤逻辑统一</td>
+<td>1.filter阶段只能过滤投放</td>
+</tr>
+<tr>
+<td>2</td>
+<td>一阶段精排前实体选择后屏蔽</td>
+<td>1.实体选择后进行rerank<br>2.将过滤后剩余有效的creative信息展开，与负反馈列表进行phash计算<br>3.保留过滤后的，如果某个投放的创意全被过滤则过滤整个投放</td>
+<td>1.可扩展性强</td>
+<td>1.逻辑复杂，为图片负反馈单独维护</td>
+</tr>
+<tr>
+<td>3</td>
+<td>创意精排后进行屏蔽</td>
+<td>1.将投放选定的图片与负反馈图片列表进行汉明距离计算，屏蔽投放</td>
+<td>1.代码入侵小</td>
+<td>1.影响召回率</td>
+</tr>
+</tbody></table>
+<p><strong>注：</strong></p>
+<ul>
+<li>filter阶段：就是最开始检索层返回了一堆的广告，然后会先在检索词进行filter（漏斗）过滤，那么这个时候，广告也会有选定的图片，然后将这个图片进行相似度比较，此时只能过滤投放</li>
+<li>一阶段精排前实体选择后：实体选择在filter阶段之后，就是说从大的候选集里选出更符合用户要求的实体，那这个工作其实就是filter阶段做的，一阶段精排是</li>
+</ul>
+<p>ad精排，进行CTR排序，穿插红线、底价排序。在一阶段是不进行投放内部创意的笛卡尔积展开的。所以在”实体选择后，一阶段精排前”进行过滤，防止相似的图片进入ad精排中</p>
+<ul>
+<li>创意精排后：创意精排是二阶段精排的过程之一，对投放内部的创意进行笛卡尔积展开，内部打分排序，最后选定图片，在此处过滤也是只能过滤投放了</li>
+</ul>
+<p><img src="diaker.png"></p>
+<h3 id="具体改动"><a href="#具体改动" class="headerlink" title="具体改动"></a>具体改动</h3><ul>
+<li>网关层：</li>
+</ul>
+<p>deleteId末尾拼接图片phash</p>
+<ul>
+<li>检索层</li>
+</ul>
+<p>新增NegativeFeedbackRerank</p>
+<p><img src="phashliucheng.png"></p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>每天过滤量约1000次，对整体消耗无影响</p>
+
                 
             </div>
             <hr/>
@@ -417,7 +510,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
+                                    <span class="chip bg-color">实习内容</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -456,9 +553,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/07/26/%E7%82%B9%E8%AF%84%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%96%B0%E5%A2%9E%E5%9B%BE%E7%89%87%E8%B4%9F%E5%8F%8D%E9%A6%88/">
                     <div class="card-image">
@@ -476,9 +574,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -491,6 +589,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -509,13 +608,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/07/25/%E5%A4%A7%E9%87%8F%E9%97%A8%E5%BA%97%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97%E4%BC%98%E5%8C%96/">
+                <a href="/2024/07/25/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F-FIT/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="大量门店距离计算优化">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="秋招面经-FIT">
                         
-                        <span class="card-title">大量门店距离计算优化</span>
+                        <span class="card-title">秋招面经-FIT</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -530,23 +629,11 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/" class="post-category">
-                                    实习内容
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            G
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
-                        <span class="chip bg-color">实习内容</span>
-                    </a>
-                    
                 </div>
                 
             </div>
