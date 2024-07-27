@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="秋招面经-FIT, 顾的博客">
+    <meta name="keywords" content="美团开屏量级优化, 顾的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>秋招面经-FIT | 顾的博客</title>
+    <title>美团开屏量级优化 | 顾的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">秋招面经-FIT</h1>
+                    <h1 class="description center-align post-title">美团开屏量级优化</h1>
                 </div>
             </div>
         </div>
@@ -368,23 +368,14 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/">
-                                <span class="chip bg-color">秋招面经</span>
+                            <a href="/tags/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
+                                <span class="chip bg-color">实习内容</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                秋招面经
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -393,7 +384,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-07-25
+                    2024-07-27
                 </div>
                 
 
@@ -417,30 +408,121 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="maven-install和package的区别"><a href="#maven-install和package的区别" class="headerlink" title="maven install和package的区别"></a>maven install和package的区别</h2><p>Maven install 安装指令，其做了<strong>两件</strong>事情：</p>
-<p><strong>1.</strong> 将<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85&spm=1001.2101.3001.7020">项目打包</a>（jar&#x2F;war），将打包结果放到项目下的 <strong>target</strong> 目录下</p>
-<p><strong>2.</strong> 同时将上述打包结果放到<strong>本地仓库</strong>的相应目录中，供其他项目或模块引用</p>
-<p>Maven package 打包指令，其就做了一件事：</p>
-<p><strong>1.</strong> 将项目打包（jar&#x2F;war），将打包结果放到项目下的 <strong>target</strong> 目录下 （也要先clean）</p>
-<h2 id="多个pom包含不同依赖版本，选用哪一个"><a href="#多个pom包含不同依赖版本，选用哪一个" class="headerlink" title="多个pom包含不同依赖版本，选用哪一个"></a>多个pom包含不同依赖版本，选用哪一个</h2><p> 两个法则：</p>
-<p><strong>路径最短优先</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">依赖链路一：A -&gt; B -&gt; C -&gt; X(1.0) &#x2F;&#x2F; dist &#x3D; 3
-依赖链路二：A -&gt; D -&gt; X(2.0) &#x2F;&#x2F; dist &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>当前美团开屏广告存在问题：</p>
+<ol>
+<li>CPM优先级较低：开屏流量优先级分配为 平台大促&gt;CPT&gt;运营活动&gt;CPM，且前三者占比很大，难以轮到CPM展示</li>
+<li>CPM展示成功率较低：CPM广告实时性较高，所以即使已经预加载到用户手机中，在曝光前仍需要校验，确认是否可以展示，但该接口返回的成功率很低</li>
+</ol>
+<h2 id="开屏展示机制"><a href="#开屏展示机制" class="headerlink" title="开屏展示机制"></a>开屏展示机制</h2><ol>
+<li>用户在打开时，会将运营活动以及广告，预加载到用户手机中，不在这一次打开时展示</li>
+<li>用户再次打开时，会根据优先级的顺序去展示缓存在本地的广告，<strong>其中CPM需要曝光前校验，确认是否仍有预算、仍在投放列表中等信息，</strong>校验通过则展示，否则不展示</li>
+</ol>
+<h2 id="产品侧优化方案"><a href="#产品侧优化方案" class="headerlink" title="产品侧优化方案"></a>产品侧优化方案</h2><table>
+<thead>
+<tr>
+<th>解决的问题</th>
+<th>解决方案描述</th>
+<th>需求承接方</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPM优先级低</td>
+<td>调整优先级，30%下CPM&gt;运营活动</td>
+<td>玲珑</td>
+</tr>
+<tr>
+<td>CPM实时校验成功率低</td>
+<td>不做实时校验，缓存直接展示，超播流量不计费</td>
+<td>广平</td>
+</tr>
+<tr>
+<td>控制预加载比例</td>
+<td>控制预加载比例</td>
+<td>广平</td>
+</tr>
+</tbody></table>
+<h2 id="广平侧方案"><a href="#广平侧方案" class="headerlink" title="广平侧方案"></a>广平侧方案</h2><h3 id="预加载控制策略"><a href="#预加载控制策略" class="headerlink" title="预加载控制策略"></a>预加载控制策略</h3><ol>
+<li>放弃实时请求流程，仅通过预加载加载广告</li>
+<li>控制预加载量级，基本思路是通过控制单个广告的预加载量，来控制其实际曝光量</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>投放时长</th>
+<th>时间点</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>非持续投放</td>
+<td>T-1无效</td>
+<td>最大预加载量&#x3D;系数k×有效投放天数 ×日最大曝光量</td>
+</tr>
+<tr>
+<td></td>
+<td>T-1有效</td>
+<td>1. T-1预算消耗比C≥90%,停止预加载<br>2. 10%≤C≤90%，继续预加载，新增预加载量&#x3D;已预加载量×(1-C)&#x2F;C，(已预加载量&#x3D;totalPreloadCnt-todayPreloadCnt)<br>3. C&lt;10%，继续预加载，最大预加载量&#x3D;系数k×有效投放天数 ×日最大曝光量</td>
+</tr>
+<tr>
+<td>持续投放</td>
+<td>T-1无效</td>
+<td>最大预加载量&#x3D;系数k×5天 ×日最大曝光量</td>
+</tr>
+<tr>
+<td></td>
+<td>T-1有效</td>
+<td>1. T-1预算消耗比C≥90%,停止预加载<br>2.10%≤C≤90%，继续预加载，新增预加载量&#x3D;已预加载量×(1-C)&#x2F;C，(已预加载量&#x3D;totalPreloadCnt-todayPreloadCnt)<br>3.C&lt;10%，继续预加载，最大预加载量&#x3D;系数k×5天 ×日最大曝光量</td>
+</tr>
+</tbody></table>
+<p><strong>解释：</strong></p>
+<ul>
+<li>T-1预算消耗比C≥90%,停止预加载：说明T-1广告主投放金额消耗率很高，动态调整预加载，防止后面的超播</li>
+<li>为什么是已预加载量×(1-C)&#x2F;C，这样如果C较小，那么继续加载量级会大，C较大，继续加载量级会小，很好</li>
+</ul>
+<p><strong>备注：</strong></p>
+<ul>
+<li><p>预算消耗比：实际消耗的预算&#x2F;广告主投入的金额</p>
+</li>
+<li><p>有效投放天数&#x3D;min(投放天数，预加载天数+1)，之所以是预加载天数+1，是因为今天展示的其实是-n天加载的广告，今天仍有预加载过程</p>
+<ul>
+<li>投放天数：在今天到未来preloadday内，结合launchtime计算得，比如今天是5号，preloadday&#x3D;5,launchtime&#x3D;3-5,7-8,10-14,则投放天数为4(5,7,8,10)</li>
+</ul>
+</li>
+<li><p>日最大曝光量&#x3D;当日预算&#x2F;出价</p>
+</li>
+<li><p>持续投放是指投放时长未做限制的投放</p>
+</li>
+<li><p>一个开屏广告的预加载过程：从投放成功到创建索引开始进行预加载，至实际预加载量&gt;&#x3D;最大预加载量或T-1有效为止</p>
+</li>
+<li><p>T-1是否有效的逻辑为：begintimestamp是否≤昨天凌晨，表示广告投放的开始时间是否早于昨天凌晨，以此判断昨天是否有预加载</p>
+</li>
+</ul>
+<h3 id="过滤逻辑"><a href="#过滤逻辑" class="headerlink" title="过滤逻辑"></a>过滤逻辑</h3><p><img src="1.png"></p>
+<h2 id="详细改动点"><a href="#详细改动点" class="headerlink" title="详细改动点"></a>详细改动点</h2><ol>
+<li>业务层引入中间件记录预加载情况</li>
+<li>检索层基于规则控制预加载量级</li>
+</ol>
+<h3 id="数据存储方式"><a href="#数据存储方式" class="headerlink" title="数据存储方式"></a>数据存储方式</h3><ul>
+<li>当日预加载数量：<ul>
+<li>key格式：投放id+当日距离1970-1-1的距离</li>
+<li>value:计数</li>
+<li>过期时间：两天</li>
+</ul>
+</li>
+<li>总预加载量：<ul>
+<li>key:投放id+0</li>
+<li>value:计数</li>
+<li>过期时间：一年</li>
+</ul>
+</li>
+</ul>
+<h2 id="上线观察"><a href="#上线观察" class="headerlink" title="上线观察"></a>上线观察</h2><p>指标：</p>
+<ol>
+<li>超播比例：如果过高，说明量级宽松</li>
+<li>预算消耗比：如果较高说明量级合适</li>
+<li>是否有实时请求的曝光：是否成功放弃了</li>
+</ol>
 
-<p>用2.0</p>
-<p><strong>声明顺序优先</strong></p>
-<p>在依赖路径长度相等的前提下，在 <code>pom.xml</code> 中依赖声明的顺序决定了谁会被解析使用，顺序最前的那个依赖优胜。该例中，如果 B 的依赖声明在 D 之前，那么 X (1.0)就会被解析使用。</p>
-<pre class="line-numbers language-none"><code class="language-none">&lt;!-- A pom.xml --&gt;
-&lt;dependencies&gt;
-    ...
-    dependency B
-    ...
-    dependency D
-&lt;&#x2F;dependencies&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="mybatis-‘-’和’-’的区别"><a href="#mybatis-‘-’和’-’的区别" class="headerlink" title="mybatis ‘#’和’$’的区别"></a>mybatis ‘#’和’$’的区别</h2><p><code>$&#123;&#125;</code>是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于原样文本替换，可以替换任意内容，比如${driver}会被原样替换为<code>com.mysql.jdbc. Driver</code></p>
-<p><code>#&#123;&#125;</code>是 sql 的参数占位符，MyBatis 会将 sql 中的<code>#&#123;&#125;</code>替换为? 号，在 sql 执行前会使用 PreparedStatement 的参数设置方法，按序给 sql 的? 号占位符设置参数值，安全</p>
-<h2 id="12-整数转罗马数字-力扣（LeetCode）"><a href="#12-整数转罗马数字-力扣（LeetCode）" class="headerlink" title="12. 整数转罗马数字 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/integer-to-roman/description/">12. 整数转罗马数字 - 力扣（LeetCode）</a></h2>
                 
             </div>
             <hr/>
@@ -454,8 +536,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/">
-                                    <span class="chip bg-color">秋招面经</span>
+                                <a href="/tags/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
+                                    <span class="chip bg-color">实习内容</span>
                                 </a>
                             
                         </div>
@@ -496,17 +578,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/07/26/%E7%82%B9%E8%AF%84%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%96%B0%E5%A2%9E%E5%9B%BE%E7%89%87%E8%B4%9F%E5%8F%8D%E9%A6%88/">
+                <a href="/2024/07/27/%E7%BE%8E%E5%9B%A2%E5%BC%80%E5%B1%8F%E9%87%8F%E7%BA%A7%E4%BC%98%E5%8C%96/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="点评负反馈新增图片负反馈">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="美团开屏量级优化">
                         
-                        <span class="card-title">点评负反馈新增图片负反馈</span>
+                        <span class="card-title">美团开屏量级优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -516,21 +599,18 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-27
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/" class="post-category">
-                                    实习内容
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            G
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -549,13 +629,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/07/25/%E5%A4%A7%E9%87%8F%E9%97%A8%E5%BA%97%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97%E4%BC%98%E5%8C%96/">
+                <a href="/2024/07/26/%E7%82%B9%E8%AF%84%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%96%B0%E5%A2%9E%E5%9B%BE%E7%89%87%E8%B4%9F%E5%8F%8D%E9%A6%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="大量门店距离计算优化">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="点评负反馈新增图片负反馈">
                         
-                        <span class="card-title">大量门店距离计算优化</span>
+                        <span class="card-title">点评负反馈新增图片负反馈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -566,7 +646,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-26
                             </span>
                         <span class="publish-author">
                             
