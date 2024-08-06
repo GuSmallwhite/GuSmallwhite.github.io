@@ -451,16 +451,13 @@ try &#123;
   b.group(bossGroup, workerGroup)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>主从多线程模型</strong></p>
-<p>针对单 Reactor 多线程模型中，Reactor 在单线程中运 行，高并发场景下容易成为性能瓶颈，可以让 Reactor 在多线程中运行</p>
-<p>方案说明</p>
+<p>主从Reactor线程模型的特点是：服务端用于接收客户端连接的不再是一个单独的NIO线程，而是一个独立的NIO线程池。Acceptor接收到客户端TCP连接请求处理完成后（可能包含接入认证等），将新创建的SocketChannel注册到IO线程池（sub reactor线程池）的某个IO线程上，由它负责SocketChannel的读写和编解码工作。Acceptor线程池仅仅只用于客户端的登录、握手、安全认证，一旦链路建立成功，就将链路注册到后端subReactor线程池的IO线程上，由IO线程负责后续的IO操作。</p>
+<p>利用主从NIO线程模型，可以解决1个服务端监听线程无法有效处理所有客户端连接的性能不足问题。</p>
+<p>它的工作流程总结如下：</p>
 <ol>
-<li>Reactor主线程 MainReactor 对象通过select 监听连接事件, 收 到事件后，通过Acceptor 处理连接事件</li>
-<li>当 Acceptor 处理连接事件后，MainReactor 将连接分配给 SubReactor</li>
-<li>subreactor 将连接加入到连接队列进行监听,并创建handler 进行各种事件处理</li>
-<li>当有新事件发生时， subreactor 就会调用对应的handler处理</li>
-<li>handler 通过read 读取数据，分发给后面的worker 线程处理</li>
-<li>worker 线程池分配独立的worker 线程进行业务处理，并返回结果</li>
-<li>handler 收到响应的结果后，再通过send 将结果返</li>
+<li>从主线程池中随机选择一个Reactor线程作为Acceptor线程，用于绑定监听端口，接收客户端连接</li>
+<li>Acceptor线程接收客户端连接请求之后创建新的SocketChannel，将其注册到主线程池的其他Reactor线程上，由其负责接入认证、IP黑名单过滤、握手等操作。</li>
+<li>步骤2完成之后，业务层的链路正式建立，将SocketChannel从主线程池的Reactor线程的多路复用器上摘除，重新注册到Sub线程池的线程上，用于处理IO的读写操作</li>
 </ol>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EventLoopGroup</span> bossGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建了用于接收客户端连接的主事件循环组 bossGroup，参数 1 表示线程数为 1。</span>
         <span class="token class-name">EventLoopGroup</span> workerGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建了用于处理客户端请求的工作事件循环组 workerGroup，采用默认线程数。</span>
