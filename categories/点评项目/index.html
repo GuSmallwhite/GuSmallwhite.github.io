@@ -288,20 +288,20 @@
                 
                 
                 
-                <a href="/categories/%E5%AD%A6%E4%B9%A0/" title="学习: 5">
+                <a href="/categories/%E5%AD%A6%E4%B9%A0/" title="学习: 4">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             style="background-color: #F9EBEA;">学习
-                        <span class="tag-length">5</span>
+                        <span class="tag-length">4</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/%E7%AE%97%E6%B3%95/" title="算法: 9">
+                <a href="/categories/%E7%AE%97%E6%B3%95/" title="算法: 8">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             style="background-color: #F5EEF8;">算法
-                        <span class="tag-length">9</span>
+                        <span class="tag-length">8</span>
                     </span>
                 </a>
                 
@@ -324,11 +324,11 @@
                 </a>
                 
                 
-                <a href="/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/" title="实验室: 2">
+                <a href="/categories/%E5%AE%9E%E9%AA%8C%E5%AE%A4/" title="实验室: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             style="background-color: #FEF9E7;">实验室
-                        <span class="tag-length">2</span>
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -439,9 +439,8 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言这里记录收集的面经看到的
-上海三菱为什么用redis存储session而不是spring session？因为我有三台机器，轮询策略下可能会把请求负载均衡到没session那台
-那用spring session可以通过配置nginx避免
+                                前言有一些东西需要明确
+乐观锁是解决超卖问题：悲观锁是解决一人一单问题，多个线程同时查询到没有下过单，然后都扣减了，肯定是不对的单机模式下用synchronized即可但是在集群模式下，需要使用分布式锁-&gt;redis setnx实现-
                             
                         </div>
                         <div class="publish-info">

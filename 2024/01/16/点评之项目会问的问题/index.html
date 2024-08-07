@@ -417,7 +417,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里记录收集的面经看到的</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有一些东西需要明确</p>
+<p>乐观锁是解决超卖问题：<br>悲观锁是解决一人一单问题，多个线程同时查询到没有下过单，然后都扣减了，肯定是不对的<br>单机模式下用synchronized即可<br>但是在集群模式下，需要使用分布式锁-&gt;redis setnx实现-&gt;redission实现</p>
+<p>而异步秒杀是说，查询库存，校验一人一单，扣减库存，的过程用lua脚本实现，然后将订单信息保存到消息队列中，然后异步保存订单即可，此处使用了lua脚本<br>以及分布式锁保证过程是一个一个的</p>
+<p>秒杀优惠券保存在redis中</p>
+<p>所以用完异步秒杀之后呢，一人一单还是用redisson实现的，在保存订单信息前进行加锁，如果获取锁失败说明保存过订单了</p>
+<p>在异步秒杀阶段，就没有乐观锁避免超卖问题了，因为包含在了lua脚本的“校验库存充足”这个阶段了，通过redis的单线程执行，一个时候只能执行一个lua脚本， 避免库存为1时多个线程同时发现库存为1，然后同时扣减，导致超卖</p>
 <h2 id="上海三菱"><a href="#上海三菱" class="headerlink" title="上海三菱"></a>上海三菱</h2><h3 id="为什么用redis存储session而不是spring-session？"><a href="#为什么用redis存储session而不是spring-session？" class="headerlink" title="为什么用redis存储session而不是spring session？"></a>为什么用redis存储session而不是spring session？</h3><p>因为我有三台机器，轮询策略下可能会把请求负载均衡到没session那台</p>
 <h3 id="那用spring-session可以通过配置nginx避免用redis吗"><a href="#那用spring-session可以通过配置nginx避免用redis吗" class="headerlink" title="那用spring session可以通过配置nginx避免用redis吗"></a>那用spring session可以通过配置nginx避免用redis吗</h3><p>用ip_hash策略</p>
 <h2 id="某小厂"><a href="#某小厂" class="headerlink" title="某小厂"></a>某小厂</h2><h3 id="自定义全局Id是怎么实现的"><a href="#自定义全局Id是怎么实现的" class="headerlink" title="自定义全局Id是怎么实现的"></a>自定义全局Id是怎么实现的</h3><p>项目中全局id由三部分组成：符号位+32位时间戳+32位序列号，符号位默认为0，时间戳为当前时间以秒为单位减去一个开始时间戳，序列号存放在redis当中，的键为固定前缀拼接上当前日期，值设置为自增，这样使得不同天的序列号对应不同的key，保证id不被用完</p>
@@ -756,13 +761,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/12/19/%E7%AE%97%E6%B3%95%E4%B9%8Bcodetop/">
+                <a href="/2023/12/15/%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="算法之codetop">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="算法专题之动态规划">
                         
-                        <span class="card-title">算法之codetop</span>
+                        <span class="card-title">算法专题之动态规划</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -773,7 +778,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-15
                             </span>
                         <span class="publish-author">
                             
