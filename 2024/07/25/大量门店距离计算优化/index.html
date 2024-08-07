@@ -498,6 +498,10 @@
 </ol>
 <p>**PS:**通过二分查找找到i的逻辑：</p>
 <p>有根据lng排序的店铺列表，有矩阵的范围，lngMin和lngMax，那么直接二分，看lng和lat在不在矩阵范围内就行，找到第一个符合要求的就可以</p>
+<p><strong>PS</strong>:不是圆形吗，怎么变成矩形了？</p>
+<blockquote>
+<p><img src="aaa.png"></p>
+</blockquote>
 <h2 id="优化距离计算"><a href="#优化距离计算" class="headerlink" title="优化距离计算"></a>优化距离计算</h2><p>之前的逻辑会先进行<code>Math.sqrt()</code>，现在是最后，选择了最短距离后才进行开根</p>
 <h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>随机生成N家门店，为了达到97%以上的匹配率，距离和门店数量成反比</p>
 <h2 id="效果回收"><a href="#效果回收" class="headerlink" title="效果回收"></a>效果回收</h2><p><img src="result.png"></p>
