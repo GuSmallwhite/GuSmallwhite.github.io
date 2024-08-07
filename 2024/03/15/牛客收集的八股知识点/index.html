@@ -421,7 +421,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><h3 id="怎么用mysql实现乐观锁、悲观锁"><a href="#怎么用mysql实现乐观锁、悲观锁" class="headerlink" title="怎么用mysql实现乐观锁、悲观锁"></a>怎么用mysql实现乐观锁、悲观锁</h3><p>乐观锁简单，就是cas呗</p>
+                <p>如果是小林有的，我会直接标注看小林</p>
+<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><h3 id="怎么用mysql实现乐观锁、悲观锁"><a href="#怎么用mysql实现乐观锁、悲观锁" class="headerlink" title="怎么用mysql实现乐观锁、悲观锁"></a>怎么用mysql实现乐观锁、悲观锁</h3><p>乐观锁简单，就是cas呗</p>
 <p>悲观锁：使用select for update实现吧</p>
 <h3 id="慢查询的原因"><a href="#慢查询的原因" class="headerlink" title="慢查询的原因"></a>慢查询的原因</h3><ol>
 <li>sql没加索引</li>
@@ -449,12 +450,73 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li>避免拼接SQL语句</li>
 <li>对输入验证和过滤</li>
 </ol>
+<h3 id="Mysql分库分表如何实现？"><a href="#Mysql分库分表如何实现？" class="headerlink" title="Mysql分库分表如何实现？"></a>Mysql分库分表如何实现？</h3><ol>
+<li><strong>确定分库分表策略</strong>：<ul>
+<li><strong>垂直分库</strong>：根据业务模块将表分配到不同的数据库中。</li>
+<li><strong>水平分库</strong>：根据某种规则将同一个表的数据分布到不同的数据库中。</li>
+<li><strong>垂直分表</strong>：根据字段的访问频率或字段长度将表的字段拆分到不同的表中。</li>
+<li><strong>水平分表</strong>：根据某种规则将同一个表的数据拆分到多个表中。</li>
+</ul>
+</li>
+<li><strong>选择分片键</strong>：选择一个或多个字段作为分片键，用于决定数据在各个数据库或表中的分布。常见的分片键包括用户ID、时间戳等。</li>
+<li><strong>设计分片规则</strong>：<ul>
+<li><strong>范围分片</strong>：根据数值范围将数据分布到不同的表或库中。</li>
+<li><strong>哈希分片</strong>：使用分片键的哈希值来决定数据的分布。</li>
+<li><strong>列表分片</strong>：根据分片键的枚举值将数据分布到不同的表或库中。</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何搭建Mysql主从集群"><a href="#如何搭建Mysql主从集群" class="headerlink" title="如何搭建Mysql主从集群"></a>如何搭建Mysql主从集群</h3><ol>
+<li><strong>配置MySQL主服务器</strong>：需要在主服务器的配置文件中设置<code>server-id</code>，开启二进制日志<code>log-bin</code>，并设置<code>log_bin_index</code>指向索引文件</li>
+<li><strong>创建MySQL用户并授权</strong>：在主服务器上创建用于从服务器连接的MySQL用户，并授予复制相关的权限</li>
+<li><strong>配置MySQL从服务器</strong>：在从服务器的配置文件中设置<code>server-id</code>，不能与主服务器的<code>server-id</code>相同。以及<code>read_only</code>属性来防止在从服务器上执行写操作</li>
+<li><strong>设置主从复制</strong>：在从服务器上执行<code>CHANGE MASTER TO</code>语句来指定主服务器的连接信息</li>
+<li><strong>启动复制进程</strong>：在从服务器上执行<code>START SLAVE;</code>命令来启动复制进程</li>
+</ol>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="解决hash冲突的方法"><a href="#解决hash冲突的方法" class="headerlink" title="解决hash冲突的方法"></a>解决hash冲突的方法</h3><p>链式方法：就是用链表</p>
+<p>开放地址法：</p>
+<ul>
+<li>线性探测，直接一直往后寻找，步长为1</li>
+<li>步长为2的n次方</li>
+</ul>
 <h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="查看内存的命令"><a href="#查看内存的命令" class="headerlink" title="查看内存的命令"></a>查看内存的命令</h3><p>free 命令用来显示系统内存状态,包括系统物理内存、虚拟内存(swap 交换分区)、共享内存和系统缓存的使用情况</p>
+<h3 id="linux怎么查看进程情况"><a href="#linux怎么查看进程情况" class="headerlink" title="linux怎么查看进程情况"></a>linux怎么查看进程情况</h3><p><strong>ps</strong>：</p>
+<ul>
+<li><code>ps aux</code>：显示所有进程的详细信息。</li>
+<li><code>ps -ef</code>：以标准格式显示所有进程的信息。</li>
+<li><code>ps -u 用户名</code>：显示指定用户的进程。</li>
+</ul>
+<p><strong>top</strong>：</p>
+<ul>
+<li>实时显示系统中各个进程的运行情况，CPU和内存的使用情况等。</li>
+</ul>
+<h3 id="linux怎么查看cpu情况"><a href="#linux怎么查看cpu情况" class="headerlink" title="linux怎么查看cpu情况"></a>linux怎么查看cpu情况</h3><p><strong>top</strong> - 显示实时的系统进程和资源使用情况</p>
 <h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="c-有析构函数可以自己回收，java有什么"><a href="#c-有析构函数可以自己回收，java有什么" class="headerlink" title="c++有析构函数可以自己回收，java有什么"></a>c++有析构函数可以自己回收，java有什么</h3><p>我觉得是垃圾回收器，但是这人回答的是try with resource</p>
 <p>其实是finalize()方法</p>
 <p>要给一个类增加收尾（finalizer ），你只要定义finalize ( ) 方法即可。Java 回收该类的一个对象时，就会调用这个方法。在finalize ( )方法中，你要指定在一个对象被撤消前必须执行的操作。垃圾回收周期性地运行，检查对象不再被运行状态引用或间接地通过****其他****对象引用。就在对象被释放之前，Java 运行系统调用该对象的finalize( ) 方法。</p>
-<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="垃圾收集器回收不掉的怎么办"><a href="#垃圾收集器回收不掉的怎么办" class="headerlink" title="垃圾收集器回收不掉的怎么办"></a>垃圾收集器回收不掉的怎么办</h3><p>不知道</p>
-<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="轻量级和重量级怎么划分"><a href="#轻量级和重量级怎么划分" class="headerlink" title="轻量级和重量级怎么划分"></a>轻量级和重量级怎么划分</h3>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="红黑树是怎样的数据结构？有什么特点？"><a href="#红黑树是怎样的数据结构？有什么特点？" class="headerlink" title="红黑树是怎样的数据结构？有什么特点？"></a>红黑树是怎样的数据结构？有什么特点？</h3><ol>
+<li><strong>有序性</strong>：红黑树是一种有序的数据结构，对于树中的任意节点，其左子树上所有节点的键值都小于当前节点的键值，其右子树上所有节点的键值都大于当前节点的键值。</li>
+<li><strong>自平衡</strong>：红黑树在插入和删除操作中通过旋转和重新着色来保持树的平衡，使得树的高度大致保持在log(n)，其中n是树中节点的数量</li>
+<li><strong>性能保证</strong>：红黑树提供了对插入、删除和查找操作的最优时间复杂度保证，即O(log n)</li>
+</ol>
+<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="垃圾收集器回收不掉的怎么办"><a href="#垃圾收集器回收不掉的怎么办" class="headerlink" title="垃圾收集器回收不掉的怎么办"></a>垃圾收集器回收不掉的怎么办</h3><p>不知道</p>
+<h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><ol>
+<li>加载：在内存中生成一个代表该类的 <code>Class</code> 对象，作为方法区这些数据的访问入口</li>
+<li>验证：<strong>这一阶段的目的是确保 Class 文件的字节流中包含的信息符合《Java 虚拟机规范》的全部约束要求</strong></li>
+<li>准备：<strong>准备阶段是正式为类变量分配内存并设置类变量初始值的阶段</strong>，这里所设置的初始值”通常情况”下是数据类型默认的零值</li>
+<li>解析：<strong>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</strong>，通过解析操作符号引用就可以直接转变为目标方法在类中方法表的位置，从而使得方法可以被调用</li>
+<li><strong>初始化阶段是执行初始化方法 <code>&lt;clinit&gt; ()</code>方法的过程，是类加载的最后一步</strong></li>
+</ol>
+<h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h3 id="轻量级和重量级怎么划分"><a href="#轻量级和重量级怎么划分" class="headerlink" title="轻量级和重量级怎么划分"></a>轻量级和重量级怎么划分</h3><p>不知道</p>
+<h3 id="创建十个线程，如何保证十个线程同时开始工作"><a href="#创建十个线程，如何保证十个线程同时开始工作" class="headerlink" title="创建十个线程，如何保证十个线程同时开始工作"></a>创建十个线程，如何保证十个线程同时开始工作</h3><p><strong>使用倒计时锁（CountDownLatch）</strong>: 倒计时锁允许一个或多个线程等待一组事件发生。你可以设置一个倒计时为10的锁，每个线程在开始跑步前都调用<code>countDown()</code>方法，当计数达到0时，所有线程都会同时开始执行。</p>
+<h2 id="Spring和SpringBoot"><a href="#Spring和SpringBoot" class="headerlink" title="Spring和SpringBoot"></a>Spring和SpringBoot</h2><h3 id="哪个组件负责HTTP的解析"><a href="#哪个组件负责HTTP的解析" class="headerlink" title="哪个组件负责HTTP的解析"></a>哪个组件负责HTTP的解析</h3><p>DsipacherServlet和HandlerMapping</p>
+<h3 id="SpringBoot用了哪些设计模式"><a href="#SpringBoot用了哪些设计模式" class="headerlink" title="SpringBoot用了哪些设计模式"></a>SpringBoot用了哪些设计模式</h3><ul>
+<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 BeanFactory、ApplicationContext 创建 bean 对象。</li>
+<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
+<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
+<li><strong>适配器模式</strong> :我认为HadnlerAdaptor是适配器模式</li>
+</ul>
+
                 
             </div>
             <hr/>
