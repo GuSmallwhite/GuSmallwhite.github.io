@@ -494,12 +494,15 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="c-有析构函数可以自己回收，java有什么"><a href="#c-有析构函数可以自己回收，java有什么" class="headerlink" title="c++有析构函数可以自己回收，java有什么"></a>c++有析构函数可以自己回收，java有什么</h3><p>我觉得是垃圾回收器，但是这人回答的是try with resource</p>
 <p>其实是finalize()方法</p>
 <p>要给一个类增加收尾（finalizer ），你只要定义finalize ( ) 方法即可。Java 回收该类的一个对象时，就会调用这个方法。在finalize ( )方法中，你要指定在一个对象被撤消前必须执行的操作。垃圾回收周期性地运行，检查对象不再被运行状态引用或间接地通过****其他****对象引用。就在对象被释放之前，Java 运行系统调用该对象的finalize( ) 方法。</p>
+<h3 id="Java里自己写一个String，会运行我们自己写的吗"><a href="#Java里自己写一个String，会运行我们自己写的吗" class="headerlink" title="Java里自己写一个String，会运行我们自己写的吗"></a>Java里自己写一个String，会运行我们自己写的吗</h3><p>自定义的java.lang.String无法加载进内存</p>
+<p>基于JVM的双亲委派机制，类加载器收到了加载类的请求，会把这个请求委派给他的父类加载器。<br>而只有父类加载器自己无法完成加载请求时，子类才会自己加载。<br>这样用户自定义的String类的加载请求就会最终达到顶层的BootStrap ClassLoader启动类加载器，<br>启动类加载器加载的是系统中的String对象，而用户编写的java.lang.String不会被加载。</p>
 <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="红黑树是怎样的数据结构？有什么特点？"><a href="#红黑树是怎样的数据结构？有什么特点？" class="headerlink" title="红黑树是怎样的数据结构？有什么特点？"></a>红黑树是怎样的数据结构？有什么特点？</h3><ol>
 <li><strong>有序性</strong>：红黑树是一种有序的数据结构，对于树中的任意节点，其左子树上所有节点的键值都小于当前节点的键值，其右子树上所有节点的键值都大于当前节点的键值。</li>
 <li><strong>自平衡</strong>：红黑树在插入和删除操作中通过旋转和重新着色来保持树的平衡，使得树的高度大致保持在log(n)，其中n是树中节点的数量</li>
 <li><strong>性能保证</strong>：红黑树提供了对插入、删除和查找操作的最优时间复杂度保证，即O(log n)</li>
 </ol>
-<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="垃圾收集器回收不掉的怎么办"><a href="#垃圾收集器回收不掉的怎么办" class="headerlink" title="垃圾收集器回收不掉的怎么办"></a>垃圾收集器回收不掉的怎么办</h3><p>不知道</p>
+<h3 id="排序算法比较"><a href="#排序算法比较" class="headerlink" title="排序算法比较"></a>排序算法比较</h3><p><img src="https://cshihong.github.io/2019/02/27/10%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/%E5%AF%B9%E6%AF%94.png" alt="对比"></p>
+<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="垃圾收集器回收不掉的怎么办"><a href="#垃圾收集器回收不掉的怎么办" class="headerlink" title="垃圾收集器回收不掉的怎么办"></a>垃圾收集器回收不掉的怎么办</h3><p>不知道</p>
 <h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><ol>
 <li>加载：在内存中生成一个代表该类的 <code>Class</code> 对象，作为方法区这些数据的访问入口</li>
 <li>验证：<strong>这一阶段的目的是确保 Class 文件的字节流中包含的信息符合《Java 虚拟机规范》的全部约束要求</strong></li>
@@ -507,6 +510,13 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li>解析：<strong>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程</strong>，通过解析操作符号引用就可以直接转变为目标方法在类中方法表的位置，从而使得方法可以被调用</li>
 <li><strong>初始化阶段是执行初始化方法 <code>&lt;clinit&gt; ()</code>方法的过程，是类加载的最后一步</strong></li>
 </ol>
+<h3 id="G1收集器的最终标记和CMS重新标记的区别"><a href="#G1收集器的最终标记和CMS重新标记的区别" class="headerlink" title="G1收集器的最终标记和CMS重新标记的区别"></a>G1收集器的最终标记和CMS重新标记的区别</h3><ul>
+<li>CMS重新标记: 暂停，采用<strong>增量更新</strong>，即标记并发期间增量的引用对象,但不会取消标记并发标记期间产生的垃圾，所以不能处理浮动垃圾,宁愿放到下次回收处理，也不愿错删</li>
+<li>G1最终标记：需要暂停整个应用,</li>
+</ul>
+<h3 id="为什么要打破双亲委派模型"><a href="#为什么要打破双亲委派模型" class="headerlink" title="为什么要打破双亲委派模型"></a>为什么要打破双亲委派模型</h3><p>我们比较熟悉的 Tomcat 服务器为了能够优先加载 Web 应用目录下的类，然后再加载其他目录下的类，就自定义了类加载器 <code>WebAppClassLoader</code> 来打破双亲委托机制。</p>
+<p>为什么呢？一个web容器可能要部署多个应用程序，不同的应用程序之间可能会依赖同一个第三方库的不同版本，不能要求同一个类库在同一个服务器只有一份，所以tomcat要具有<strong>隔离性</strong>，每个服务都是独立的。</p>
+<h3 id="ThreadLocal内存泄漏问题"><a href="#ThreadLocal内存泄漏问题" class="headerlink" title="ThreadLocal内存泄漏问题"></a>ThreadLocal内存泄漏问题</h3><p>ThreadLocalMap的<code>Entry</code>的Key是弱引用，如果外部没有强引用指向Key，Key就会被回收，而value由于<code>Entry</code>强引用指向了它，导致无法被回收，但是value又无法被访问，因此发生内存泄漏。 所以，开发者应该尽量在使用完毕后及时调用<code>remove()</code>删除节点。 如果开发者粗心忘记主动删除了，ThreadLocal也做了很多努力，在<code>get()</code>、<code>set()</code>、<code>remove()</code>时会自发的检查过期节点，并清理掉他们，最大程度的来避免程序发生「内存泄漏」，还是非常贴心的。</p>
 <h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h3 id="轻量级和重量级怎么划分"><a href="#轻量级和重量级怎么划分" class="headerlink" title="轻量级和重量级怎么划分"></a>轻量级和重量级怎么划分</h3><p>不知道</p>
 <h3 id="创建十个线程，如何保证十个线程同时开始工作"><a href="#创建十个线程，如何保证十个线程同时开始工作" class="headerlink" title="创建十个线程，如何保证十个线程同时开始工作"></a>创建十个线程，如何保证十个线程同时开始工作</h3><p><strong>使用倒计时锁（CountDownLatch）</strong>: 倒计时锁允许一个或多个线程等待一组事件发生。你可以设置一个倒计时为10的锁，每个线程在开始跑步前都调用<code>countDown()</code>方法，当计数达到0时，所有线程都会同时开始执行。</p>
 <h2 id="Spring和SpringBoot"><a href="#Spring和SpringBoot" class="headerlink" title="Spring和SpringBoot"></a>Spring和SpringBoot</h2><h3 id="哪个组件负责HTTP的解析"><a href="#哪个组件负责HTTP的解析" class="headerlink" title="哪个组件负责HTTP的解析"></a>哪个组件负责HTTP的解析</h3><p>DsipacherServlet和HandlerMapping</p>
@@ -516,6 +526,73 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
 <li><strong>适配器模式</strong> :我认为HadnlerAdaptor是适配器模式</li>
 </ul>
+<h3 id="SpringBoot的启动流程"><a href="#SpringBoot的启动流程" class="headerlink" title="SpringBoot的启动流程"></a>SpringBoot的启动流程</h3><h2 id="手写题"><a href="#手写题" class="headerlink" title="手写题"></a>手写题</h2><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> singleton<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>singleton<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token class-name">Singleton</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>singleton<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#123;</span>
+                    singleton<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span>  singleton<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>为什么要加volatile？因为singleton&#x3D;new Singleton();分三步</p>
+<ul>
+<li>①内存分配：为singleton对象分配一片内存</li>
+<li>②对象构造：调用构造函数构造一个singleton对象，存入已分配的内存区</li>
+<li>③地址绑定：将指针instance指向这片内存区（执行完这步instance才是非 nullptr）</li>
+</ul>
+<p>如果不加，那么变成132,那么线程A执行到13，挂起，线程B判断Instance！&#x3D;null,然后返回Instance，但是instance还没初始化</p>
+<h3 id="两个线程交替打印"><a href="#两个线程交替打印" class="headerlink" title="两个线程交替打印"></a>两个线程交替打印</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PrintOddEven</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span>  <span class="token keyword">static</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Object</span> object<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span>count<span class="token operator">&lt;</span><span class="token number">100</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>object<span class="token punctuation">)</span>
+                    <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>count<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">&#123;</span>
+                            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">":"</span><span class="token operator">+</span>count<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token string">"偶数"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span>count<span class="token operator">&lt;</span><span class="token number">100</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>object<span class="token punctuation">)</span>
+                    <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>count<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">&#123;</span>
+                            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">":"</span><span class="token operator">+</span>count<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token string">"技术"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
