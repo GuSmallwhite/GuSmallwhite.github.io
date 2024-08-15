@@ -479,7 +479,7 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li>线性探测，直接一直往后寻找，步长为1</li>
 <li>步长为2的n次方</li>
 </ul>
-<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="查看内存的命令"><a href="#查看内存的命令" class="headerlink" title="查看内存的命令"></a>查看内存的命令</h3><p>free 命令用来显示系统内存状态,包括系统物理内存、虚拟内存(swap 交换分区)、共享内存和系统缓存的使用情况</p>
+<h3 id="如何设计热门商品排行"><a href="#如何设计热门商品排行" class="headerlink" title="如何设计热门商品排行"></a>如何设计热门商品排行</h3><h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="查看内存的命令"><a href="#查看内存的命令" class="headerlink" title="查看内存的命令"></a>查看内存的命令</h3><p>free 命令用来显示系统内存状态,包括系统物理内存、虚拟内存(swap 交换分区)、共享内存和系统缓存的使用情况</p>
 <h3 id="linux怎么查看进程情况"><a href="#linux怎么查看进程情况" class="headerlink" title="linux怎么查看进程情况"></a>linux怎么查看进程情况</h3><p><strong>ps</strong>：</p>
 <ul>
 <li><code>ps aux</code>：显示所有进程的详细信息。</li>
@@ -519,6 +519,7 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <h3 id="ThreadLocal内存泄漏问题"><a href="#ThreadLocal内存泄漏问题" class="headerlink" title="ThreadLocal内存泄漏问题"></a>ThreadLocal内存泄漏问题</h3><p>ThreadLocalMap的<code>Entry</code>的Key是弱引用，如果外部没有强引用指向Key，Key就会被回收，而value由于<code>Entry</code>强引用指向了它，导致无法被回收，但是value又无法被访问，因此发生内存泄漏。 所以，开发者应该尽量在使用完毕后及时调用<code>remove()</code>删除节点。 如果开发者粗心忘记主动删除了，ThreadLocal也做了很多努力，在<code>get()</code>、<code>set()</code>、<code>remove()</code>时会自发的检查过期节点，并清理掉他们，最大程度的来避免程序发生「内存泄漏」，还是非常贴心的。</p>
 <h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h3 id="轻量级和重量级怎么划分"><a href="#轻量级和重量级怎么划分" class="headerlink" title="轻量级和重量级怎么划分"></a>轻量级和重量级怎么划分</h3><p>不知道</p>
 <h3 id="创建十个线程，如何保证十个线程同时开始工作"><a href="#创建十个线程，如何保证十个线程同时开始工作" class="headerlink" title="创建十个线程，如何保证十个线程同时开始工作"></a>创建十个线程，如何保证十个线程同时开始工作</h3><p><strong>使用倒计时锁（CountDownLatch）</strong>: 倒计时锁允许一个或多个线程等待一组事件发生。你可以设置一个倒计时为10的锁，每个线程在开始跑步前都调用<code>countDown()</code>方法，当计数达到0时，所有线程都会同时开始执行。</p>
+<h3 id="协程是什么"><a href="#协程是什么" class="headerlink" title="协程是什么"></a>协程是什么</h3><p>协程是一种用户态的轻量级线程，其调度完全由用户程序控制，而不需要内核的参与。协程的切换开销非常小，因为只需要保存和恢复协程的上下文，而无需进行内核级的上下文切换。</p>
 <h2 id="Spring和SpringBoot"><a href="#Spring和SpringBoot" class="headerlink" title="Spring和SpringBoot"></a>Spring和SpringBoot</h2><h3 id="哪个组件负责HTTP的解析"><a href="#哪个组件负责HTTP的解析" class="headerlink" title="哪个组件负责HTTP的解析"></a>哪个组件负责HTTP的解析</h3><p>DsipacherServlet和HandlerMapping</p>
 <h3 id="SpringBoot用了哪些设计模式"><a href="#SpringBoot用了哪些设计模式" class="headerlink" title="SpringBoot用了哪些设计模式"></a>SpringBoot用了哪些设计模式</h3><ul>
 <li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 BeanFactory、ApplicationContext 创建 bean 对象。</li>
