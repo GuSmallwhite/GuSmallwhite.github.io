@@ -520,6 +520,7 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h3 id="轻量级和重量级怎么划分"><a href="#轻量级和重量级怎么划分" class="headerlink" title="轻量级和重量级怎么划分"></a>轻量级和重量级怎么划分</h3><p>不知道</p>
 <h3 id="创建十个线程，如何保证十个线程同时开始工作"><a href="#创建十个线程，如何保证十个线程同时开始工作" class="headerlink" title="创建十个线程，如何保证十个线程同时开始工作"></a>创建十个线程，如何保证十个线程同时开始工作</h3><p><strong>使用倒计时锁（CountDownLatch）</strong>: 倒计时锁允许一个或多个线程等待一组事件发生。你可以设置一个倒计时为10的锁，每个线程在开始跑步前都调用<code>countDown()</code>方法，当计数达到0时，所有线程都会同时开始执行。</p>
 <h3 id="协程是什么"><a href="#协程是什么" class="headerlink" title="协程是什么"></a>协程是什么</h3><p>协程是一种用户态的轻量级线程，其调度完全由用户程序控制，而不需要内核的参与。协程的切换开销非常小，因为只需要保存和恢复协程的上下文，而无需进行内核级的上下文切换。</p>
+<h3 id="守护线程是什么"><a href="#守护线程是什么" class="headerlink" title="守护线程是什么"></a>守护线程是什么</h3><p>守护线程（Daemon Thread）<strong>是Java中一种特殊的线程，主要用于执行一些辅助任务，如垃圾回收、缓存管理等</strong>。 与普通线程（非守护线程）相比，守护线程的特点是它会在所有非守护线程结束后自动关闭。 这意味着当应用程序中没有非守护线程在运行时，JVM会自动关闭所有守护线程。</p>
 <h2 id="Spring和SpringBoot"><a href="#Spring和SpringBoot" class="headerlink" title="Spring和SpringBoot"></a>Spring和SpringBoot</h2><h3 id="哪个组件负责HTTP的解析"><a href="#哪个组件负责HTTP的解析" class="headerlink" title="哪个组件负责HTTP的解析"></a>哪个组件负责HTTP的解析</h3><p>DsipacherServlet和HandlerMapping</p>
 <h3 id="SpringBoot用了哪些设计模式"><a href="#SpringBoot用了哪些设计模式" class="headerlink" title="SpringBoot用了哪些设计模式"></a>SpringBoot用了哪些设计模式</h3><ul>
 <li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 BeanFactory、ApplicationContext 创建 bean 对象。</li>
