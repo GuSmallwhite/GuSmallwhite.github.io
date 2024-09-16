@@ -473,13 +473,46 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li><strong>设置主从复制</strong>：在从服务器上执行<code>CHANGE MASTER TO</code>语句来指定主服务器的连接信息</li>
 <li><strong>启动复制进程</strong>：在从服务器上执行<code>START SLAVE;</code>命令来启动复制进程</li>
 </ol>
+<h3 id="两个数据库怎么保证事务"><a href="#两个数据库怎么保证事务" class="headerlink" title="两个数据库怎么保证事务"></a>两个数据库怎么保证事务</h3><p>不会，分布式事务也不是两个数据库啊</p>
+<h3 id="悲观锁sql怎么实现"><a href="#悲观锁sql怎么实现" class="headerlink" title="悲观锁sql怎么实现"></a>悲观锁sql怎么实现</h3><p>select for update 对记录加锁，阻塞其他线程</p>
+<h3 id="更新完数据库再更新redis不行吗，除了白白浪费开销，还有什么问题"><a href="#更新完数据库再更新redis不行吗，除了白白浪费开销，还有什么问题" class="headerlink" title="更新完数据库再更新redis不行吗，除了白白浪费开销，还有什么问题"></a>更新完数据库再更新redis不行吗，除了白白浪费开销，还有什么问题</h3><p>在实际业务中，缓存的数据可能不是直接来自数据库表，也许来自多张底层数据表的聚合。比如上面提到的商品详情信息，在底层可能会关联商品表、价格表、库存表等，如果更新了一个价格字段，那么就要更新整个数据库，还要关联的去查询和汇总各个周边业务系统的数据，这个操作会非常耗时。</p>
+<p>从另外一个角度，不是所有的缓存数据都是频繁访问的，更新后的缓存可能会长时间不被访问，所以说，从计算资源和整体性能的考虑，更新的时候删除缓存，等到下次查询命中再填充缓存，是一个更好的方案。</p>
+<h3 id="联合索引在b-树怎么存的？"><a href="#联合索引在b-树怎么存的？" class="headerlink" title="联合索引在b+树怎么存的？"></a>联合索引在b+树怎么存的？</h3><h3 id="订单表和产品表，查找卖出1千元的以上的产品"><a href="#订单表和产品表，查找卖出1千元的以上的产品" class="headerlink" title="订单表和产品表，查找卖出1千元的以上的产品"></a>订单表和产品表，查找卖出1千元的以上的产品</h3><p>用子查询可以用where，</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> product_id<span class="token punctuation">,</span> product_name<span class="token punctuation">,</span> total_sales
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+    <span class="token keyword">SELECT</span> p<span class="token punctuation">.</span>product_id<span class="token punctuation">,</span> p<span class="token punctuation">.</span>product_name<span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span>quantity <span class="token operator">*</span> o<span class="token punctuation">.</span>price<span class="token punctuation">)</span> <span class="token keyword">AS</span> total_sales
+    <span class="token keyword">FROM</span> orders o
+    <span class="token keyword">JOIN</span> products p <span class="token keyword">ON</span> o<span class="token punctuation">.</span>product_id <span class="token operator">=</span> p<span class="token punctuation">.</span>product_id
+    <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> p<span class="token punctuation">.</span>product_id<span class="token punctuation">,</span> p<span class="token punctuation">.</span>product_name
+<span class="token punctuation">)</span> <span class="token keyword">AS</span> product_sales
+<span class="token keyword">WHERE</span> total_sales <span class="token operator">></span> <span class="token number">1000</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="解决hash冲突的方法"><a href="#解决hash冲突的方法" class="headerlink" title="解决hash冲突的方法"></a>解决hash冲突的方法</h3><p>链式方法：就是用链表</p>
 <p>开放地址法：</p>
 <ul>
 <li>线性探测，直接一直往后寻找，步长为1</li>
 <li>步长为2的n次方</li>
 </ul>
-<h3 id="如何设计热门商品排行"><a href="#如何设计热门商品排行" class="headerlink" title="如何设计热门商品排行"></a>如何设计热门商品排行</h3><h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="查看内存的命令"><a href="#查看内存的命令" class="headerlink" title="查看内存的命令"></a>查看内存的命令</h3><p>free 命令用来显示系统内存状态,包括系统物理内存、虚拟内存(swap 交换分区)、共享内存和系统缓存的使用情况</p>
+<h3 id="如何设计热门商品排行"><a href="#如何设计热门商品排行" class="headerlink" title="如何设计热门商品排行"></a>如何设计热门商品排行</h3><p>不知道</p>
+<h3 id="有没有规定redis节点有多少个"><a href="#有没有规定redis节点有多少个" class="headerlink" title="有没有规定redis节点有多少个"></a>有没有规定redis节点有多少个</h3><blockquote>
+<p>The cluster’s key space is split into 16384 slots, effectively setting an upper limit for the cluster size of 16384 master nodes (however, the suggested max size of nodes is on the order of ~ 1000 nodes).<br>集群的键空间被划分为16384个插槽，有效地为16384个主节点的集群大小设置了上限(然而，建议的最大节点大小约为1000个节点)。</p>
+</blockquote>
+<h3 id="为什么需要集群"><a href="#为什么需要集群" class="headerlink" title="为什么需要集群"></a>为什么需要集群</h3><ul>
+<li><strong>分片集群诞生理由</strong>：写性能在高并发下会遇到瓶颈&amp;&amp;无法无限地纵向扩展（不划算）</li>
+<li><strong>分片集群</strong>：需要解决「数据路由」和「数据迁移」的问题</li>
+<li><strong>Redis Cluster数据路由</strong>：<ul>
+<li>Redis Cluster默认一个集群有16384个哈希槽，哈希槽会被分配到Redis集群中的实例中</li>
+<li>Redis集群的实例会相互「通讯」，交互自己所负责哈希槽信息（最终每个实例都有完整的映射关系）</li>
+<li>当客户端请求时，使用CRC16算法算出Hash值并模以16384，自然就能得到哈希槽进而得到所对应的Redis实例位置</li>
+</ul>
+</li>
+<li><strong>为什么16384个哈希槽</strong>：16384个既能让Redis实例分配到的数据相对均匀，又不会影响Redis实例之间交互槽信息产生严重的网络性能开销问题</li>
+<li><strong>Redis Cluster 为什么使用哈希槽，而非一致性哈希算法</strong>：哈希槽实现相对简单高效，每次扩缩容只需要动对应Solt（槽）的数据，一般不会动整个Redis实例</li>
+</ul>
+<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="查看内存的命令"><a href="#查看内存的命令" class="headerlink" title="查看内存的命令"></a>查看内存的命令</h3><p>free 命令用来显示系统内存状态,包括系统物理内存、虚拟内存(swap 交换分区)、共享内存和系统缓存的使用情况</p>
 <h3 id="linux怎么查看进程情况"><a href="#linux怎么查看进程情况" class="headerlink" title="linux怎么查看进程情况"></a>linux怎么查看进程情况</h3><p><strong>ps</strong>：</p>
 <ul>
 <li><code>ps aux</code>：显示所有进程的详细信息。</li>
@@ -491,11 +524,33 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li>实时显示系统中各个进程的运行情况，CPU和内存的使用情况等。</li>
 </ul>
 <h3 id="linux怎么查看cpu情况"><a href="#linux怎么查看cpu情况" class="headerlink" title="linux怎么查看cpu情况"></a>linux怎么查看cpu情况</h3><p><strong>top</strong> - 显示实时的系统进程和资源使用情况</p>
+<h3 id="fork和exec有什么区别"><a href="#fork和exec有什么区别" class="headerlink" title="fork和exec有什么区别"></a>fork和exec有什么区别</h3><p><strong>fork</strong></p>
+<ol>
+<li>创建一个新的子进程，这个子进程是父进程的副本。</li>
+<li>子进程获得父进程数据空间、堆和栈的副本。</li>
+<li>在父进程中，fork()返回子进程的PID；在子进程中，fork()返回0。</li>
+<li>子进程从fork()的位置开始执行。</li>
+</ol>
+<p><strong>exec</strong></p>
+<ol>
+<li>用新的进程镜像替换当前进程镜像。</li>
+<li>exec()调用成功后不会返回，因为整个进程都被新程序替换了。</li>
+<li>exec()只有出错时才返回，返回-1。</li>
+</ol>
+<h3 id="Linux网络抓包用什么命令来实现？"><a href="#Linux网络抓包用什么命令来实现？" class="headerlink" title="Linux网络抓包用什么命令来实现？"></a>Linux网络抓包用什么命令来实现？</h3><p> tcpdump：tcpdump 是一个非常强大的网络抓包工具，可以用来捕获并分析网络数据包</p>
+<h3 id="如何排查服务器cpu占用率高的程序"><a href="#如何排查服务器cpu占用率高的程序" class="headerlink" title="如何排查服务器cpu占用率高的程序"></a>如何排查服务器cpu占用率高的程序</h3><p>1.使用top 定位到占用CPU高的进程PID <code>top</code></p>
+<p>2.通过ps aux | grep PID命令 获取线程信息，并找到占用CPU高的线程 <code>ps -mp pid -o THREAD,tid,time | sort -rn</code></p>
+<p>3.将需要的线程ID转换为16进制格式 <code>printf &quot;%x\n&quot; tid</code></p>
+<p>4.打印线程的堆栈信息 到了这一步具体看堆栈的日志来定位问题了 <code>jstack pid |grep tid -A 30</code></p>
+<h3 id="Linux-从日志获取ip-取top10"><a href="#Linux-从日志获取ip-取top10" class="headerlink" title="Linux 从日志获取ip 取top10"></a>Linux 从日志获取ip 取top10</h3><p>cat *.log sort  uniq -c  head -n</p>
+<h3 id="现在一个进程在写入一个文件，比如log，如果现在直接rmrf会发生什么，文件会直接被删掉吗？"><a href="#现在一个进程在写入一个文件，比如log，如果现在直接rmrf会发生什么，文件会直接被删掉吗？" class="headerlink" title="现在一个进程在写入一个文件，比如log，如果现在直接rmrf会发生什么，文件会直接被删掉吗？"></a>现在一个进程在写入一个文件，比如log，如果现在直接rmrf会发生什么，文件会直接被删掉吗？</h3><p>如果你直接运行 <code>rm -rf</code> 删除一个正在被写入的文件（比如日志文件），文件的<strong>目录项</strong>（即文件名的指针）会被删除，但文件本身不会立即从磁盘上消失。如果有进程仍然在使用该文件，操作系统会保持该文件的数据块直到所有对它的引用都被关闭为止。</p>
+<h3 id="CPU飙升的场景怎么排查？用哪些工具？"><a href="#CPU飙升的场景怎么排查？用哪些工具？" class="headerlink" title="CPU飙升的场景怎么排查？用哪些工具？"></a>CPU飙升的场景怎么排查？用哪些工具？</h3><p>跟上面一样</p>
 <h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="c-有析构函数可以自己回收，java有什么"><a href="#c-有析构函数可以自己回收，java有什么" class="headerlink" title="c++有析构函数可以自己回收，java有什么"></a>c++有析构函数可以自己回收，java有什么</h3><p>我觉得是垃圾回收器，但是这人回答的是try with resource</p>
 <p>其实是finalize()方法</p>
 <p>要给一个类增加收尾（finalizer ），你只要定义finalize ( ) 方法即可。Java 回收该类的一个对象时，就会调用这个方法。在finalize ( )方法中，你要指定在一个对象被撤消前必须执行的操作。垃圾回收周期性地运行，检查对象不再被运行状态引用或间接地通过****其他****对象引用。就在对象被释放之前，Java 运行系统调用该对象的finalize( ) 方法。</p>
 <h3 id="Java里自己写一个String，会运行我们自己写的吗"><a href="#Java里自己写一个String，会运行我们自己写的吗" class="headerlink" title="Java里自己写一个String，会运行我们自己写的吗"></a>Java里自己写一个String，会运行我们自己写的吗</h3><p>自定义的java.lang.String无法加载进内存</p>
 <p>基于JVM的双亲委派机制，类加载器收到了加载类的请求，会把这个请求委派给他的父类加载器。<br>而只有父类加载器自己无法完成加载请求时，子类才会自己加载。<br>这样用户自定义的String类的加载请求就会最终达到顶层的BootStrap ClassLoader启动类加载器，<br>启动类加载器加载的是系统中的String对象，而用户编写的java.lang.String不会被加载。</p>
+<h3 id="命名管道和匿名管道的区别"><a href="#命名管道和匿名管道的区别" class="headerlink" title="命名管道和匿名管道的区别"></a>命名管道和匿名管道的区别</h3><p>匿名管道一般用于父子进程之间，子进程复制父进程的文件表，找到文件描述符，就能找到管道，比如一个进程要做一些耗时操作，就可以fork子进程去做。命名管道，需要管道名，用open命令去打开，一般进程的话都能支持。</p>
 <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="红黑树是怎样的数据结构？有什么特点？"><a href="#红黑树是怎样的数据结构？有什么特点？" class="headerlink" title="红黑树是怎样的数据结构？有什么特点？"></a>红黑树是怎样的数据结构？有什么特点？</h3><ol>
 <li><strong>有序性</strong>：红黑树是一种有序的数据结构，对于树中的任意节点，其左子树上所有节点的键值都小于当前节点的键值，其右子树上所有节点的键值都大于当前节点的键值。</li>
 <li><strong>自平衡</strong>：红黑树在插入和删除操作中通过旋转和重新着色来保持树的平衡，使得树的高度大致保持在log(n)，其中n是树中节点的数量</li>
@@ -535,6 +590,23 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li>条件判断: 对于每一个发现的自动配置类，<code>AutoConfigurationImportSelector</code> 会使用条件判断机制（通常是通过 <code>@ConditionalOnXxx</code>注解）来确定是否满足导入条件。这些条件可以是配置属性、类是否存在、Bean是否存在等等。</li>
 <li>根据条件导入自动配置类: 满足条件的自动配置类将被导入到应用程序的上下文中。这意味着它们会被实例化并应用于应用程序的配置。</li>
 </ul>
+<h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="session和cookie的区别"><a href="#session和cookie的区别" class="headerlink" title="session和cookie的区别"></a>session和cookie的区别</h3><ul>
+<li>作用范围不同，Cookie 保存在客户端（浏览器），Session 保存在服务器端。</li>
+<li>存取方式的不同，Cookie 只能保存 ASCII，Session 可以存任意数据类型，一般情况下我们可以在 Session 中保持一些常用变量信息，比如说 UserId 等。</li>
+<li>有效期不同，Cookie 可设置为长时间保持，比如我们经常使用的默认登录功能，Session 一般失效时间较短，客户端关闭或者 Session 超时都会失效。</li>
+<li>隐私策略不同，Cookie 存储在客户端，比较容易遭到不法获取，早期有人将用户的登录名和密码存储在 Cookie 中导致信息被窃取；Session 存储在服务端，安全性相对 Cookie 要好一些。</li>
+<li>存储大小不同， 单个 Cookie 保存的数据不能超过 4K，Session 可存储数据远高于 Cookie。</li>
+</ul>
+<h3 id="epoll一定是最快的吗"><a href="#epoll一定是最快的吗" class="headerlink" title="epoll一定是最快的吗"></a>epoll一定是最快的吗</h3><p> 不一定。epoll的一个缺点，当事件触发比较频繁时，回调函数也会被频繁触发，此时效率就未必比select 或 poll高了。所以epoll的最佳使用情景是：连接数量多，但活跃的连接数量少。</p>
+<h3 id="如果四次挥手中主动关闭方发送FIN后直接关闭连接，会有什么问题"><a href="#如果四次挥手中主动关闭方发送FIN后直接关闭连接，会有什么问题" class="headerlink" title="如果四次挥手中主动关闭方发送FIN后直接关闭连接，会有什么问题"></a>如果四次挥手中主动关闭方发送FIN后直接关闭连接，会有什么问题</h3><p>（假设主动方是客户端被动方是服务器）这题的答案按面试官的解释，服务器会重传第三次挥手的FIN报文，但此时端口已经被回收，如果此时有新的连接想要使用这个端口，那么重传的FIN就会被新客户端误认为是服务器主动发送的FIN，出现意外情况。</p>
+<h3 id="在无丢包、时延大的通信环境下使用TCP和UDP区别"><a href="#在无丢包、时延大的通信环境下使用TCP和UDP区别" class="headerlink" title="在无丢包、时延大的通信环境下使用TCP和UDP区别"></a>在无丢包、时延大的通信环境下使用TCP和UDP区别</h3><h3 id="为什么有了TCP还要QUIC"><a href="#为什么有了TCP还要QUIC" class="headerlink" title="为什么有了TCP还要QUIC"></a>为什么有了TCP还要QUIC</h3><ul>
+<li><strong>减少延迟</strong>- QUIC 通过将 TLS 握手与连接设置相结合来最大限度地减少延迟。这也称为<strong>0-RTT</strong> （零往返时间）。它可以更快地建立连接并提高 Web 应用程序的性能。</li>
+<li><strong>多路复用</strong>- 通过多路复用，QUIC 可以通过单个通道发送多个数据流。它极大地帮助了下载多个文件（即图像、Javascript、CSS 等）的客户端应用程序。</li>
+<li><strong>连接迁移</strong>- 通过<strong>连接 ID</strong> 来标记通信的两个端点，客户端和服务器可以各自选择一组 ID 来标记自己，因此即使移动设备的网络变化后，导致 IP 地址变化了，只要仍保有上下文信息（比如连接 ID、TLS 密钥等），就可以“无缝”地复用原连接，消除重连的成本，没有丝毫卡顿感，达到了<strong>连接迁移</strong>的功能</li>
+<li><strong>安全性增强</strong>- QUIC 可在 TLS 1.3 上运行，可提供更好的安全性。此外，它还会加密协议的大部分内容，而 TCP 和 TLS 则仅加密 HTTP 负载。与 TCP 相比，QUIC 更能抵御安全攻击。</li>
+<li><strong>广泛支持</strong>- 自推出以来，其采用率不断上升。这进一步增强了其有效性。</li>
+</ul>
+<h3 id="服务器有10w个长连接-即socket，应该用什么数据结构存"><a href="#服务器有10w个长连接-即socket，应该用什么数据结构存" class="headerlink" title="服务器有10w个长连接&#x2F;即socket，应该用什么数据结构存"></a>服务器有10w个长连接&#x2F;即socket，应该用什么数据结构存</h3><p>我的想法啊，<strong>哈希表 + 优先队列</strong>: 使用哈希表存储连接，同时用优先队列按时间排序以便进行超时处理。</p>
 <h2 id="手写题"><a href="#手写题" class="headerlink" title="手写题"></a>手写题</h2><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> singleton<span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
@@ -667,6 +739,47 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="智力题场景题"><a href="#智力题场景题" class="headerlink" title="智力题场景题"></a>智力题场景题</h2><h3 id="20个有序数组，每个数组500个元素，用最快的方法找出最大的第500个数及这个方法的时间复杂度"><a href="#20个有序数组，每个数组500个元素，用最快的方法找出最大的第500个数及这个方法的时间复杂度" class="headerlink" title="20个有序数组，每个数组500个元素，用最快的方法找出最大的第500个数及这个方法的时间复杂度"></a>20个有序数组，每个数组500个元素，用最快的方法找出最大的第500个数及这个方法的时间复杂度</h3><p>从20个数组中各取一个数，并记录每个数的来源数组，建立一个含20个元素的大根堆。此时堆顶就是最大的数，取出堆顶元素，并<strong>从堆顶元素的来源数组中取下一个数加入堆</strong>，再取最大值，一直这样进行500次即可。</p>
+<h3 id="49只老虎1只羊"><a href="#49只老虎1只羊" class="headerlink" title="49只老虎1只羊"></a>49只老虎1只羊</h3><p>A.每次只有一只老虎能吃掉一只羊，而这只老虎在吃了羊后就会变成一只羊。</p>
+<p>B.所有的老虎都是完全理性的，生存是优先考虑的。</p>
+<p>C.老虎可以吃草，但在可以安全吃羊的情况下一定会吃羊。</p>
+<p>答案：</p>
+<p>如果只有1只老虎（n &#x3D; 1），它肯定会吃掉羊，因为它不需要担心被吃掉。</p>
+<p>2 只老虎怎么样？因为这两只老虎都是完全理性的，任何一只老虎可能会思考如果它吃了羊会发生什么。任何一只老虎在想：如果我吃了羊，我就会变成一只羊；然后我将被另一只老虎吃掉。所以为了保证最高的生存可能性，任何一只老虎都不会吃掉羊。</p>
+<p>如果有 3 只老虎，羊就会被吃掉，因为每只老虎都会意识到一旦它变成一只羊，就会剩下2只老虎，它不会被吃掉。所以第一个想到这一点的老虎就会吃掉羊。</p>
+<p>如果有 4 只老虎，每只老虎都会明白，如果它吃了羊，就会变成一只羊，由于还有其他 3 只老虎，所以它将被吃掉。所以为了保证最大的生存可能性，没有老虎会吃羊。</p>
+<p>按照同样的逻辑，我们自然可以证明，如果老虎的数量是偶数，那么羊不会被吃掉。 如果数字是奇数，羊会被吃掉。 对于本题 n &#x3D; l00，羊不会被吃掉。</p>
+<h3 id="5和3升的杯子怎么求4升"><a href="#5和3升的杯子怎么求4升" class="headerlink" title="5和3升的杯子怎么求4升"></a>5和3升的杯子怎么求4升</h3><p>先3升满，倒进5升，再3升满倒进5升，此时3升杯子剩余1升，接下来不用说了</p>
+<h3 id="10亿个数求topk"><a href="#10亿个数求topk" class="headerlink" title="10亿个数求topk"></a>10亿个数求topk</h3><p>是否并发：并发可以显著提高运行速度，单机多核可以使用Hash将数据划分为多份子数据然后多线程<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%B9%B6%E5%8F%91%E6%8E%92%E5%BA%8F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:441597621%7D">并发排序</a>，多机可以使用Hash+Socket方法将数据分发到多台机器上</p>
+<p>是否有足够内存：如果机器内存足够可以直接在内存中使用Hash对数据进行切分，如果机器内存不足可以将<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8E%9F%E5%A7%8B%E6%96%87%E4%BB%B6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:441597621%7D">原始文件</a>切分成多个小文件</p>
+<h3 id="现在有A、B两组url，量级都是50亿（内存放不下），怎么找出它们间相同的数据"><a href="#现在有A、B两组url，量级都是50亿（内存放不下），怎么找出它们间相同的数据" class="headerlink" title="现在有A、B两组url，量级都是50亿（内存放不下），怎么找出它们间相同的数据"></a>现在有A、B两组url，量级都是50亿（内存放不下），怎么找出它们间相同的数据</h3><p>遍历文件a，对每个 url 根据某种hash规则，求取hash(url)&#x2F;1024，然后根据所取得的值将 url 分别存储到1024个小文件,这样 url 就被hash到 1024 个不同级别的文件中。</p>
+<p>分别比较文件，a0 VS b0，…… ，a1023 VS b1023，求每对小文件中相同的url时：把其中一个小文件的 url 存储到 hashmap 中，然后遍历另一个小文件的每个url，看其是否在刚才构建的 hashmap 中，如果是，那么就是共同的url，存到文件中。</p>
+<p>把1024个文件中的相同 url 合并起来</p>
+<h3 id="有10w个字符串，三种匹配模式，一种是固定字符串，一种有可变的uid，一种有-号，怎么快速判断字符串是否在集合里"><a href="#有10w个字符串，三种匹配模式，一种是固定字符串，一种有可变的uid，一种有-号，怎么快速判断字符串是否在集合里" class="headerlink" title="有10w个字符串，三种匹配模式，一种是固定字符串，一种有可变的uid，一种有**号，怎么快速判断字符串是否在集合里"></a>有10w个字符串，三种匹配模式，一种是固定字符串，一种有可变的uid，一种有**号，怎么快速判断字符串是否在集合里</h3><p><strong>预处理</strong>：</p>
+<ul>
+<li>将固定字符串存储在哈希集合中。</li>
+<li>将带有可变UID的字符串根据固定部分存储在前缀树或哈希映射中。</li>
+<li>将带有通配符<code>**</code>的模式转换为正则表达式并存储。</li>
+</ul>
+<p><strong>查询阶段</strong>：</p>
+<ul>
+<li>优先在哈希集合中查找固定字符串，查询时间为 O(1)。</li>
+<li>如果模式中含有可变UID，则基于前缀树或哈希映射查找固定部分，匹配成功后再验证 UID。</li>
+<li>如果字符串中可能匹配通配符模式，则通过遍历所有通配符模式并使用正则表达式匹配。</li>
+</ul>
+<h3 id="设计一个微博的评论系统，要求展示热点评论，要求处理高并发访问场景。如何设计数据库表，如何保证高并发访问时微博不会挂掉。"><a href="#设计一个微博的评论系统，要求展示热点评论，要求处理高并发访问场景。如何设计数据库表，如何保证高并发访问时微博不会挂掉。" class="headerlink" title="设计一个微博的评论系统，要求展示热点评论，要求处理高并发访问场景。如何设计数据库表，如何保证高并发访问时微博不会挂掉。"></a>设计一个微博的评论系统，要求展示热点评论，要求处理高并发访问场景。如何设计数据库表，如何保证高并发访问时微博不会挂掉。</h3><p>服务拆分：</p>
+<ol>
+<li>评论和微博虽然关联性很强，但功能涉及属于主体微博的附属品，故而单独拆分评论服务便于演进；同时评论和发微博不一样，评论可以通过排队来解决</li>
+<li>其次，评论微博及看微博评论，也推荐拆分服务，两者的压力完全不一样，拆分更利于扩展</li>
+</ol>
+<p>负载均衡算法选择：虽然评论微博跟指定微博有关，但考虑到评论时不会使用缓存，故而将请求发送给任意服务器都可以，这里选择<strong>“轮询”或者“随机”</strong>算法</p>
+<h3 id="如果你的舍友在下载东西，速度很快，但你的网络很卡，这和你舍友有关系吗"><a href="#如果你的舍友在下载东西，速度很快，但你的网络很卡，这和你舍友有关系吗" class="headerlink" title="如果你的舍友在下载东西，速度很快，但你的网络很卡，这和你舍友有关系吗"></a>如果你的舍友在下载东西，速度很快，但你的网络很卡，这和你舍友有关系吗</h3><p>宽带有一个固定的带宽上限（例如 100 Mbps 或 200 Mbps），所有连接到这个网络的设备共享这个带宽。如果你的舍友在下载大量数据，可能会占用大部分带宽，导致其他设备的网速变慢</p>
+<h3 id="现在有个场景，比如说pdd助力，你砍我我砍你，我们要设计俩接口和数据库表，接口一可以查找我们之间是否存在砍or被砍的关系，接口二可以查找我砍了谁or谁砍了我，如何合理设计数据库表呢"><a href="#现在有个场景，比如说pdd助力，你砍我我砍你，我们要设计俩接口和数据库表，接口一可以查找我们之间是否存在砍or被砍的关系，接口二可以查找我砍了谁or谁砍了我，如何合理设计数据库表呢" class="headerlink" title="现在有个场景，比如说pdd助力，你砍我我砍你，我们要设计俩接口和数据库表，接口一可以查找我们之间是否存在砍or被砍的关系，接口二可以查找我砍了谁or谁砍了我，如何合理设计数据库表呢"></a>现在有个场景，比如说pdd助力，你砍我我砍你，我们要设计俩接口和数据库表，接口一可以查找我们之间是否存在砍or被砍的关系，接口二可以查找我砍了谁or谁砍了我，如何合理设计数据库表呢</h3><p>我觉得就两个表吧，一个详细记录谁砍了谁</p>
+<p>另一个只记录有砍行为的关系表</p>
+<h3 id="有一台16G内存的电脑，要保存2的32次方个qq号的状态，怎么设计，大概占多少内存空间。不能用数据库等中间件"><a href="#有一台16G内存的电脑，要保存2的32次方个qq号的状态，怎么设计，大概占多少内存空间。不能用数据库等中间件" class="headerlink" title="有一台16G内存的电脑，要保存2的32次方个qq号的状态，怎么设计，大概占多少内存空间。不能用数据库等中间件"></a>有一台16G内存的电脑，要保存2的32次方个qq号的状态，怎么设计，大概占多少内存空间。不能用数据库等中间件</h3><p><strong>位图</strong>（Bit Array）：如果要存储每个 QQ 号的状态，可以使用位图，其中每一位代表一个 QQ 号的状态。假设每个 QQ 号用一个位表示状态，则</p>
+<p>内存&#x3D;2的32次方&#x2F;8 字节&#x3D;4GB</p>
+<h3 id="代码中怎么实现超时控制，一个请求，怎么把他限制在固定的时间里"><a href="#代码中怎么实现超时控制，一个请求，怎么把他限制在固定的时间里" class="headerlink" title="代码中怎么实现超时控制，一个请求，怎么把他限制在固定的时间里"></a>代码中怎么实现超时控制，一个请求，怎么把他限制在固定的时间里</h3><p>总体来说就是，在提交服务端的查询请求时，会开启定时任务，检查超时。如果定时任务到期，还未收到结果则会触发超时通知。如果客户端还未成功发送数据，则认为是客户端自己超时。如果已经将数据发送出去，则认为是服务端超时。这相当于是一个看门狗的形式处理了，就是说，不管服务端和客户端本身如何，总能被这东西给发现，所以这种超时控制是精确的</p>
+<h3 id="同一时刻要更新大量数据，怎么办"><a href="#同一时刻要更新大量数据，怎么办" class="headerlink" title="同一时刻要更新大量数据，怎么办"></a>同一时刻要更新大量数据，怎么办</h3><p>应该就是分两个字段去存，到点换着读，用redis hash key是商家id，field一个pre一个now，value价格，业务里面根据时间切换读哪个     </p>
 
                 
             </div>
