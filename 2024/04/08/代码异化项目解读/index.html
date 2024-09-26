@@ -417,9 +417,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>实验室的代码异化项目，我来接手，但是有一说一，这个项目很复杂</p>
-<h1 id="头文件部分"><a href="#头文件部分" class="headerlink" title="头文件部分"></a>头文件部分</h1><h2 id="consumer-h"><a href="#consumer-h" class="headerlink" title="consumer.h"></a>consumer.h</h2><p>主要就是定义了六中错误类型</p>
-<h3 id="include"><a href="#include" class="headerlink" title="include"></a>include</h3><p>这里面include了几个AST相关的东西：</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>实验室的代码异化项目，我来接手，但是有一说一，这个项目很复杂</p>
+<h2 id="头文件部分"><a href="#头文件部分" class="headerlink" title="头文件部分"></a>头文件部分</h2><h3 id="consumer-h"><a href="#consumer-h" class="headerlink" title="consumer.h"></a>consumer.h</h3><p>主要就是定义了六中错误类型</p>
+<h4 id="include"><a href="#include" class="headerlink" title="include"></a>include</h4><p>这里面include了几个AST相关的东西：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;clang/AST/ASTConsumer.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;clang/AST/ASTContext.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;clang/ASTMatchers/ASTMatchFinder.h></span></span>
@@ -434,7 +434,7 @@
 <li><code>&lt;clang/ASTMatchers/ASTMatchFinder.h&gt;</code>：该头文件提供了 AST 匹配器和匹配器查找器，用于在 AST 中查找特定模式的节点。</li>
 <li><code>&lt;clang/Rewrite/Core/Rewriter.h&gt;</code>：该头文件提供了 <code>Rewriter</code> 类，用于重写源代码，通常用于生成修改后的代码。</li>
 </ol>
-<h3 id="enum枚举部分"><a href="#enum枚举部分" class="headerlink" title="enum枚举部分"></a>enum枚举部分</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">enum</span> <span class="token punctuation">&#123;</span>
+<h4 id="enum枚举部分"><a href="#enum枚举部分" class="headerlink" title="enum枚举部分"></a>enum枚举部分</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">enum</span> <span class="token punctuation">&#123;</span>
   <span class="token comment">// 语义错误</span>
   OPERATOR_SEMANTIC <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token comment">//操作符错误</span>
   BOUND_SEMANTIC<span class="token punctuation">,</span><span class="token comment">//边界错误</span>
@@ -446,7 +446,7 @@
   ALL_CONSUMER
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="父类：CustomASTConsumer"><a href="#父类：CustomASTConsumer" class="headerlink" title="父类：CustomASTConsumer"></a>父类：CustomASTConsumer</h3><p>所有错误类型的父类，他本身也继承了<code>clang::ASTConsumer</code></p>
+<h4 id="父类：CustomASTConsumer"><a href="#父类：CustomASTConsumer" class="headerlink" title="父类：CustomASTConsumer"></a>父类：CustomASTConsumer</h4><p>所有错误类型的父类，他本身也继承了<code>clang::ASTConsumer</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">CustomASTConsumer</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> clang<span class="token double-colon punctuation">::</span><span class="token class-name">ASTConsumer</span></span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">protected</span><span class="token operator">:</span>
     <span class="token comment">// 用于查找 AST 中特定模式的 MatchFinder</span>
@@ -461,7 +461,7 @@
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>callbacks</code> 是一个容器，其中的每个元素都是一个指向 <code>clang::ast_matchers::MatchFinder::MatchCallback</code> 类型对象的 <code>std::unique_ptr</code> 智能指针。</p>
-<h3 id="OperatorSemantic"><a href="#OperatorSemantic" class="headerlink" title="OperatorSemantic"></a>OperatorSemantic</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">OperatorSemantic</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">CustomASTConsumer</span></span> <span class="token punctuation">&#123;</span>
+<h4 id="OperatorSemantic"><a href="#OperatorSemantic" class="headerlink" title="OperatorSemantic"></a>OperatorSemantic</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">OperatorSemantic</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">CustomASTConsumer</span></span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
   <span class="token keyword">explicit</span> <span class="token function">OperatorSemantic</span><span class="token punctuation">(</span>
       std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>clang<span class="token double-colon punctuation">::</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -479,7 +479,7 @@
 
 <p>处理翻译单元的AST</p>
 <p><strong>其余错误类型格式都是一样的</strong>，看一个就好了</p>
-<h3 id="ConsumerFactory"><a href="#ConsumerFactory" class="headerlink" title="ConsumerFactory"></a>ConsumerFactory</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ASTConsumerFactory</span> <span class="token punctuation">&#123;</span>
+<h4 id="ConsumerFactory"><a href="#ConsumerFactory" class="headerlink" title="ConsumerFactory"></a>ConsumerFactory</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ASTConsumerFactory</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
   <span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>clang<span class="token double-colon punctuation">::</span>ASTConsumer<span class="token operator">></span>
   <span class="token function">getASTConsumer</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>clang<span class="token double-colon punctuation">::</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">,</span>
@@ -491,7 +491,7 @@
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>用于获取 <code>clang::ASTConsumer</code> 的对象。它接受一个vector <code>all</code> 作为参数，该vector中的每个元素都是一个函数对象，这些函数对象接受一个 <code>clang::Rewriter</code> 的引用，并且返回 <code>void</code>。该函数还接受一个可选参数 <code>type</code>，默认值为 <code>ALL_CONSUMER</code></p>
-<h2 id="util-h"><a href="#util-h" class="headerlink" title="util.h"></a>util.h</h2><p>就是用来生成随机数和打乱一个vector的</p>
+<h3 id="util-h"><a href="#util-h" class="headerlink" title="util.h"></a>util.h</h3><p>就是用来生成随机数和打乱一个vector的</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 声明一个函数模板，用于生成指定长度的随机字符串</span>
 std<span class="token double-colon punctuation">::</span>string <span class="token function">randomStr</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -507,7 +507,7 @@ std<span class="token double-colon punctuation">::</span>string <span class="tok
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在rand.cpp里会用到</p>
-<h2 id="exp-h"><a href="#exp-h" class="headerlink" title="exp.h"></a>exp.h</h2><p>自定义了两种exp</p>
+<h3 id="exp-h"><a href="#exp-h" class="headerlink" title="exp.h"></a>exp.h</h3><p>自定义了两种exp</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;exception></span></span>
 
 <span class="token comment">// 自定义异常类 InvalidConsumerExp，继承自 std::exception</span>
@@ -528,9 +528,9 @@ std<span class="token double-colon punctuation">::</span>string <span class="tok
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="syntax包"><a href="#syntax包" class="headerlink" title="syntax包"></a>syntax包</h1><p>主要是三种语法错误</p>
-<h2 id="ForSemiSyntax"><a href="#ForSemiSyntax" class="headerlink" title="ForSemiSyntax"></a>ForSemiSyntax</h2><p>生成错误的for语句，将for语句本来的分号替换为逗号</p>
-<h3 id="匿名namespace"><a href="#匿名namespace" class="headerlink" title="匿名namespace"></a>匿名namespace</h3><pre class="line-numbers language-CPP" data-language="CPP"><code class="language-CPP">namespace &#123;
+<h2 id="syntax包"><a href="#syntax包" class="headerlink" title="syntax包"></a>syntax包</h2><p>主要是三种语法错误</p>
+<h3 id="ForSemiSyntax"><a href="#ForSemiSyntax" class="headerlink" title="ForSemiSyntax"></a>ForSemiSyntax</h3><p>生成错误的for语句，将for语句本来的分号替换为逗号</p>
+<h4 id="匿名namespace"><a href="#匿名namespace" class="headerlink" title="匿名namespace"></a>匿名namespace</h4><pre class="line-numbers language-CPP" data-language="CPP"><code class="language-CPP">namespace &#123;
 
 const string desc &#x3D;
     &quot;This bug is a syntax error where a comma is mistakenly used instead &quot;
@@ -588,7 +588,7 @@ public:
 
 <p><strong>run方法</strong></p>
 <p>定位两个分号的位置，随机将一个分号改成逗号</p>
-<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a><strong>构造函数</strong></h3><p>所有错误类型的构造函数都差不多，就分析这个了</p>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a><strong>构造函数</strong></h4><p>所有错误类型的构造函数都差不多，就分析这个了</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token class-name">ForSemiSyntax</span><span class="token double-colon punctuation">::</span><span class="token function">ForSemiSyntax</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">this</span><span class="token operator">-></span>callbacks<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>
       <span class="token generic-function"><span class="token function">unique_ptr</span><span class="token generic class-name"><span class="token operator">&lt;</span>MatchFinder<span class="token double-colon punctuation">::</span>MatchCallback<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">ForSemiCallback</span><span class="token punctuation">(</span>all<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//把自定义的callback函数放到容器当中</span>
@@ -607,7 +607,7 @@ public:
 string <span class="token class-name">ParenSyntax</span><span class="token double-colon punctuation">::</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token string">"ParenSyntax"</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>以后就不分析了</p>
-<h2 id="ParenSyntax"><a href="#ParenSyntax" class="headerlink" title="ParenSyntax"></a>ParenSyntax</h2><p>只看run方法了</p>
+<h3 id="ParenSyntax"><a href="#ParenSyntax" class="headerlink" title="ParenSyntax"></a>ParenSyntax</h3><p>只看run方法了</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">const</span> MatchFinder<span class="token double-colon punctuation">::</span>MatchResult <span class="token operator">&amp;</span>result<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">const</span> Stmt <span class="token operator">*</span>bo <span class="token operator">=</span> result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>Stmt<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm <span class="token operator">=</span> result<span class="token punctuation">.</span>SourceManager<span class="token punctuation">;</span>
@@ -658,7 +658,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="UndefVarSyntax"><a href="#UndefVarSyntax" class="headerlink" title="UndefVarSyntax"></a>UndefVarSyntax</h2><p>未定义变量错误，使用了未定义的变量, 现实情况可能是打错了变量名. 随机选择一个变量使用, 将它改成一个没有出现过的变量名.</p>
+<h3 id="UndefVarSyntax"><a href="#UndefVarSyntax" class="headerlink" title="UndefVarSyntax"></a>UndefVarSyntax</h3><p>未定义变量错误，使用了未定义的变量, 现实情况可能是打错了变量名. 随机选择一个变量使用, 将它改成一个没有出现过的变量名.</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">const</span> MatchFinder<span class="token double-colon punctuation">::</span>MatchResult <span class="token operator">&amp;</span>result<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">const</span> DeclRefExpr <span class="token operator">*</span>bo <span class="token operator">=</span> result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>DeclRefExpr<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获得为id的变量的节点</span>
   <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm <span class="token operator">=</span> result<span class="token punctuation">.</span>SourceManager<span class="token punctuation">;</span><span class="token comment">//获得资源管理器</span>
@@ -683,8 +683,8 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="semantic包"><a href="#semantic包" class="headerlink" title="semantic包"></a>semantic包</h1><p>语义错误</p>
-<h2 id="OperatorSemantic-1"><a href="#OperatorSemantic-1" class="headerlink" title="OperatorSemantic"></a>OperatorSemantic</h2><p>操作符错误，随机把正确的操作符替换为错误的操作符</p>
+<h2 id="semantic包"><a href="#semantic包" class="headerlink" title="semantic包"></a>semantic包</h2><p>语义错误</p>
+<h3 id="OperatorSemantic-1"><a href="#OperatorSemantic-1" class="headerlink" title="OperatorSemantic"></a>OperatorSemantic</h3><p>操作符错误，随机把正确的操作符替换为错误的操作符</p>
 <p>首先定义了所有的二院操作符，以二维数组的形式</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span>string<span class="token operator">>></span> binaryOperators <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
     <span class="token punctuation">&#123;</span><span class="token string">"+"</span><span class="token punctuation">,</span> <span class="token string">"-"</span><span class="token punctuation">,</span> <span class="token string">"*"</span><span class="token punctuation">,</span> <span class="token string">"/"</span><span class="token punctuation">,</span> <span class="token string">"%"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>          <span class="token comment">// Arithmetic</span>
@@ -740,9 +740,9 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="BoundSemantic"><a href="#BoundSemantic" class="headerlink" title="BoundSemantic"></a>BoundSemantic</h2><p>边界错误: 对数值进行了不正确的增加或减少，从而导致变量值与预期不符. 挑选随机类型为数值类型的变量 <code>a</code>, 在它后边插入 +&#x2F;- number 的操作.</p>
+<h3 id="BoundSemantic"><a href="#BoundSemantic" class="headerlink" title="BoundSemantic"></a>BoundSemantic</h3><p>边界错误: 对数值进行了不正确的增加或减少，从而导致变量值与预期不符. 挑选随机类型为数值类型的变量 <code>a</code>, 在它后边插入 +&#x2F;- number 的操作.</p>
 <p>这个就比语法错误复杂很多，而且包含了两个callback类</p>
-<h3 id="modifyBound函数"><a href="#modifyBound函数" class="headerlink" title="modifyBound函数"></a>modifyBound函数</h3><p>对数值进行增加或者减少</p>
+<h4 id="modifyBound函数"><a href="#modifyBound函数" class="headerlink" title="modifyBound函数"></a>modifyBound函数</h4><p>对数值进行增加或者减少</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">modifyBound</span><span class="token punctuation">(</span><span class="token keyword">const</span> DeclRefExpr <span class="token operator">*</span>bo<span class="token punctuation">,</span> <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm<span class="token punctuation">,</span>
                         Rewriter <span class="token operator">&amp;</span>r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token comment">// 注意 getEndLoc 可能返回代表范围结束的令牌的开始位置</span>
@@ -774,7 +774,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
 <span class="token comment">//结果就是：</span>
 <span class="token comment">//5所在的位置</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="BoundCallbackComm-的run方法"><a href="#BoundCallbackComm-的run方法" class="headerlink" title="BoundCallbackComm 的run方法"></a>BoundCallbackComm 的run方法</h3><p>第一个callback类</p>
+<h4 id="BoundCallbackComm-的run方法"><a href="#BoundCallbackComm-的run方法" class="headerlink" title="BoundCallbackComm 的run方法"></a>BoundCallbackComm 的run方法</h4><p>第一个callback类</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">const</span> MatchFinder<span class="token double-colon punctuation">::</span>MatchResult <span class="token operator">&amp;</span>result<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">const</span> <span class="token keyword">auto</span> <span class="token operator">*</span>bo <span class="token operator">=</span> result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>DeclRefExpr<span class="token operator">></span></span></span><span class="token punctuation">(</span>id0<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取id为id0且为声明引用类型的节点,id0为“numvarialbe"</span>
   <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm <span class="token operator">=</span> result<span class="token punctuation">.</span>SourceManager<span class="token punctuation">;</span>
@@ -788,7 +788,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="辅助函数isLastEquals"><a href="#辅助函数isLastEquals" class="headerlink" title="辅助函数isLastEquals"></a>辅助函数isLastEquals</h3><p>判断这个等号是否是最后一个赋值</p>
+<h4 id="辅助函数isLastEquals"><a href="#辅助函数isLastEquals" class="headerlink" title="辅助函数isLastEquals"></a>辅助函数isLastEquals</h4><p>判断这个等号是否是最后一个赋值</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLastEquals</span><span class="token punctuation">(</span><span class="token keyword">const</span> BinaryOperator <span class="token operator">*</span>bin<span class="token punctuation">,</span> <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>bin <span class="token operator">||</span> <span class="token operator">!</span>sm<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
@@ -822,7 +822,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="辅助函数rightDeclRefs"><a href="#辅助函数rightDeclRefs" class="headerlink" title="辅助函数rightDeclRefs"></a>辅助函数rightDeclRefs</h3><p>提取所有右值引用，放到result当中，result就是个vector的引用</p>
+<h4 id="辅助函数rightDeclRefs"><a href="#辅助函数rightDeclRefs" class="headerlink" title="辅助函数rightDeclRefs"></a>辅助函数rightDeclRefs</h4><p>提取所有右值引用，放到result当中，result就是个vector的引用</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">rightDeclRefs</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">const</span> DeclRefExpr <span class="token operator">*</span><span class="token operator">></span> <span class="token operator">&amp;</span>result<span class="token punctuation">,</span> <span class="token keyword">const</span> Expr <span class="token operator">*</span>e<span class="token punctuation">,</span>
                    <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>e<span class="token punctuation">)</span>
@@ -859,7 +859,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   result<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>dre<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="BoundCallbackAssi-的run方法"><a href="#BoundCallbackAssi-的run方法" class="headerlink" title="BoundCallbackAssi 的run方法"></a>BoundCallbackAssi 的run方法</h3><p> 在赋值语句中捕获右侧操作数中所有的变量引用，并将其边界进行修改</p>
+<h4 id="BoundCallbackAssi-的run方法"><a href="#BoundCallbackAssi-的run方法" class="headerlink" title="BoundCallbackAssi 的run方法"></a>BoundCallbackAssi 的run方法</h4><p> 在赋值语句中捕获右侧操作数中所有的变量引用，并将其边界进行修改</p>
 <p>比第一个callback函数更加严谨</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">const</span> MatchFinder<span class="token double-colon punctuation">::</span>MatchResult <span class="token operator">&amp;</span>result<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
   <span class="token comment">// 获取赋值表达式 =</span>
@@ -891,7 +891,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h3><p>有点不一样，这里考虑了两种情况</p>
+<h4 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h4><p>有点不一样，这里考虑了两种情况</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token class-name">BoundSemantic</span><span class="token double-colon punctuation">::</span><span class="token function">BoundSemantic</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">this</span><span class="token operator">-></span>callbacks<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>
       <span class="token generic-function"><span class="token function">unique_ptr</span><span class="token generic class-name"><span class="token operator">&lt;</span>MatchFinder<span class="token double-colon punctuation">::</span>MatchCallback<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">BoundCallbackComm</span><span class="token punctuation">(</span>all<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -923,8 +923,8 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   finder<span class="token punctuation">.</span><span class="token function">addMatcher</span><span class="token punctuation">(</span>m1<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token operator">-></span>callbacks<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="VarUseSemantic"><a href="#VarUseSemantic" class="headerlink" title="VarUseSemantic"></a>VarUseSemantic</h2><p>变量使用错误: 某个该用变量 <code>a</code> 的地方用成了同一类型的变量 <code>b</code>. 随机挑选类型 <code>T</code> 变量 <code>a</code>, 并替换为已声明的类型 <code>T</code> 变量 <code>b</code>.</p>
-<h3 id="Replacetool类"><a href="#Replacetool类" class="headerlink" title="Replacetool类"></a>Replacetool类</h3><p><strong>定义了两个id：</strong></p>
+<h3 id="VarUseSemantic"><a href="#VarUseSemantic" class="headerlink" title="VarUseSemantic"></a>VarUseSemantic</h3><p>变量使用错误: 某个该用变量 <code>a</code> 的地方用成了同一类型的变量 <code>b</code>. 随机挑选类型 <code>T</code> 变量 <code>a</code>, 并替换为已声明的类型 <code>T</code> 变量 <code>b</code>.</p>
+<h4 id="Replacetool类"><a href="#Replacetool类" class="headerlink" title="Replacetool类"></a>Replacetool类</h4><p><strong>定义了两个id：</strong></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> string desc <span class="token operator">=</span>
     <span class="token string">"This bug is a semantic error where the variable &lt;b> is mistakenly used in "</span>
     <span class="token string">"place of the intended variable &lt;a> of the same type"</span><span class="token punctuation">;</span>
@@ -1020,7 +1020,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="VarGetCallback"><a href="#VarGetCallback" class="headerlink" title="VarGetCallback"></a>VarGetCallback</h2><p><strong>run方法</strong></p>
+<h3 id="VarGetCallback"><a href="#VarGetCallback" class="headerlink" title="VarGetCallback"></a>VarGetCallback</h3><p><strong>run方法</strong></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">    <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">const</span> MatchFinder<span class="token double-colon punctuation">::</span>MatchResult <span class="token operator">&amp;</span>result<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
       <span class="token keyword">const</span> DeclRefExpr <span class="token operator">*</span>bo <span class="token operator">=</span> result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>DeclRefExpr<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token keyword">const</span> SourceManager <span class="token operator">*</span>sm <span class="token operator">=</span> result<span class="token punctuation">.</span>SourceManager<span class="token punctuation">;</span>
@@ -1035,7 +1035,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这个回调函数只是将匹配到的变量放到replaceList当中</p>
-<h2 id="VarUseCallback"><a href="#VarUseCallback" class="headerlink" title="VarUseCallback"></a>VarUseCallback</h2><p>真正进行替换</p>
+<h3 id="VarUseCallback"><a href="#VarUseCallback" class="headerlink" title="VarUseCallback"></a>VarUseCallback</h3><p>真正进行替换</p>
 <p><strong>run方法</strong></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">const</span> MatchFinder<span class="token double-colon punctuation">::</span>MatchResult <span class="token operator">&amp;</span>result<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">const</span> DeclRefExpr <span class="token operator">*</span>bo <span class="token operator">=</span> result<span class="token punctuation">.</span>Nodes<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">getNodeAs</span><span class="token generic class-name"><span class="token operator">&lt;</span>DeclRefExpr<span class="token operator">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1069,7 +1069,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
     <span class="token punctuation">&#125;</span>
   <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="构造函数-2"><a href="#构造函数-2" class="headerlink" title="构造函数"></a>构造函数</h2><p>也是add两个</p>
+<h3 id="构造函数-2"><a href="#构造函数-2" class="headerlink" title="构造函数"></a>构造函数</h3><p>也是add两个</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token class-name">VarUseSemantic</span><span class="token double-colon punctuation">::</span><span class="token function">VarUseSemantic</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> <span class="token operator">&amp;</span>all<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">this</span><span class="token operator">-></span>callbacks<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>
           <span class="token generic-function"><span class="token function">unique_ptr</span><span class="token generic class-name"><span class="token operator">&lt;</span>MatchFinder<span class="token double-colon punctuation">::</span>MatchCallback<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">VarGetCallback</span><span class="token punctuation">(</span>all<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1085,7 +1085,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   finder<span class="token punctuation">.</span><span class="token function">addMatcher</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token operator">-></span>callbacks<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a>main.cpp</h1><h2 id="SilentDiagConsumer类"><a href="#SilentDiagConsumer类" class="headerlink" title="SilentDiagConsumer类"></a>SilentDiagConsumer类</h2><p>用于屏蔽源程序中的诊断信息，即警告和错误信息，不让其输出到控制台或其他目标。</p>
+<h2 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a>main.cpp</h2><h3 id="SilentDiagConsumer类"><a href="#SilentDiagConsumer类" class="headerlink" title="SilentDiagConsumer类"></a>SilentDiagConsumer类</h3><p>用于屏蔽源程序中的诊断信息，即警告和错误信息，不让其输出到控制台或其他目标。</p>
 <p>重写了<code>HandleDiagnostic</code>方法，为空，也就是不做任何操作</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 用于将源程序本身的警告屏蔽掉</span>
 <span class="token keyword">class</span> <span class="token class-name">SilentDiagConsumer</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> clang<span class="token double-colon punctuation">::</span><span class="token class-name">DiagnosticConsumer</span></span> <span class="token punctuation">&#123;</span>
@@ -1094,14 +1094,14 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
                         <span class="token keyword">const</span> clang<span class="token double-colon punctuation">::</span>Diagnostic <span class="token operator">&amp;</span>Info<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="AmmonFrontendAction类"><a href="#AmmonFrontendAction类" class="headerlink" title="AmmonFrontendAction类"></a>AmmonFrontendAction类</h2><p>继承了<code>ASTFrontendAction </code>类，用于对Clang前端进行操作</p>
-<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">private</span><span class="token operator">:</span>
+<h3 id="AmmonFrontendAction类"><a href="#AmmonFrontendAction类" class="headerlink" title="AmmonFrontendAction类"></a>AmmonFrontendAction类</h3><p>继承了<code>ASTFrontendAction </code>类，用于对Clang前端进行操作</p>
+<h4 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">private</span><span class="token operator">:</span>
   Rewriter rewriter<span class="token punctuation">;</span><span class="token comment">//rewriter</span>
   <span class="token comment">// 这是不知道 rewriter 里边有 editBuffer 迭代器之前的设计...</span>
   vector<span class="token operator">&lt;</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>Rewriter <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">>></span> all<span class="token punctuation">;</span><span class="token comment">//存放函数的vector</span>
   <span class="token keyword">int</span> typeOption<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="EndSourceFileAction方法"><a href="#EndSourceFileAction方法" class="headerlink" title="EndSourceFileAction方法"></a>EndSourceFileAction方法</h3><p>重写的方法，在处理完源文件之后被调用</p>
+<h4 id="EndSourceFileAction方法"><a href="#EndSourceFileAction方法" class="headerlink" title="EndSourceFileAction方法"></a>EndSourceFileAction方法</h4><p>重写的方法，在处理完源文件之后被调用</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 处理完文件后, 进行的操作</span>
 <span class="token keyword">void</span> <span class="token function">EndSourceFileAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">auto</span> mainFileId <span class="token operator">=</span> rewriter<span class="token punctuation">.</span><span class="token function">getSourceMgr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMainFileID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取主文件的标识符，这个标识符用于识别源文件的位置</span>
@@ -1121,7 +1121,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   rewriter<span class="token punctuation">.</span><span class="token function">getEditBuffer</span><span class="token punctuation">(</span>mainFileId<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token function">outs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="CreateASTConsumer方法"><a href="#CreateASTConsumer方法" class="headerlink" title="CreateASTConsumer方法"></a>CreateASTConsumer方法</h3><p>也是重写的方法，就是创建ASTComsumer对象用的</p>
+<h4 id="CreateASTConsumer方法"><a href="#CreateASTConsumer方法" class="headerlink" title="CreateASTConsumer方法"></a>CreateASTConsumer方法</h4><p>也是重写的方法，就是创建ASTComsumer对象用的</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  unique_ptr<span class="token operator">&lt;</span>ASTConsumer<span class="token operator">></span> <span class="token function">CreateASTConsumer</span><span class="token punctuation">(</span>CompilerInstance <span class="token operator">&amp;</span>ci<span class="token punctuation">,</span>
                                             StringRef file<span class="token punctuation">)</span> <span class="token keyword">override</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 屏蔽原来的错误和异常信息，用自己的SilentDiagConsumer</span>
@@ -1134,7 +1134,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="AmmonFrontendActionFactory类"><a href="#AmmonFrontendActionFactory类" class="headerlink" title="AmmonFrontendActionFactory类"></a>AmmonFrontendActionFactory类</h2><p>用于创建AmmonFrontedAction对象，貌似就是把他变成unique的？</p>
+<h3 id="AmmonFrontendActionFactory类"><a href="#AmmonFrontendActionFactory类" class="headerlink" title="AmmonFrontendActionFactory类"></a>AmmonFrontendActionFactory类</h3><p>用于创建AmmonFrontedAction对象，貌似就是把他变成unique的？</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">AmmonFrontendActionFactory</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">FrontendActionFactory</span></span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
   <span class="token keyword">int</span> typeOption<span class="token punctuation">;</span>
@@ -1147,7 +1147,7 @@ string <span class="token class-name">ParenSyntax</span><span class="token doubl
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="一个新的namespace"><a href="#一个新的namespace" class="headerlink" title="一个新的namespace"></a>一个新的namespace</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> <span class="token punctuation">&#123;</span>
+<h3 id="一个新的namespace"><a href="#一个新的namespace" class="headerlink" title="一个新的namespace"></a>一个新的namespace</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> <span class="token punctuation">&#123;</span>
 
 <span class="token comment">// 命令行选项</span>
 cl<span class="token double-colon punctuation">::</span>OptionCategory <span class="token function">ammonCategory</span><span class="token punctuation">(</span><span class="token string">"Ammon options"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1193,7 +1193,7 @@ cl<span class="token double-colon punctuation">::</span>opt<span class="token op
 
 
 
-<h2 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   cl<span class="token double-colon punctuation">::</span><span class="token function">HideUnrelatedOptions</span><span class="token punctuation">(</span>ammonCategory<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//隐藏与 ammonCategory 不相关的命令行选项</span>
   Expected<span class="token operator">&lt;</span>CommonOptionsParser<span class="token operator">></span> expectedParser <span class="token operator">=</span>
       <span class="token class-name">CommonOptionsParser</span><span class="token double-colon punctuation">::</span><span class="token function">create</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> ammonCategory<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//使用 CommonOptionsParser 类创建一个命令行选项解析器对象</span>

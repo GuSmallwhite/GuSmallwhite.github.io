@@ -488,9 +488,11 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <span class="token keyword">WHERE</span> total_sales <span class="token operator">></span> <span class="token number">1000</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="解决hash冲突的方法"><a href="#解决hash冲突的方法" class="headerlink" title="解决hash冲突的方法"></a>解决hash冲突的方法</h3><p>链式方法：就是用链表</p>
+<h3 id="怎么减少回表"><a href="#怎么减少回表" class="headerlink" title="怎么减少回表"></a>怎么减少回表</h3><ol>
+<li>聚簇索引</li>
+<li>查询的列在联合索引当中</li>
+</ol>
+<h3 id="MySQL-中我有两张表，订单表有-2000-万数据，用户表有-100-条数据，如何让我的查询（订单信息带着用户信息）能够更快"><a href="#MySQL-中我有两张表，订单表有-2000-万数据，用户表有-100-条数据，如何让我的查询（订单信息带着用户信息）能够更快" class="headerlink" title="MySQL 中我有两张表，订单表有 2000 万数据，用户表有 100 条数据，如何让我的查询（订单信息带着用户信息）能够更快"></a>MySQL 中我有两张表，订单表有 2000 万数据，用户表有 100 条数据，如何让我的查询（订单信息带着用户信息）能够更快</h3><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="解决hash冲突的方法"><a href="#解决hash冲突的方法" class="headerlink" title="解决hash冲突的方法"></a>解决hash冲突的方法</h3><p>链式方法：就是用链表</p>
 <p>开放地址法：</p>
 <ul>
 <li>线性探测，直接一直往后寻找，步长为1</li>
@@ -590,6 +592,7 @@ log_queries_not_using_indexes ： 是否记录未使用索引的<span class="tok
 <li>条件判断: 对于每一个发现的自动配置类，<code>AutoConfigurationImportSelector</code> 会使用条件判断机制（通常是通过 <code>@ConditionalOnXxx</code>注解）来确定是否满足导入条件。这些条件可以是配置属性、类是否存在、Bean是否存在等等。</li>
 <li>根据条件导入自动配置类: 满足条件的自动配置类将被导入到应用程序的上下文中。这意味着它们会被实例化并应用于应用程序的配置。</li>
 </ul>
+<h3 id="Springboot如何实现数据预热"><a href="#Springboot如何实现数据预热" class="headerlink" title="Springboot如何实现数据预热"></a>Springboot如何实现数据预热</h3><p><code>ApplicationRunner</code>接口的<code>run</code>方法</p>
 <h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="session和cookie的区别"><a href="#session和cookie的区别" class="headerlink" title="session和cookie的区别"></a>session和cookie的区别</h3><ul>
 <li>作用范围不同，Cookie 保存在客户端（浏览器），Session 保存在服务器端。</li>
 <li>存取方式的不同，Cookie 只能保存 ASCII，Session 可以存任意数据类型，一般情况下我们可以在 Session 中保持一些常用变量信息，比如说 UserId 等。</li>
