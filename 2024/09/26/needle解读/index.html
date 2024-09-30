@@ -1,0 +1,1104 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="needle解读, 顾的博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>needle解读 | 顾的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">顾的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">顾的博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">needle解读</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">
+                                <span class="chip bg-color">实验室</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" class="post-category">
+                                毕业设计
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-09-26
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>毕业设计的一部分，我来看看，有一说一，这个项目并不复杂</p>
+<p><strong>一句话描述</strong>：python项目，接收json格式的批量代码数据，调用ammon进行多种类型错误生成，输出json文件</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p><img src="1.png"></p>
+<h2 id="code-json包"><a href="#code-json包" class="headerlink" title="code-json包"></a>code-json包</h2><p>两个json文件，分别是<code>origin.json</code>和<code>all.json</code>，用于进行错误代码生成</p>
+<p>存储的都是<code>leetcode</code>题目，格式如下</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"description"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    	<span class="token comment">//题目描述</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token comment">//题目标签</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"answer"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token comment">//C++题解，包含多种解法，我草</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>理性讨论没发现什么区别，其实就是<code>origin</code>里的代码比<code>all</code>里的代码多罢了</p>
+<h3 id="origin-json"><a href="#origin-json" class="headerlink" title="origin.json"></a>origin.json</h3><p>猜测是一开始爬的小部分题目，只有28题</p>
+<h3 id="all-json"><a href="#all-json" class="headerlink" title="all.json"></a>all.json</h3><p>全量题目，有200题，最开始几题可以和<code>leetcode</code>上对应，后面就随机了</p>
+<h2 id="format"><a href="#format" class="headerlink" title="format"></a>format</h2><p>包含<code>multi.py</code>以及<code>one_input.py</code>，目测是定义了生成对话的逻辑规则</p>
+<h3 id="one-input-py"><a href="#one-input-py" class="headerlink" title="one_input.py"></a>one_input.py</h3><p>定义了transform方法，目的是将一个 one 中的每一对正确答案和错误变异组合起来, 按照一定格式生成生成对话</p>
+<p><code>transform</code>：该方法接收一个字典 <code>one</code>，并生成一个对话列表。以下是具体解析：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">transform</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> one<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">list</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    将一个 one 中的每一对正确答案和错误变异组合起来, 按照一定格式生成生成对话
+    """</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">//</span>初始化返回结果列表
+    description <span class="token operator">=</span> one<span class="token punctuation">[</span><span class="token string">"description"</span><span class="token punctuation">]</span><span class="token operator">//</span>英文的题目描述
+    fmain <span class="token operator">=</span> <span class="token string">"int main() &#123;&#125;"</span><span class="token operator">//</span>代码的开头<span class="token punctuation">,</span><span class="token builtin">int</span> main<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">for</span> answer<span class="token punctuation">,</span> errors <span class="token keyword">in</span> <span class="token builtin">zip</span><span class="token punctuation">(</span>one<span class="token punctuation">[</span><span class="token string">"answer"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> one<span class="token punctuation">[</span><span class="token string">"error"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token operator">//</span>遍历answer和error，每一个正确代码可能有多个错误代码对应
+        <span class="token keyword">for</span> error <span class="token keyword">in</span> errors<span class="token punctuation">:</span>
+
+            error_code <span class="token operator">=</span> error<span class="token punctuation">[</span><span class="token string">"code"</span><span class="token punctuation">]</span><span class="token operator">//</span>错误代码具体
+            row<span class="token punctuation">,</span> col <span class="token operator">=</span> error<span class="token punctuation">[</span><span class="token string">"pos"</span><span class="token punctuation">]</span><span class="token operator">//</span>错误位置
+            error_desc <span class="token operator">=</span> error<span class="token punctuation">[</span><span class="token string">"desc"</span><span class="token punctuation">]</span><span class="token operator">//</span>错误类型
+
+            <span class="token comment"># 注意有给 leetcode 加的保险</span>
+            <span class="token operator">//</span>这里的conversation相当于我一次对话，<span class="token builtin">input</span>为输入，output为gpt的结果
+            conversation <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">"instruction"</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"Given a problem description, incorrect code, the location of the error within the code, and a description of what's wrong, I need you to identify the mistake and provide the corrected code. Problem Description:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>description<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span>
+                <span class="token string">"input"</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"Erroneous Code:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>error_code<span class="token punctuation">&#125;</span></span><span class="token string">\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>fmain<span class="token punctuation">&#125;</span></span><span class="token string">\n\nError Location (row, column):\n(</span><span class="token interpolation"><span class="token punctuation">&#123;</span>row<span class="token punctuation">&#125;</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">&#123;</span>col<span class="token punctuation">&#125;</span></span><span class="token string">)\n\nError Description:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>error_desc<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span>
+                <span class="token string">"output"</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>answer<span class="token punctuation">&#125;</span></span><span class="token string">\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>fmain<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span>
+            <span class="token punctuation">&#125;</span>
+
+            result<span class="token punctuation">.</span>append<span class="token punctuation">(</span>conversation<span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="one"><a href="#one" class="headerlink" title="one"></a><strong>one</strong></h4><p>一个字典，包含键 <code>&quot;description&quot;</code>、<code>&quot;answer&quot;</code> 和 <code>&quot;error&quot;</code>。<code>&quot;description&quot;</code> 是问题描述，<code>&quot;answer&quot;</code> 是正确答案的列表，<code>&quot;error&quot;</code> 是错误的代码及其相关信息的列表。</p>
+<p>格式如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">one <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"description"</span><span class="token punctuation">:</span> <span class="token string">"问题描述内容"</span><span class="token punctuation">,</span>
+    <span class="token string">"answer"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"正确答案1"</span><span class="token punctuation">,</span>
+        <span class="token string">"正确答案2"</span><span class="token punctuation">,</span>
+        <span class="token comment"># 其他正确答案</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">"error"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">[</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token string">"code"</span><span class="token punctuation">:</span> <span class="token string">"错误代码1"</span><span class="token punctuation">,</span>
+                <span class="token string">"pos"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span>行号<span class="token number">1</span><span class="token punctuation">,</span> 列号<span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token string">"desc"</span><span class="token punctuation">:</span> <span class="token string">"错误描述1"</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token string">"code"</span><span class="token punctuation">:</span> <span class="token string">"错误代码2"</span><span class="token punctuation">,</span>
+                <span class="token string">"pos"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span>行号<span class="token number">2</span><span class="token punctuation">,</span> 列号<span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token string">"desc"</span><span class="token punctuation">:</span> <span class="token string">"错误描述2"</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment"># 其他错误信息</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token string">"code"</span><span class="token punctuation">:</span> <span class="token string">"错误代码3"</span><span class="token punctuation">,</span>
+                <span class="token string">"pos"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span>行号<span class="token number">3</span><span class="token punctuation">,</span> 列号<span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token string">"desc"</span><span class="token punctuation">:</span> <span class="token string">"错误描述3"</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment"># 其他错误信息</span>
+        <span class="token punctuation">]</span>
+        <span class="token comment"># 其他错误列表</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例子：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">one <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"description"</span><span class="token punctuation">:</span> <span class="token string">"计算两个数的和。"</span><span class="token punctuation">,</span>
+    <span class="token string">"answer"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"int main() &#123; return a + b; &#125;"</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">"error"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">[</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token string">"code"</span><span class="token punctuation">:</span> <span class="token string">"int main() &#123; return a - b; &#125;"</span><span class="token punctuation">,</span>
+                <span class="token string">"pos"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token string">"desc"</span><span class="token punctuation">:</span> <span class="token string">"使用了错误的运算符"</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">]</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>问题</strong></p>
+<p><code>answer</code>字段包含多种解法，目前不确定<code>error</code>字段的<code>code</code>部分，如何定位到对应的解法，是每一种解法只有一个对应错误代码，还是多个错误代码</p>
+<h4 id="conversation"><a href="#conversation" class="headerlink" title="conversation"></a>conversation</h4><p>定义了和模型对话的格式</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">conversation <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token string">"instruction"</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"Given a problem description, incorrect code, the location of the error within the code, and a description of what's wrong, I need you to identify the mistake and provide the corrected code. Problem Description:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>description<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span>
+    
+    <span class="token string">"input"</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"Erroneous Code:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>error_code<span class="token punctuation">&#125;</span></span><span class="token string">\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>fmain<span class="token punctuation">&#125;</span></span><span class="token string">\n\nError Location (row, column):\n(</span><span class="token interpolation"><span class="token punctuation">&#123;</span>row<span class="token punctuation">&#125;</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">&#123;</span>col<span class="token punctuation">&#125;</span></span><span class="token string">)\n\nError Description:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>error_desc<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span>
+    
+    <span class="token string">"output"</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>answer<span class="token punctuation">&#125;</span></span><span class="token string">\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>fmain<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span>
+    
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="multi-py"><a href="#multi-py" class="headerlink" title="multi.py"></a>multi.py</h3><p>one_input生成的conversation只是用户给gpt单向的，而multi返回的conversation有双向的，包含了gpt的回答格式</p>
+<h4 id="conversation-1"><a href="#conversation-1" class="headerlink" title="conversation"></a>conversation</h4><p>这里的conversation是一个字典格式，包含<code>id</code>和<code>conversations</code>两个部分，<code>id</code>为字符串，<code>conversations</code>为列表</p>
+<p>整体而言格式如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token punctuation">&#123;</span>
+    <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"conv_id-1-1"</span><span class="token punctuation">,</span>
+    <span class="token string">"conversations"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">"from"</span><span class="token punctuation">:</span> <span class="token string">"human"</span><span class="token punctuation">,</span>
+            <span class="token string">"value"</span><span class="token punctuation">:</span> <span class="token string">"Could you provide a C++ program template with a class named 'Solution' and a 'main' function? The problem it should address is described as follows:\n问题描述.\nPlease ensure to include the directive '#include &lt;bits/stdc++.h>' and 'using namespace std;'."</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">"from"</span><span class="token punctuation">:</span> <span class="token string">"gpt"</span><span class="token punctuation">,</span>
+            <span class="token string">"value"</span><span class="token punctuation">:</span> <span class="token string">"Sure, here is a cpp program for this problem:\n错误代码\nint main() &#123;&#125;"</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">"from"</span><span class="token punctuation">:</span> <span class="token string">"human"</span><span class="token punctuation">,</span>
+            <span class="token string">"value"</span><span class="token punctuation">:</span> <span class="token string">"There is a bug in 5:10, bug description is '某某错误', please fix it."</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">"from"</span><span class="token punctuation">:</span> <span class="token string">"gpt"</span><span class="token punctuation">,</span>
+            <span class="token string">"value"</span><span class="token punctuation">:</span> <span class="token string">"Sorry, here is the fixed code:\n修复后的正确代码\nint main() &#123;&#125;"</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>id</strong></p>
+<p>由三个部分组成：<code>f&quot;&#123;conv_id&#125;-&#123;idx + 1&#125;-&#123;sub_idx + 1&#125;&quot;</code>。</p>
+<p><code>conv_id</code>: 来自 <code>one[&quot;id&quot;]</code>，通常表示问题或任务的编号。</p>
+<p><code>idx + 1</code>: 当前循环中的正确答案的编号。</p>
+<p><code>sub_idx + 1</code>: 当前循环中的错误代码的编号。</p>
+<p><strong>conversations</strong></p>
+<p>包含四次发言，人类和gpt各两次</p>
+<ul>
+<li>第一段对话 (<code>from: &quot;human&quot;</code>):<ul>
+<li>发言内容请求 GPT 提供一个 C++ 程序模板，包含一个名为 <code>Solution</code> 的类和 <code>main</code> 函数。</li>
+<li>模板的作用是解决问题 <code>description</code> 中描述的任务。</li>
+<li>还要求包含 <code>#include &lt;bits/stdc++.h&gt;</code> 和 <code>using namespace std;</code> 这些标准的 C++ 导入语句。</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"human"</span><span class="token punctuation">,</span>
+    <span class="token property">"value"</span><span class="token operator">:</span> f<span class="token string">"Could you provide a C++ program template with a class named 'Solution' and a 'main' function? The problem it should address is described as follows:\n&#123;description&#125;.\nPlease ensure to include the directive '#include &lt;bits/stdc++.h>' and 'using namespace std;'."</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><strong>第二段对话 (<code>from: &quot;gpt&quot;</code>)</strong>:<ul>
+<li>GPT 提供了一段包含错误的 C++ 代码，代码内容是 <code>error_code</code>，并包含 <code>fmain</code>，即 <code>int main() &#123;&#125;</code> 这段代码作为函数定义。</li>
+<li>也就是说这里GPT一开始提供的是错误代码</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"gpt"</span><span class="token punctuation">,</span>
+    <span class="token property">"value"</span><span class="token operator">:</span> f<span class="token string">"Sure, here is a cpp program for this problem:\n&#123;error_code&#125;\n&#123;fmain&#125;"</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><strong>第三段对话 (<code>from: &quot;human&quot;</code>)</strong>:<ul>
+<li>人类发言指出代码中的某个错误，位置在 <code>row</code> 和 <code>col</code>，并提供了错误的描述 <code>error_desc</code>，请求 GPT 修复错误。</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"human"</span><span class="token punctuation">,</span>
+    <span class="token property">"value"</span><span class="token operator">:</span> f<span class="token string">"There is a bug in &#123;row&#125;:&#123;col&#125;, bug description is '&#123;error_desc&#125;', please fix it."</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><strong>第四段对话 (<code>from: &quot;gpt&quot;</code>)</strong>:<ul>
+<li>GPT 提供修正后的代码，内容为 <code>answer</code>，并再次包含 <code>fmain</code>。</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"gpt"</span><span class="token punctuation">,</span>
+    <span class="token property">"value"</span><span class="token operator">:</span> f<span class="token string">"Sorry, here is the fixed code:\n&#123;answer&#125;\n&#123;fmain&#125;"</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>所以总体来说one_input和multi区别不大，都是生成对话</p>
+<p>但是one_input生成一次性，multi生成来回对话，并且添加上了idx</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">
+                                    <span class="chip bg-color">实验室</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2024/09/26/needle%E8%A7%A3%E8%AF%BB/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="needle解读">
+                        
+                        <span class="card-title">needle解读</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-09-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" class="post-category">
+                                    毕业设计
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%AE%A4/">
+                        <span class="chip bg-color">实验室</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/08/14/%E5%B9%BF%E5%91%8A%E7%9B%B8%E5%85%B3/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="广告相关">
+                        
+                        <span class="card-title">广告相关</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            G
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AE%9E%E4%B9%A0/">
+                        <span class="chip bg-color">实习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2024</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">G</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/GuSmallwhite" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
