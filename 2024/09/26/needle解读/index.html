@@ -422,7 +422,9 @@
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p><img src="1.png"></p>
 <h2 id="code-json包"><a href="#code-json包" class="headerlink" title="code-json包"></a>code-json包</h2><p>两个json文件，分别是<code>origin.json</code>和<code>all.json</code>，用于进行错误代码生成</p>
 <p>存储的都是<code>leetcode</code>题目，格式如下</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<p>整体来说是一个大的字典，作为mute函数的输入：one</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
     <span class="token property">"description"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     	<span class="token comment">//题目描述</span>
@@ -433,12 +435,13 @@
     <span class="token property">"answer"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
         <span class="token comment">//C++题解，包含多种解法，我草</span>
     <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>理性讨论没发现什么区别，其实就是<code>origin</code>里的代码比<code>all</code>里的代码多罢了</p>
 <h3 id="origin-json"><a href="#origin-json" class="headerlink" title="origin.json"></a>origin.json</h3><p>猜测是一开始爬的小部分题目，只有28题</p>
 <h3 id="all-json"><a href="#all-json" class="headerlink" title="all.json"></a>all.json</h3><p>全量题目，有200题，最开始几题可以和<code>leetcode</code>上对应，后面就随机了</p>
-<h2 id="format"><a href="#format" class="headerlink" title="format"></a>format</h2><p>包含<code>multi.py</code>以及<code>one_input.py</code>，目测是定义了生成对话的逻辑规则</p>
+<h2 id="format包"><a href="#format包" class="headerlink" title="format包"></a>format包</h2><p>包含<code>multi.py</code>以及<code>one_input.py</code>，目测是定义了生成对话的逻辑规则</p>
 <h3 id="one-input-py"><a href="#one-input-py" class="headerlink" title="one_input.py"></a>one_input.py</h3><p>定义了transform方法，目的是将一个 one 中的每一对正确答案和错误变异组合起来, 按照一定格式生成生成对话</p>
 <p><code>transform</code>：该方法接收一个字典 <code>one</code>，并生成一个对话列表。以下是具体解析：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">transform</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> one<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">list</span><span class="token punctuation">:</span>
@@ -522,6 +525,8 @@
 
 <p><strong>问题</strong></p>
 <p><code>answer</code>字段包含多种解法，目前不确定<code>error</code>字段的<code>code</code>部分，如何定位到对应的解法，是每一种解法只有一个对应错误代码，还是多个错误代码</p>
+<p>更新：应该是多个错误代码</p>
+<p>更新：”code”应该只有错误的那一行代码，而不是整个错误的代码</p>
 <h4 id="conversation"><a href="#conversation" class="headerlink" title="conversation"></a>conversation</h4><p>定义了和模型对话的格式</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">conversation <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
 
@@ -619,6 +624,442 @@
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>所以总体来说one_input和multi区别不大，都是生成对话</p>
 <p>但是one_input生成一次性，multi生成来回对话，并且添加上了idx</p>
+<h2 id="run-ammon-sh"><a href="#run-ammon-sh" class="headerlink" title="run-ammon.sh"></a>run-ammon.sh</h2><p>执行ammon的脚本</p>
+<p>内容如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># shell解释器的路径</span>
+<span class="token comment">#!/usr/bin/env bash </span>
+
+<span class="token comment"># ammon 可执行文件的路径</span>
+<span class="token assign-left variable">AMMON</span><span class="token operator">=</span>/home/xiayi/Mine/workspace/mand/code-fix/ammon/build/ammon
+
+<span class="token variable">$AMMON</span> <span class="token string">"<span class="token variable">$@</span>"</span> --
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>&quot;$@&quot;</code> 会传递所有命令行参数到 <code>ammon</code> 程序。 <code>&quot;$@&quot;</code> 是所有传入参数的集合，保证所有输入参数都直接传递给 <code>ammon</code>。</p>
+<h2 id="chat-py"><a href="#chat-py" class="headerlink" title="chat.py"></a>chat.py</h2><p>主要用于测试和gpt的链接是否正常，仅仅发送一条”Hello”消息</p>
+<p>直接看代码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#!/usr/bin/env python //制定python解释器的位置</span>
+
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> requests
+
+OPENAI_API_KEY <span class="token operator">=</span> os<span class="token punctuation">.</span>getenv<span class="token punctuation">(</span><span class="token string">'OPENAI_API_KEY'</span><span class="token punctuation">)</span><span class="token operator">//</span>从环境变量中获取 OpenAI API 密钥
+
+headers <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'application/json'</span><span class="token punctuation">,</span> <span class="token operator">//</span>内容格式
+    <span class="token string">'Authorization'</span><span class="token punctuation">:</span> <span class="token string-interpolation"><span class="token string">f"Bearer </span><span class="token interpolation"><span class="token punctuation">&#123;</span>OPENAI_API_KEY<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">,</span><span class="token operator">//</span>认证信息
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment"># 具体请求数据，模型3.5，内容为一个Hello</span>
+json_data <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'model'</span><span class="token punctuation">:</span> <span class="token string">'gpt-3.5-turbo'</span><span class="token punctuation">,</span>
+    <span class="token string">'messages'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">'role'</span><span class="token punctuation">:</span> <span class="token string">'user'</span><span class="token punctuation">,</span>
+            <span class="token string">'content'</span><span class="token punctuation">:</span> <span class="token string">'Hello!'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment"># 发送请求并返回响应</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    response <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span><span class="token string">'https://api.openai-proxy.com/v1/chat/completions'</span><span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">,</span> json<span class="token operator">=</span>json_data<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="main-py"><a href="#main-py" class="headerlink" title="main.py"></a>main.py</h2><p>这个脚本 <code>main.py</code> 用于处理 JSON 数据，生成一系列 “变异体”（mutation），并将结果保存为 JSON 文件。</p>
+<p>包含多个部分：</p>
+<p>**日志配置 (<code>logger_config</code>)**：</p>
+<ul>
+<li>设置日志记录功能，日志会输出到终端和文件中，便于调试和错误跟踪。</li>
+</ul>
+<p>**变异检查 (<code>check_valid</code>)**：</p>
+<ul>
+<li>使用 <code>clang++</code> 编译代码片段，检查语法是否正确。如果有语法错误，返回 <code>False</code>。</li>
+</ul>
+<p>**代码变异 (<code>mutate</code>)**：</p>
+<ul>
+<li>主要逻辑是对 <code>one[&quot;answer&quot;]</code> 中的每个代码段进行变异操作。</li>
+<li>使用 <code>run-ammon.sh</code> 脚本和有效的变异类型集合 <code>valid_mutation</code> 对代码段生成变异体。</li>
+<li>使用 <code>clang-format</code> 格式化代码，确保生成的变异代码符合风格。</li>
+</ul>
+<p>**整体流程控制 (<code>all</code>)**：</p>
+<ul>
+<li>对所有 JSON 数据元素应用变异操作。</li>
+<li>调用 <code>mutate</code> 函数处理每个问题中的答案代码段，并生成相应的变异体。</li>
+<li>根据 <code>transform</code> 函数格式化结果，生成对话格式数据，并写入文件 <code>res.json</code>。</li>
+</ul>
+<p><strong>主函数逻辑</strong>：</p>
+<ul>
+<li>检查命令行参数个数，正确则运行 <code>logger_config</code> 设置日志记录。</li>
+<li>调用 <code>all</code> 函数对 JSON 文件中每个元素进行变异操作。</li>
+</ul>
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><p>对日志、函数等信息进行配置</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">logger <span class="token operator">=</span> logging<span class="token punctuation">.</span>getLogger<span class="token punctuation">(</span>__file__<span class="token punctuation">)</span><span class="token comment"># 创建了一个以当前文件路径为标识的日志记录器</span>
+mutate_exec <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>os<span class="token punctuation">.</span>getcwd<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"run-ammon.sh"</span><span class="token punctuation">)</span><span class="token comment"># 形成run-ammon.sh的完整路径</span>
+valid_mutation <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token comment"># 有效变异类型组合</span>
+clang_style <span class="token operator">=</span> <span class="token string">"&#123;BasedOnStyle: llvm, MaxEmptyLinesToKeep: 1, KeepEmptyLinesAtTheStartOfBlocks: false&#125;"</span><span class="token comment"># 定义clang-format格式</span>
+format_funcs <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">"multi"</span><span class="token punctuation">:</span> Multi<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>transform<span class="token punctuation">,</span> <span class="token string">"one-input"</span><span class="token punctuation">:</span> OneInput<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>transform<span class="token punctuation">&#125;</span><span class="token comment"># 格式化函数映射</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>clang-format</strong>：Clang-Format可用于格式化（排版）多种不同语言的代码。其自带的排版格式主要有：LLVM, Google, Chromium, Mozilla, WebKit等</p>
+<p><strong>格式化函数映射</strong>： 也就是说，我输入multi，就会调用multi.transform</p>
+<h3 id="日志配置logger-config"><a href="#日志配置logger-config" class="headerlink" title="日志配置logger_config"></a>日志配置logger_config</h3><p>这个没啥好说的，就是配置日志</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">logger_config</span><span class="token punctuation">(</span>log_file_name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    logger<span class="token punctuation">.</span>setLevel<span class="token punctuation">(</span>logging<span class="token punctuation">.</span>DEBUG<span class="token punctuation">)</span><span class="token comment"># debug级别，最详细</span>
+    <span class="token comment"># file handler</span>
+    fh <span class="token operator">=</span> logging<span class="token punctuation">.</span>FileHandler<span class="token punctuation">(</span>log_file_name<span class="token punctuation">,</span> mode<span class="token operator">=</span><span class="token string">"w"</span><span class="token punctuation">)</span><span class="token comment"># filehandler会将日志写入制定文件</span>
+    fh<span class="token punctuation">.</span>setLevel<span class="token punctuation">(</span>logging<span class="token punctuation">.</span>DEBUG<span class="token punctuation">)</span>
+    <span class="token comment"># cmd handler</span>
+    ch <span class="token operator">=</span> logging<span class="token punctuation">.</span>StreamHandler<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment"># cmdhandler则输出到控制台</span>
+    ch<span class="token punctuation">.</span>setLevel<span class="token punctuation">(</span>logging<span class="token punctuation">.</span>INFO<span class="token punctuation">)</span><span class="token comment"># 级别为info，不如debug详细</span>
+    <span class="token comment"># format</span>
+    formatter <span class="token operator">=</span> logging<span class="token punctuation">.</span>Formatter<span class="token punctuation">(</span><span class="token comment"># 日志格式</span>
+        <span class="token string">"Log[%(asctime)s:%(funcName)s:%(lineno)d] - %(levelname)s: %(message)s"</span>
+    <span class="token punctuation">)</span>
+    ch<span class="token punctuation">.</span>setFormatter<span class="token punctuation">(</span>formatter<span class="token punctuation">)</span><span class="token comment"># 将格式给到handler</span>
+    fh<span class="token punctuation">.</span>setFormatter<span class="token punctuation">(</span>formatter<span class="token punctuation">)</span>
+    logger<span class="token punctuation">.</span>addHandler<span class="token punctuation">(</span>ch<span class="token punctuation">)</span><span class="token comment"># handler绑定给logger，就可以用了</span>
+    logger<span class="token punctuation">.</span>addHandler<span class="token punctuation">(</span>fh<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="变异检查check-valid"><a href="#变异检查check-valid" class="headerlink" title="变异检查check_valid"></a>变异检查check_valid</h3><p>对变异后的代码使用clang++进行编译，用于检查是否有语法错误</p>
+<p><strong>总体代码</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">check_valid</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    使用 clang++ 编译 'mutated' 中的代码, 根据需要检查语法错误
+    如果语法正确或者不需要检查，返回 True; 否则返回 False
+    """</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+    mutated <span class="token operator">=</span> <span class="token string">"\n"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    desc <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">if</span> mutated <span class="token operator">==</span> <span class="token string">""</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+    <span class="token keyword">if</span> <span class="token string">"syntax"</span> <span class="token keyword">in</span> desc<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">True</span>
+
+    <span class="token keyword">with</span> tempfile<span class="token punctuation">.</span>NamedTemporaryFile<span class="token punctuation">(</span>delete<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> suffix<span class="token operator">=</span><span class="token string">".cpp"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> tmp_file<span class="token punctuation">:</span>
+        <span class="token comment"># 将代码写入临时文件</span>
+        tmp_file<span class="token punctuation">.</span>write<span class="token punctuation">(</span>mutated<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 获取临时文件的文件名</span>
+        tmp_filename <span class="token operator">=</span> tmp_file<span class="token punctuation">.</span>name
+
+    <span class="token comment"># 构建 clang++ 命令来编译这个源文件</span>
+    compile_command <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token string">"clang++"</span><span class="token punctuation">,</span>
+        tmp_filename<span class="token punctuation">,</span>
+        <span class="token string">"-c"</span><span class="token punctuation">,</span>
+        <span class="token string">"-o"</span><span class="token punctuation">,</span>
+        <span class="token string">"/dev/null"</span><span class="token punctuation">,</span>
+        <span class="token string">"-fsyntax-only"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+
+    <span class="token comment"># 执行编译命令</span>
+    result <span class="token operator">=</span> sp<span class="token punctuation">.</span>run<span class="token punctuation">(</span>compile_command<span class="token punctuation">,</span> stdout<span class="token operator">=</span>sp<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> stderr<span class="token operator">=</span>sp<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 删除临时文件</span>
+    os<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>tmp_filename<span class="token punctuation">)</span>
+
+    <span class="token comment"># 如果编译成功 (无语法错误), 返回 True</span>
+    <span class="token keyword">return</span> result<span class="token punctuation">.</span>returncode <span class="token operator">==</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>一段一段来看</strong></p>
+<p><strong>前置验证</strong>：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+mutated <span class="token operator">=</span> <span class="token string">"\n"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+desc <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+
+<span class="token keyword">if</span> mutated <span class="token operator">==</span> <span class="token string">""</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+<span class="token keyword">if</span> <span class="token string">"syntax"</span> <span class="token keyword">in</span> desc<span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token boolean">True</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>result</code> 是由变异生成的代码行组成的列表</p>
+<p><code>result</code> 的长度若小于 5，则认为结果无效并返回 <code>False</code></p>
+<p><code>mutated</code> 是变异后的代码部分，合并 <code>result</code> 的 <code>3</code> 到 <code>-1</code> 行</p>
+<p><code>desc</code> 是变异的描述信息</p>
+<p>若 <code>mutated</code> 为空或 <code>desc</code> 中包含 <code>&quot;syntax&quot;</code> 字样，则认为无需进一步验证，直接返回 <code>True</code>。因为已经明确表明了当前的代码片段是与语法相关的错误</p>
+<p><strong>使用clang++编译</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">with</span> tempfile<span class="token punctuation">.</span>NamedTemporaryFile<span class="token punctuation">(</span>delete<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> suffix<span class="token operator">=</span><span class="token string">".cpp"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> tmp_file<span class="token punctuation">:</span>
+    <span class="token comment"># 将代码写入临时文件，以cpp为后缀</span>
+    tmp_file<span class="token punctuation">.</span>write<span class="token punctuation">(</span>mutated<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 获取临时文件的文件名</span>
+    tmp_filename <span class="token operator">=</span> tmp_file<span class="token punctuation">.</span>name
+
+<span class="token comment"># 构建 clang++ 命令来编译这个源文件</span>
+compile_command <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token string">"clang++"</span><span class="token punctuation">,</span><span class="token comment"># 指定clang++</span>
+    tmp_filename<span class="token punctuation">,</span><span class="token comment"># 文件</span>
+    <span class="token string">"-c"</span><span class="token punctuation">,</span><span class="token comment"># 只编译</span>
+    <span class="token string">"-o"</span><span class="token punctuation">,</span><span class="token comment"># 不生成可连接文件</span>
+    <span class="token string">"/dev/null"</span><span class="token punctuation">,</span>
+    <span class="token string">"-fsyntax-only"</span><span class="token punctuation">,</span><span class="token comment"># 只进行语法检查，不实际编译</span>
+<span class="token punctuation">]</span>
+
+<span class="token comment"># 执行编译命令</span>
+result <span class="token operator">=</span> sp<span class="token punctuation">.</span>run<span class="token punctuation">(</span>compile_command<span class="token punctuation">,</span> stdout<span class="token operator">=</span>sp<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> stderr<span class="token operator">=</span>sp<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token comment"># sp为subprocess，开启子进程处理</span>
+
+<span class="token comment"># 删除临时文件</span>
+os<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>tmp_filename<span class="token punctuation">)</span>
+
+<span class="token comment"># 如果编译成功 (无语法错误), 返回 True</span>
+<span class="token keyword">return</span> result<span class="token punctuation">.</span>returncode <span class="token operator">==</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="代码变异"><a href="#代码变异" class="headerlink" title="代码变异"></a>代码变异</h3><p>对origin.json或者all.json调用<code>ammon</code>进行批量代码变异，穿插<code>check_valid</code>函数进行验证</p>
+<p>此处的输入one的格式，就是origin.json的格式，或者说内容就是origin.json</p>
+<p>结果是err，其实对应的就是之前解析的<strong>one</strong></p>
+<p>整体代码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">mutate</span><span class="token punctuation">(</span>one<span class="token punctuation">:</span> <span class="token builtin">dict</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    problem_id <span class="token operator">=</span> one<span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">]</span>
+    logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Mutation start for problem &#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    errs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    codes <span class="token operator">=</span> one<span class="token punctuation">[</span><span class="token string">"answer"</span><span class="token punctuation">]</span>
+    answer_to_remove <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">for</span> idx<span class="token punctuation">,</span> code <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>codes<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Mutating code &#123;&#125;-&#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">,</span> idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">with</span> tempfile<span class="token punctuation">.</span>NamedTemporaryFile<span class="token punctuation">(</span>mode<span class="token operator">=</span><span class="token string">"w+t"</span><span class="token punctuation">,</span> delete<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> suffix<span class="token operator">=</span><span class="token string">".cpp"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+            <span class="token comment"># write code into tempfile</span>
+            <span class="token comment"># append header file and namespace statements</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"#include &lt;bits/stdc++.h>\n"</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"using namespace std;\n"</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>code<span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># clang-format</span>
+            s <span class="token operator">=</span> sp<span class="token punctuation">.</span>run<span class="token punctuation">(</span>
+                <span class="token punctuation">[</span>
+                    <span class="token string">"clang-format"</span><span class="token punctuation">,</span>
+                    <span class="token string">"-i"</span><span class="token punctuation">,</span>
+                    <span class="token string">"-style="</span> <span class="token operator">+</span> clang_style<span class="token punctuation">,</span>
+                    f<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+                <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                stdout<span class="token operator">=</span>sp<span class="token punctuation">.</span>DEVNULL<span class="token punctuation">,</span>
+                stderr<span class="token operator">=</span>sp<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span>
+            <span class="token punctuation">)</span>
+            <span class="token keyword">if</span> s<span class="token punctuation">.</span>returncode <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                logger<span class="token punctuation">.</span>error<span class="token punctuation">(</span><span class="token string">"Format error: &#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>stderr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># do mutatation</span>
+            cmd <span class="token operator">=</span> <span class="token punctuation">[</span>mutate_exec<span class="token punctuation">,</span> f<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token string">"-t"</span><span class="token punctuation">]</span>
+
+            <span class="token comment"># 遍历所有可以使用的 mutation</span>
+            answer_mutated <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token keyword">for</span> t <span class="token keyword">in</span> valid_mutation<span class="token punctuation">:</span>
+                cur_cmd <span class="token operator">=</span> cmd <span class="token operator">+</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">]</span>
+                count <span class="token operator">=</span> <span class="token number">0</span>
+
+                <span class="token comment"># 重复某一个 mutation 最多三次, 排除偶然因素</span>
+                <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+                    count <span class="token operator">+=</span> <span class="token number">1</span>
+                    logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span>
+                        <span class="token string">"Executing '&#123;&#125;' for the &#123;&#125;-th time"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+                            <span class="token string">" "</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>cur_cmd<span class="token punctuation">)</span><span class="token punctuation">,</span> count
+                        <span class="token punctuation">)</span>
+                    <span class="token punctuation">)</span>
+                    result <span class="token operator">=</span> sp<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span>cur_cmd<span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">.</span>splitlines<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+                    <span class="token keyword">if</span> check_valid<span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        info <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span>
+                        pos <span class="token operator">=</span> info<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+                        desc <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+                        mutated <span class="token operator">=</span> <span class="token string">"\n"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+                        answer_mutated<span class="token punctuation">.</span>append<span class="token punctuation">(</span>
+                            <span class="token punctuation">&#123;</span><span class="token string">"pos"</span><span class="token punctuation">:</span> pos<span class="token punctuation">,</span> <span class="token string">"code"</span><span class="token punctuation">:</span> mutated<span class="token punctuation">,</span> <span class="token string">"desc"</span><span class="token punctuation">:</span> desc<span class="token punctuation">&#125;</span>
+                        <span class="token punctuation">)</span>
+                        <span class="token keyword">break</span>
+
+                    logger<span class="token punctuation">.</span>debug<span class="token punctuation">(</span>
+                        <span class="token string">"Mutation error:\nammon result:\n&#123;&#125;\ncode:\n&#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+                            result<span class="token punctuation">,</span> code
+                        <span class="token punctuation">)</span>
+                    <span class="token punctuation">)</span>
+
+                    <span class="token comment"># 最多重复 3 次</span>
+                    <span class="token keyword">if</span> count <span class="token operator">>=</span> <span class="token number">3</span><span class="token punctuation">:</span>
+                        <span class="token keyword">break</span>
+
+            <span class="token comment"># 如果当前 answer 一个 err 都没生成</span>
+            <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>answer_mutated<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                answer_to_remove<span class="token punctuation">.</span>append<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                errs<span class="token punctuation">.</span>append<span class="token punctuation">(</span>answer_mutated<span class="token punctuation">)</span>
+
+    <span class="token comment"># 删除掉没有成功生成对应变异体的 answer</span>
+    <span class="token keyword">for</span> idx <span class="token keyword">in</span> <span class="token builtin">sorted</span><span class="token punctuation">(</span>answer_to_remove<span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        int_idx <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Removing invalid answer &#123;&#125;-&#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">,</span> int_idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        codes<span class="token punctuation">.</span>pop<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+    <span class="token comment"># append attribute error</span>
+    one<span class="token punctuation">[</span><span class="token string">"error"</span><span class="token punctuation">]</span> <span class="token operator">=</span> errs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>逐步解析:</p>
+<p><strong>获取问题 ID 和初始化变量</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">problem_id <span class="token operator">=</span> one<span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">]</span><span class="token comment"># 问题id，并不完全和lc的id一样</span>
+logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Mutation start for problem &#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+errs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+codes <span class="token operator">=</span> one<span class="token punctuation">[</span><span class="token string">"answer"</span><span class="token punctuation">]</span><span class="token comment"># 每个问题有多个正确答案</span>
+answer_to_remove <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>遍历每段代码进行变异</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> idx<span class="token punctuation">,</span> code <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>codes<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Mutating code &#123;&#125;-&#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">,</span> idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 遍历codes中的代码，同时记录idx</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>创建临时文件并写入代码</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">with</span> tempfile<span class="token punctuation">.</span>NamedTemporaryFile<span class="token punctuation">(</span>mode<span class="token operator">=</span><span class="token string">"w+t"</span><span class="token punctuation">,</span> delete<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> suffix<span class="token operator">=</span><span class="token string">".cpp"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"#include &lt;bits/stdc++.h>\n"</span><span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"using namespace std;\n"</span><span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>code<span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>格式化代码</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">s <span class="token operator">=</span> sp<span class="token punctuation">.</span>run<span class="token punctuation">(</span>
+    <span class="token punctuation">[</span>
+        <span class="token string">"clang-format"</span><span class="token punctuation">,</span>
+        <span class="token string">"-i"</span><span class="token punctuation">,</span><span class="token comment"># 就地修改</span>
+        <span class="token string">"-style="</span> <span class="token operator">+</span> clang_style<span class="token punctuation">,</span>
+        f<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    stdout<span class="token operator">=</span>sp<span class="token punctuation">.</span>DEVNULL<span class="token punctuation">,</span><span class="token comment"># 标准输出定位到null，相当于不要了</span>
+    stderr<span class="token operator">=</span>sp<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span><span class="token comment"># 只捕捉错误信息到管道</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>设置变异命令</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># do mutatation</span>
+           cmd <span class="token operator">=</span> <span class="token punctuation">[</span>mutate_exec<span class="token punctuation">,</span> f<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token string">"-t"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>构造命令以调用 <code>run-ammon.sh</code> 脚本，后面将为其添加变异类型参数</p>
+<p><strong>变异并调用check_valid验证</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 遍历所有可以使用的 mutation</span>
+answer_mutated <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> t <span class="token keyword">in</span> valid_mutation<span class="token punctuation">:</span><span class="token comment"># 目前是&#123;0, 1, 3, 4, 5&#125;</span>
+    cur_cmd <span class="token operator">=</span> cmd <span class="token operator">+</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">]</span>
+    count <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token comment"># 重复某一个 mutation 最多三次, 排除偶然因素</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        count <span class="token operator">+=</span> <span class="token number">1</span>
+        logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span>
+            <span class="token string">"Executing '&#123;&#125;' for the &#123;&#125;-th time"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+                <span class="token string">" "</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>cur_cmd<span class="token punctuation">)</span><span class="token punctuation">,</span> count
+            <span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        result <span class="token operator">=</span> sp<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span>cur_cmd<span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">.</span>splitlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment"># 执行cmd并结果按行分割成字符串列表</span>
+
+        <span class="token keyword">if</span> check_valid<span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            info <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span>
+            pos <span class="token operator">=</span> info<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+            desc <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+            mutated <span class="token operator">=</span> <span class="token string">"\n"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+            answer_mutated<span class="token punctuation">.</span>append<span class="token punctuation">(</span>
+                <span class="token punctuation">&#123;</span><span class="token string">"pos"</span><span class="token punctuation">:</span> pos<span class="token punctuation">,</span> <span class="token string">"code"</span><span class="token punctuation">:</span> mutated<span class="token punctuation">,</span> <span class="token string">"desc"</span><span class="token punctuation">:</span> desc<span class="token punctuation">&#125;</span>
+            <span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+
+        logger<span class="token punctuation">.</span>debug<span class="token punctuation">(</span>
+            <span class="token string">"Mutation error:\nammon result:\n&#123;&#125;\ncode:\n&#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>
+                result<span class="token punctuation">,</span> code
+            <span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+
+        <span class="token comment"># 最多重复 3 次</span>
+        <span class="token keyword">if</span> count <span class="token operator">>=</span> <span class="token number">3</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注：此处result格式疑似为:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">result <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token string">"Mutation successful"</span><span class="token punctuation">,</span>             <span class="token comment"># 变异状态</span>
+    <span class="token string">"Position: line 4, column 10"</span><span class="token punctuation">,</span>     <span class="token comment"># 变异位置</span>
+    <span class="token string">"Description: syntax mutation"</span><span class="token punctuation">,</span>    <span class="token comment"># 变异描述</span>
+    <span class="token string">"int x = 10;"</span><span class="token punctuation">,</span>                     <span class="token comment"># 变异后的代码</span>
+    <span class="token string">"x += 5;"</span>                          <span class="token comment"># 变异后的代码（可能还有更多行）</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>根据代码来看，同一个code会进行所有错误类型的生成，<strong>但是每次生成只对应一个错误类型</strong>，同一个错误类型会尝试至多3次，不成功便跳过该错误类型</p>
+<p><strong>处理无效答案</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>answer_mutated<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+    answer_to_remove<span class="token punctuation">.</span>append<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    errs<span class="token punctuation">.</span>append<span class="token punctuation">(</span>answer_mutated<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果当前代码没有生成有效的变异体，记录索引以便后续移除；否则，将有效的变异体添加到 <code>errs</code> 中。</p>
+<p><strong>移除无效答案并记录errs</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 删除掉没有成功生成对应变异体的 answer</span>
+<span class="token keyword">for</span> idx <span class="token keyword">in</span> <span class="token builtin">sorted</span><span class="token punctuation">(</span>answer_to_remove<span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    int_idx <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Removing invalid answer &#123;&#125;-&#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">,</span> int_idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    codes<span class="token punctuation">.</span>pop<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+<span class="token comment"># append attribute error</span>
+one<span class="token punctuation">[</span><span class="token string">"error"</span><span class="token punctuation">]</span> <span class="token operator">=</span> errs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="整体流程控制all"><a href="#整体流程控制all" class="headerlink" title="整体流程控制all"></a>整体流程控制all</h3><p><code>all</code> 函数负责执行项目的整体流程，将 JSON 文件加载为数据，逐个进行变异操作并将变异结果保存</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">all</span><span class="token punctuation">(</span>json_file_name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> json_dir_name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> transform<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Link start for &#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>json_file_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    intermediate_file_name <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>json_dir_name<span class="token punctuation">,</span> <span class="token string">"mid.json"</span><span class="token punctuation">)</span><span class="token comment"># 存储中间结果</span>
+    result_file_name <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>json_dir_name<span class="token punctuation">,</span> <span class="token string">"res.json"</span><span class="token punctuation">)</span><span class="token comment"># 存储最终结果</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>json_file_name<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token comment"># list type</span>
+        data <span class="token operator">=</span> json<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token comment"># 加载json文件</span>
+        one_to_remove <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+        <span class="token comment"># mutate each element</span>
+        <span class="token keyword">for</span> idx<span class="token punctuation">,</span> one <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            mutate<span class="token punctuation">(</span>one<span class="token punctuation">)</span>
+
+            <span class="token comment"># 说明一个变异体都没成功生成</span>
+            <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>one<span class="token punctuation">[</span><span class="token string">"answer"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                one_to_remove<span class="token punctuation">.</span>append<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+
+        <span class="token comment"># 在 data 中删除无效的 one</span>
+        <span class="token keyword">for</span> idx <span class="token keyword">in</span> <span class="token builtin">sorted</span><span class="token punctuation">(</span>one_to_remove<span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Removing invalid problem &#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            data<span class="token punctuation">.</span>pop<span class="token punctuation">(</span>idx<span class="token punctuation">)</span>
+
+        <span class="token comment"># conversations</span>
+        convs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># transform into conversation，具体可以为one或者multi</span>
+        <span class="token keyword">for</span> one <span class="token keyword">in</span> data<span class="token punctuation">:</span>
+            convs<span class="token punctuation">.</span>extend<span class="token punctuation">(</span>transform<span class="token punctuation">(</span>one<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># write intermediate result into mid.json，变异的中间结果作为mid.json</span>
+        <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>intermediate_file_name<span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> r<span class="token punctuation">:</span>
+            json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>data<span class="token punctuation">,</span> r<span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># write final result into res.json ，最后的对话作为res.json</span>
+        <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>result_file_name<span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> r<span class="token punctuation">:</span>
+            json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>convs<span class="token punctuation">,</span> r<span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><p><code>main</code> 函数控制整个脚本的运行逻辑，设置了日志配置，并根据命令行参数执行主流程</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">:</span>
+        exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    json_file_name <span class="token operator">=</span> sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token comment"># 文件名，如origin.json</span>
+    json_dir_name <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>dirname<span class="token punctuation">(</span>json_file_name<span class="token punctuation">)</span><span class="token comment"># 文件夹路径</span>
+
+    logger_config<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>json_dir_name<span class="token punctuation">,</span> <span class="token string">"all.log"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    conv_format <span class="token operator">=</span> sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token comment"># 对话格式,one/multi</span>
+    <span class="token builtin">all</span><span class="token punctuation">(</span>json_file_name<span class="token punctuation">,</span> json_dir_name<span class="token punctuation">,</span> format_funcs<span class="token punctuation">[</span>conv_format<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token comment"># 通过all来执行全部流程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对应格式：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python main.py data.json multi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 
                 
             </div>
