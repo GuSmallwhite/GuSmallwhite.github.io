@@ -1,0 +1,1 @@
+<h1>Posts</h1><p>共 <%= site.posts.length %> 篇文章。</p><% let year=''; site.posts.sort('date',-1).each(function(post){ const y=date(post.date,'YYYY'); if(y!==year){if(year){ %></ul><% }year=y; %><h2><%= y %></h2><ul><% } %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a></li><% }); %></ul>

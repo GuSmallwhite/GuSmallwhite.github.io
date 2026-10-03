@@ -1,0 +1,21 @@
+{
+  "name": "gu-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "hexo generate",
+    "start": "hexo server --ip 127.0.0.1 --port 4000",
+    "new": "hexo new"
+  },
+  "dependencies": {
+    "hexo": "^7.3.0",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-marked": "^7.0.1",
+    "hexo-server": "^3.0.0"
+  },
+  "hexo": {
+    "version": "7.3.0"
+  }
+}

@@ -1,0 +1,10 @@
+<p>💻 我的代码：<a href="https://github.com/GuSmallwhite">GuSmallwhite</a></p>
+<p>📚 学习笔记：<a href="/notes/">技术与论文</a></p>
+<h2>Facts</h2>
+<ul><li>写代码，也记录生活。</li><li>学过 Java、RPC 和分布式系统，做过广告业务相关的实践。</li><li>读一些程序修复与代码生成的论文，偶尔写点胡思乱想。</li></ul>
+<h2>Notes</h2>
+<ul><% const picks = ['再看rpc之项目会问的问题','ARPLLM阅读','大量门店距离计算优化']; picks.forEach(function(title) { const post = site.posts.toArray().find(p => p.title === title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
+<h2>Writing</h2>
+<ul><% site.posts.sort('date',-1).toArray().filter(p => ['我好像是败犬','我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
+<h2>Posts</h2>
+<ul class="posts"><% site.posts.sort('date', -1).limit(7).each(function(post) { let summary = strip_html(post.content).replace(/\s+/g,' ').trim(); if (summary.startsWith(post.title)) summary = summary.slice(post.title.length).trim(); summary = summary.replace(/^前言\s*/, ''); %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a><br><%= summary.slice(0,105) %><%= summary.length>105 ? '…' : '' %></li><% }); %><li><a href="/archives/">...Posts</a></li></ul>

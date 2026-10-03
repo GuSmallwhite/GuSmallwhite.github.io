@@ -1,0 +1,32 @@
+title: 顾的博客
+subtitle: ''
+author: 顾
+language: zh-CN
+timezone: Asia/Shanghai
+url: https://gusmallwhite.github.io
+permalink: :year/:month/:day/:title/
+pretty_urls:
+  trailing_index: false
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+skip_render:
+  - '**/*.pdf'
+  - '**/*.zip'
+  - '**/*.svg'
+theme: plain
+highlight:
+  enable: true
+  line_number: false
+prismjs:
+  enable: false
+per_page: 0
+archive_generator:
+  per_page: 0
+  yearly: false
+  monthly: false
+index_generator:
+  per_page: 0
+  order_by: -date
