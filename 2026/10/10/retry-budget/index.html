@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>重试三次，可能把故障放大九次 | 顾的博客</title><meta name="description" content="顾的技术笔记、论文阅读与生活随笔"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/style.css"><link rel="canonical" href="https://sinho.homes//2026/10/10/retry-budget/"><meta name="generator" content="Hexo 7.3.0"></head><body><a class="skip" href="#main">跳到正文</a><div class="site"><header><nav aria-label="主导航"><a href="/">home</a> <a href="/archives/">posts</a> <a href="/notes/">notes</a> <a href="/friends/">friends</a> <a href="/about/">about</a></nav></header><main id="main"><article><p class="post-meta"><time datetime="2026-10-10">2026-10-10</time></p><h1>重试三次，可能把故障放大九次</h1><div class="prose"><p>接口超时，重试一下。这句话听上去很合理，问题是调用链里的每一层可能都这样想。</p>
+<p>设想 A 调用 B，B 调用 C。A 对一次操作最多尝试三次，B 对每次来自 A 的调用也最多向 C 尝试三次。如果每次都失败，一次操作最多会给 C 带来九次尝试。这里“三次”包含第一次调用；如果配置写的是“额外重试三次”，数字还会变成十六。</p>
+<p><a target="_blank" rel="noopener" href="https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/">AWS 对超时与重试的讨论</a>指出，多层独立重试会放大底层负载。在设计里，次数的含义和重试的层级都需要明确。</p>
+<h2 id="超时留下的是一个问号"><a href="#超时留下的是一个问号" class="headerlink" title="超时留下的是一个问号"></a>超时留下的是一个问号</h2><p>客户端没收到结果，不等于服务端没执行。一个创建订单请求可能已经写入数据库，只是返回途中断了连接。换一个新请求再创建，可能得到第二笔订单。</p>
+<p>对有副作用的操作，首先要定义重复请求的语义。<a target="_blank" rel="noopener" href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">AWS 的幂等 API 文章</a>讨论了用调用方提供的标识表达同一次请求意图。</p>
+<p>在假设的订单接口里，可以让同一次操作的所有尝试携带相同的幂等标识。服务端需要把标识与请求参数、执行状态或结果关联起来，处理并发重复请求，并规定记录的保留时间。只在缓存里随手放一个“处理过”的布尔值，还不足以解释崩溃和超时后的行为。</p>
+<h2 id="等待不能挤出总预算"><a href="#等待不能挤出总预算" class="headerlink" title="等待不能挤出总预算"></a>等待不能挤出总预算</h2><p>重试策略不仅是次数，也包括每次调用的等待时间和两次尝试之间的间隔。</p>
+<p>假设一次操作只允许等待两秒，而每次下游调用都能等待两秒，那么串行尝试三次显然无法守住这个约束。应从总截止时间分配预算，并确认客户端的超时设置到底覆盖连接、请求还是完整操作。</p>
+<p>退避可以拉开尝试间隔，随机抖动可以减少许多客户端同时再次出发的情况，但两者都不能凭空增加下游容量。它们仍需受总时间和总尝试次数约束。</p>
+<h2 id="别把所有失败都送回队列"><a href="#别把所有失败都送回队列" class="headerlink" title="别把所有失败都送回队列"></a>别把所有失败都送回队列</h2><p>参数不合法、权限不足，重复提交相同请求通常不会改变答案。限流或暂时不可用可能值得稍后再试，也应遵守接口约定的等待提示与截止时间。</p>
+<p>具体错误是否可以重试，需要由接口契约定义。不要只靠“不是成功”这个条件，也不要让 SDK、业务服务和任务调度器分别无限补救。</p>
+<p>可以记录原始操作数量与实际尝试数量的比值，再看重试带来的成功增量。如果失败增加时，尝试数量迅速上升，成功数量却没有改善，就该检查重试是否正在拖慢恢复。</p>
+<p>一个完整的重试设计，要能说明重复执行是否安全、总共愿意花多少时间、由哪一层负责，以及什么时候停止。</p>
+</div><hr><p><a href="/archives/">← Posts</a></p></article></main><footer><nav><a target="_blank" rel="noopener" href="https://github.com/GuSmallwhite">Github</a> <a href="/archives/">Archive</a></nav></footer></div></body></html>
