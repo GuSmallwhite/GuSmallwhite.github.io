@@ -3,7 +3,7 @@
 <h2>Facts</h2>
 <ul><li>写代码，也记录生活。</li><li>学过 Java、RPC 和分布式系统，做过广告业务相关的实践。</li><li>读一些程序修复与代码生成的论文，偶尔写点胡思乱想。</li></ul>
 <h2>Notes</h2>
-<ul><% const picks = ['再看rpc之项目会问的问题','ARPLLM阅读','大量门店距离计算优化']; picks.forEach(function(title) { const post = site.posts.toArray().find(p => p.title === title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
+<ul><% const picks = ['再看rpc之项目会问的问题','ARPLLM阅读','地理位置距离计算优化实践']; picks.forEach(function(title) { const post = site.posts.toArray().find(p => p.title === title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
 <h2>Writing</h2>
 <ul><% site.posts.sort('date',-1).toArray().filter(p => ['我好像是败犬','我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
 <h2>Posts</h2>
