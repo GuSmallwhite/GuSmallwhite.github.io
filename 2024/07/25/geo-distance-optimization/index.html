@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>地理位置距离计算优化实践 | 顾的博客</title><meta name="description" content="顾的技术笔记、论文阅读与生活随笔"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/style.css"><link rel="canonical" href="https://sinho.homes//2024/07/25/geo-distance-optimization/"><meta name="generator" content="Hexo 7.3.0"></head><body><a class="skip" href="#main">跳到正文</a><div class="site"><header><nav aria-label="主导航"><a href="/">home</a> <a href="/archives/">posts</a> <a href="/notes/">notes</a> <a href="/friends/">friends</a> <a href="/about/">about</a></nav></header><main id="main"><article><p class="post-meta"><time datetime="2024-07-25">2024-07-25</time></p><h1>地理位置距离计算优化实践</h1><div class="prose"><p>候选地点很多时，距离计算往往成为请求链路中的一项重复开销。优化的重点可以从“让每次计算更快”转向“减少需要计算的地点”。</p>
+<p>本文讨论一个假设的本地服务检索场景：请求包含用户位置，候选集包含地点坐标，需要找出给定半径内的地点，或其中最近的地点。示例不对应特定公司的线上实现。</p>
+<h2 id="先把问题量出来"><a href="#先把问题量出来" class="headerlink" title="先把问题量出来"></a>先把问题量出来</h2><p>全量扫描的成本随候选集大小增加，但耗时也可能来自对象分配、缓存未命中或数据读取。应分别测量候选数量、每次请求的距离计算次数、分配量和端到端延迟，再选择优化方向。</p>
+<p>离线构建索引与请求时计算的成本也要分开。一个请求阶段更快的方案，可能需要更多索引空间或更复杂的更新流程。</p>
+<h2 id="三种缩小候选集的办法"><a href="#三种缩小候选集的办法" class="headerlink" title="三种缩小候选集的办法"></a>三种缩小候选集的办法</h2><p>按行政区域过滤实现简单，但区域边界附近可能漏掉更近的地点。区域标签适合业务约束，不宜直接当作距离约束。</p>
+<p>GeoHash 将空间划分为网格。查询应覆盖搜索圆与网格相交的所有单元，不能只取用户所在格子。精度过细会增加网格数量，过粗又会保留过多候选。还需要明确极区、跨日期变更线和跨区域查询的处理方式。</p>
+<p>另一种办法是按经度维护有序数组，用二分查找找到包围盒的左右边界，再按纬度和真实距离过滤。这里二分查找只负责一维区间定位，不能直接用二维“是否在矩形里”作为二分条件。</p>
+<h2 id="包围盒只是第一道筛选"><a href="#包围盒只是第一道筛选" class="headerlink" title="包围盒只是第一道筛选"></a>包围盒只是第一道筛选</h2><p>给定位置与搜索半径，可以构造包含搜索圆的包围盒。盒内的点不一定在圆内，因此最终还要进行距离判断。</p>
+<p>下面是流程示意，不是可直接部署的地理计算实现：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">box = conservative_bounding_box(user_position, radius)</span><br><span class="line">intervals = split_if_crossing_dateline(box)</span><br><span class="line"></span><br><span class="line">for interval in intervals:</span><br><span class="line">    begin = lower_bound(sorted_longitudes, interval.min_longitude)</span><br><span class="line">    end   = upper_bound(sorted_longitudes, interval.max_longitude)</span><br><span class="line">    for point in candidates[begin:end]:</span><br><span class="line">        if point.latitude is outside box.latitude_range:</span><br><span class="line">            continue</span><br><span class="line">        distance = geographic_distance(user_position, point)</span><br><span class="line">        if distance &lt;= radius:</span><br><span class="line">            keep(point, distance)</span><br></pre></td></tr></table></figure>
+
+<p>包围盒必须足够保守，宁可多保留候选，也不要提前丢掉正确结果。在高纬度和跨日期变更线等情况，应使用经过验证的地理库或空间索引。</p>
+<h2 id="少开根号，也少分配对象"><a href="#少开根号，也少分配对象" class="headerlink" title="少开根号，也少分配对象"></a>少开根号，也少分配对象</h2><p>在满足误差要求的局部平面近似中，比较距离平方即可判断远近，最后需要展示距离时再开根号。但不能把不同地点各自换算的经纬度差，未经一致尺度处理就直接比较。</p>
+<p>把请求阶段频繁创建的中间对象改为复用或直接数值计算，也可能降低分配压力。是否有效应以测量结果为准。</p>
+<h2 id="验证优化没有改变答案"><a href="#验证优化没有改变答案" class="headerlink" title="验证优化没有改变答案"></a>验证优化没有改变答案</h2><p>先用全量扫描作为基准，对比优化后的结果集合。覆盖边界、空候选、重复坐标、密集城区与稀疏地区，再看延迟分位数、索引更新成本和内存占用。</p>
+<p>最近点查询与固定半径查询是不同问题：没有业务半径限制时，不能因为当前包围盒里找到了一个点就停止，除非能证明盒外不会存在更近的点。</p>
+<p>这类优化的关键是把候选筛选与最终判断分开，并为筛选规则提供完整性验证。</p>
+</div><hr><p><a href="/archives/">← Posts</a></p></article></main><footer><nav><a target="_blank" rel="noopener" href="https://github.com/GuSmallwhite">Github</a> <a href="/archives/">Archive</a></nav></footer></div></body></html>

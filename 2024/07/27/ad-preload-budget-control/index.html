@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>广告预加载与预算控制的设计思路 | 顾的博客</title><meta name="description" content="顾的技术笔记、论文阅读与生活随笔"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/style.css"><link rel="canonical" href="https://sinho.homes//2024/07/27/ad-preload-budget-control/"><meta name="generator" content="Hexo 7.3.0"></head><body><a class="skip" href="#main">跳到正文</a><div class="site"><header><nav aria-label="主导航"><a href="/">home</a> <a href="/archives/">posts</a> <a href="/notes/">notes</a> <a href="/friends/">friends</a> <a href="/about/">about</a></nav></header><main id="main"><article><p class="post-meta"><time datetime="2024-07-27">2024-07-27</time></p><h1>广告预加载与预算控制的设计思路</h1><div class="prose"><p>预加载可以缩短展示等待时间，却把“决定加载”和“真正展示”分成了两个时刻。素材被缓存后，投放状态、预算和内容有效期都可能发生变化。</p>
+<p>本文讨论一个假设的广告系统，说明设计中的约束与取舍，不复述特定公司的业务策略。</p>
+<h2 id="先区分几个数量"><a href="#先区分几个数量" class="headerlink" title="先区分几个数量"></a>先区分几个数量</h2><p>预加载次数、实际曝光次数和可计费曝光次数并不相同。把它们混为一谈，容易出现缓存很多却展示很少，或展示量超过预算允许范围的问题。</p>
+<p>应先定义计数口径：哪些请求算加载成功，哪些事件算有效曝光，重复上报如何去重，以及日期边界采用什么时区。</p>
+<h2 id="两种基本策略"><a href="#两种基本策略" class="headerlink" title="两种基本策略"></a>两种基本策略</h2><p>曝光前实时校验能取得较新的状态，但增加了网络依赖。校验服务延迟或不可用时，需要明确降级行为。</p>
+<p>给缓存内容设置较短有效期，并在预加载时保留一定额度，可以减少展示时的远程检查，但需要处理额度过期、未展示释放和状态失效的问题。</p>
+<p>两者也可以组合使用。并非所有检查都适合省略：内容撤回、合规状态和素材失效应有明确机制，不能只为了提高展示量而跳过。</p>
+<h2 id="预算控制需要考虑在途请求"><a href="#预算控制需要考虑在途请求" class="headerlink" title="预算控制需要考虑在途请求"></a>预算控制需要考虑在途请求</h2><p>简化模型里，可分配额度取决于剩余额度与尚未结算的占用：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">available = max(0, total_limit - settled_usage - reserved_usage)</span><br></pre></td></tr></table></figure>
+
+<p>这个式子仅说明额度关系。实际系统还要处理计费单位、预估与实际消耗的差异，以及多个服务实例同时分配额度的竞争。</p>
+<p>预加载额度可随展示概率、缓存有效期和历史消耗变化而调整，但不宜把某一天的消耗比例机械地当作未来展示率。数据较少或业务变化时，应限制调整幅度并设置兜底。</p>
+<h2 id="用状态管理预留额度"><a href="#用状态管理预留额度" class="headerlink" title="用状态管理预留额度"></a>用状态管理预留额度</h2><p>一种可讨论的流程是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">reserve -&gt; preload -&gt; expose -&gt; settle</span><br><span class="line">                   -&gt; expire -&gt; release</span><br></pre></td></tr></table></figure>
+
+<p>额度预留、结算和释放需要幂等标识。重复曝光回调不能重复扣减，过期回收也不能释放已经结算的额度。关键状态更新应通过原子操作或事务保证一致性。</p>
+<p>还应保留事件记录，方便重建计数与核对异常。仅保存一个累加计数器，往往不足以解释为什么账面额度与真实消耗不一致。</p>
+<h2 id="验证与上线观察"><a href="#验证与上线观察" class="headerlink" title="验证与上线观察"></a>验证与上线观察</h2><p>测试应覆盖并发预留、重复回调、延迟上报、跨日展示、缓存过期与服务重启。离线模拟不同展示概率，观察缓存利用率和额度占用时间。</p>
+<p>上线时同时观察展示延迟、有效曝光、预算偏差、预留未释放量和过期素材比例。提升某一个指标可能牺牲另一个，因此需要明确业务约束再判断方案是否有效。</p>
+<p>这里没有给出特定系统的上线效果或内部参数。重点是理解预加载、展示和计费之间的状态关系。</p>
+</div><hr><p><a href="/archives/">← Posts</a></p></article></main><footer><nav><a target="_blank" rel="noopener" href="https://github.com/GuSmallwhite">Github</a> <a href="/archives/">Archive</a></nav></footer></div></body></html>
