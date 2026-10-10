@@ -1,10 +1,19 @@
 <p>💻 我的代码：<a href="https://github.com/GuSmallwhite">GuSmallwhite</a></p>
 <p>📚 学习笔记：<a href="/notes/">技术与论文</a></p>
 <h2>Facts</h2>
-<ul><li>写代码，也记录生活。</li><li>学过 Java、RPC 和分布式系统，做过广告业务相关的实践。</li><li>读一些程序修复与代码生成的论文，偶尔写点胡思乱想。</li></ul>
+<ul><li>写代码，也记录生活。</li><li>关注系统设计、分布式系统与广告业务。</li><li>探索 AI 模型与工具，偶尔写点胡思乱想。</li></ul>
+<%
+const posts = site.posts.toArray();
+const featured = [
+  { title: 'Multi-harness RL 中文导读：模型也要适应它使用的工具', summary: '同一个模型，放进不同的 Agent 工具里，为什么会表现得像换了一个模型？' },
+  { title: '地理位置距离计算优化实践', summary: '从空间索引、包围盒到精确距离判断：如何减少计算，又不漏掉正确结果。' },
+  { title: '基于感知哈希的相似图片过滤设计', summary: '用感知哈希识别相似图片，讨论过滤位置、阈值选择与误伤控制。' },
+  { title: '广告预加载与预算控制的设计思路', summary: '预加载、曝光和计费发生在不同时间，预算如何预留、结算与释放？' }
+];
+%>
 <h2>Notes</h2>
-<ul><% const picks = ['再看rpc之项目会问的问题','ARPLLM阅读','地理位置距离计算优化实践']; picks.forEach(function(title) { const post = site.posts.toArray().find(p => p.title === title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
+<ul><% featured.forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
 <h2>Writing</h2>
 <ul><% site.posts.sort('date',-1).toArray().filter(p => ['我好像是败犬','我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
 <h2>Posts</h2>
-<ul class="posts"><% site.posts.sort('date', -1).limit(7).each(function(post) { let summary = strip_html(post.content).replace(/\s+/g,' ').trim(); if (summary.startsWith(post.title)) summary = summary.slice(post.title.length).trim(); summary = summary.replace(/^前言\s*/, ''); %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a><br><%= summary.slice(0,105) %><%= summary.length>105 ? '…' : '' %></li><% }); %><li><a href="/archives/">...Posts</a></li></ul>
+<ul class="posts"><% featured.forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a><br><%= item.summary %></li><% } }); %><li><a href="/archives/">...Posts</a></li></ul>
