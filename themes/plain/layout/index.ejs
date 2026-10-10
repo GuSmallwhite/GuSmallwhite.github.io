@@ -4,6 +4,12 @@
 <ul><li>写代码，也记录生活。</li><li>关注系统设计、分布式系统与广告业务。</li><li>探索 AI 模型与工具，偶尔写点胡思乱想。</li></ul>
 <%
 const posts = site.posts.toArray();
+const latest = [
+  { title: '缓存命中之后，问题才刚开始', summary: '缓存命中率很高，也可能一直返回旧值。用一条并发时间线拆解失效与回填的竞争。' },
+  { title: '重试三次，可能把故障放大九次', summary: '超时不代表没有执行。重试要同时考虑幂等、调用层级与总时间预算。' },
+  { title: 'AI 工具越多，越要知道自己在做什么', summary: '把任务终点说清楚，留下可检查的判断，少在不同输入框里重复同一个问题。' },
+  { title: '博客不必写成另一份简历', summary: '给方法和成果之外的部分留一点位置，也允许观点随着时间改变。' }
+];
 const featured = [
   { title: 'Multi-harness RL 中文导读：模型也要适应它使用的工具', summary: '同一个模型，放进不同的 Agent 工具里，为什么会表现得像换了一个模型？' },
   { title: '地理位置距离计算优化实践', summary: '从空间索引、包围盒到精确距离判断：如何减少计算，又不漏掉正确结果。' },
@@ -14,6 +20,6 @@ const featured = [
 <h2>Notes</h2>
 <ul><% featured.forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
 <h2>Writing</h2>
-<ul><% site.posts.sort('date',-1).toArray().filter(p => ['我好像是败犬','我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
+<ul><% site.posts.sort('date',-1).toArray().filter(p => ['AI 工具越多，越要知道自己在做什么','博客不必写成另一份简历','我好像是败犬','我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
 <h2>Posts</h2>
-<ul class="posts"><% featured.forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a><br><%= item.summary %></li><% } }); %><li><a href="/archives/">...Posts</a></li></ul>
+<ul class="posts"><% latest.concat(featured).forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a><br><%= item.summary %></li><% } }); %><li><a href="/archives/">...Posts</a></li></ul>
