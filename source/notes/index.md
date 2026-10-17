@@ -5,8 +5,6 @@ layout: page
 
 ## 工程实践
 
-- [缓存命中之后，问题才刚开始](/2026/10/10/cache-invalidation/)
-- [重试三次，可能把故障放大九次](/2026/10/10/retry-budget/)
 
 - [地理位置距离计算优化实践](/2024/07/25/geo-distance-optimization/)
 - [基于感知哈希的相似图片过滤设计](/2024/07/26/perceptual-hash-filtering/)
