@@ -5,6 +5,7 @@
 <%
 const posts = site.posts.toArray();
 const featured = [
+  { title: 'Managed Agents 解读：Agent 的状态，为什么不能绑在容器里', summary: '从 Anthropic 的架构设计出发，分析会话恢复、工具副作用、事件流重连与授权边界。' },
   { title: 'Multi-harness RL 中文导读：模型也要适应它使用的工具', summary: '同一个模型，放进不同的 Agent 工具里，为什么会表现得像换了一个模型？' },
   { title: '地理位置距离计算优化实践', summary: '从空间索引、包围盒到精确距离判断：如何减少计算，又不漏掉正确结果。' },
   { title: '基于感知哈希的相似图片过滤设计', summary: '用感知哈希识别相似图片，讨论过滤位置、阈值选择与误伤控制。' },

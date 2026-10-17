@@ -5,7 +5,6 @@ layout: page
 
 ## 工程实践
 
-
 - [地理位置距离计算优化实践](/2024/07/25/geo-distance-optimization/)
 - [基于感知哈希的相似图片过滤设计](/2024/07/26/perceptual-hash-filtering/)
 - [广告预加载与预算控制的设计思路](/2024/07/27/ad-preload-budget-control/)
@@ -16,6 +15,8 @@ layout: page
 - [再看 RPC：网络传输](/2023/12/07/再看rpc之网络传输/)
 
 ## 论文阅读
+
+- [Managed Agents 解读：Agent 的状态，为什么不能绑在容器里](/2026/10/17/managed-agents-guide/)
 
 - [Multi-harness RL 中文导读](/2026/10/03/multi-harness-rl-guide/)
 
