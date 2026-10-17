@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Managed Agents 解读：Agent 的状态，为什么不能绑在容器里 | 顾的博客</title><meta name="description" content="顾的技术笔记、论文阅读与生活随笔"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/style.css"><link rel="canonical" href="https://sinho.homes//2026/10/17/managed-agents-guide/"><meta name="generator" content="Hexo 7.3.0"></head><body><a class="skip" href="#main">跳到正文</a><div class="site"><header><nav aria-label="主导航"><a href="/">home</a> <a href="/archives/">posts</a> <a href="/notes/">notes</a> <a href="/friends/">friends</a> <a href="/about/">about</a></nav></header><main id="main"><article><p class="post-meta"><time datetime="2026-10-17">2026-10-17</time></p><h1>Managed Agents 解读：Agent 的状态，为什么不能绑在容器里</h1><div class="prose"><p>一个 Agent 跑了两小时，已经修改文件、调用外部服务，最后执行容器退出了。此时重新启动一个进程，到底是在“继续任务”，还是在“重新猜一遍发生过什么”？</p>
+<p>这是阅读 Anthropic Managed Agents 工程文章时，我最想追问的问题。把模型接到工具上并不难；难的是进程、文件和外部操作各自发生故障以后，系统还能解释任务进行到了哪里。</p>
+<blockquote>
+<p>原文：<a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/managed-agents">Scaling Managed Agents: Decoupling the brain from the hands</a></p>
+<p>原作者：Lance Martin、Gabe Cemaj、Michael Cohen，Anthropic。原文发表于 <strong>2026 年 4 月 8 日</strong>。</p>
+<p>本文是中文导读与工程分析，不是全文翻译。产品细节补充参考官方文档，查阅日期为 <strong>2026 年 10 月 17 日</strong>。下文的故障时间线、业务例子与设计建议是我的推演，不代表 Anthropic 已公开的内部实现，也不是使用该产品后的实测报告。</p>
+</blockquote>
+<h2 id="先分清：托管的是哪一层"><a href="#先分清：托管的是哪一层" class="headerlink" title="先分清：托管的是哪一层"></a>先分清：托管的是哪一层</h2><p>按<a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/managed-agents/overview">官方概览</a>，Messages API 提供模型调用，Managed Agents 进一步提供可配置的 Agent 运行框架与托管基础设施，面向长任务和异步执行。它的产品概念包括 Agent、Environment、Session 和 Events。</p>
+<p>这意味着接入方可以把更多运行细节交给平台，但业务层仍要决定：用户要完成什么，能访问哪些资源，哪种结果算完成。把一个循环放到云上运行，不会自动补齐这些定义。</p>
+<h2 id="原文的关键：把三种生命周期拆开"><a href="#原文的关键：把三种生命周期拆开" class="headerlink" title="原文的关键：把三种生命周期拆开"></a>原文的关键：把三种生命周期拆开</h2><p>Anthropic 将系统拆成独立的会话日志、harness 和执行沙箱。Harness 负责调用模型和分派工具；沙箱负责执行；持久化日志记录过程。组件能够独立替换，容器故障不再等同于整个会话丢失。原文还区分了完整会话记录与模型当前的上下文窗口：历史可保存，选哪些内容交给模型则由 harness 决定。<a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/managed-agents">见原文</a>。</p>
+<p>为了讨论后面的边界，可以用下面这张简化图理解。它是本文的分析示意，不是产品部署拓扑：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户目标、约束</span><br><span class="line">      |</span><br><span class="line">      v</span><br><span class="line">控制循环 &lt;----&gt; 持久化会话记录</span><br><span class="line">      |</span><br><span class="line">      +----&gt; 文件与代码执行环境</span><br><span class="line">      |</span><br><span class="line">      +----&gt; 外部服务的受控接口</span><br></pre></td></tr></table></figure>
+
+<p>在这个划分里，至少有三种不同的问题：控制循环能不能接着运行，工作目录能不能恢复，外部服务是否已经接受了某个操作。它们不能用同一个“重启成功”来回答。</p>
+<h2 id="日志恢复不了外部世界的事务"><a href="#日志恢复不了外部世界的事务" class="headerlink" title="日志恢复不了外部世界的事务"></a>日志恢复不了外部世界的事务</h2><p>假设一个任务是生成报告，审核通过后提交到某个业务系统。先把模型能力放到一边，只看最后一次提交：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">T1：记录“准备提交报告”，操作标识为 op-42</span><br><span class="line">T2：外部系统接受报告，产生记录 R</span><br><span class="line">T3：网络连接断开，调用方没拿到成功响应</span><br><span class="line">T4：控制循环恢复，日志里只有 T1</span><br></pre></td></tr></table></figure>
+
+<p>从本地记录看，操作尚未完成；从外部系统看，报告已经存在。直接重放会有重复提交的风险，直接跳过又可能遗漏一次实际上没有成功的操作。</p>
+<p>所以，持久化日志能保存已知事实，却不能把未知结果变成已知结果。接入方还需要定义操作的核对方式。例如，外部接口若支持幂等标识，同一次提交的后续尝试应沿用 <code>op-42</code>；若支持按业务标识查询，就先核对是否存在 R。两者都不支持时，应把状态显式保留为“结果待确认”，而不是让模型根据一句错误提示自行判断成功或失败。</p>
+<p>这也是恢复流程里容易被忽略的一个区分：<strong>重读事件、重新推理和再次执行工具，是三个不同动作。</strong> 前两个可以帮助还原判断，第三个会再次影响外部世界。</p>
+<table>
+<thead>
+<tr>
+<th>中断位置</th>
+<th>恢复时还缺什么信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型尚未返回完整决策</td>
+<td>上一次生成是否形成了可接受的完整动作</td>
+</tr>
+<tr>
+<td>工具已执行，结果还没记录</td>
+<td>外部操作的标识、查询或去重机制</td>
+</tr>
+<tr>
+<td>结果已记录，页面没显示</td>
+<td>客户端读取位置与事件去重状态</td>
+</tr>
+<tr>
+<td>文件已改动，沙箱不可用</td>
+<td>工作目录的检查点、补丁或其他持久化产物</td>
+</tr>
+</tbody></table>
+<p>这张表是通用系统设计分析。单凭一篇架构文章，不能推定产品对所有工具都提供了恰好执行一次的保证。</p>
+<h2 id="事件流重连，也有一个容易漏掉的窗口"><a href="#事件流重连，也有一个容易漏掉的窗口" class="headerlink" title="事件流重连，也有一个容易漏掉的窗口"></a>事件流重连，也有一个容易漏掉的窗口</h2><p><a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/managed-agents/events-and-streaming">官方事件流文档</a>给出的重连顺序是：先打开新流，再拉历史事件，最后消费流，并按事件 ID 去重。文档也说明，流只发送打开之后产生的事件。</p>
+<p>为什么这个顺序值得注意？假设先查历史，再订阅：历史查询结束到订阅建立之间，新产生的事件可能既不在查询结果里，也不进入新流。</p>
+<p>反过来，先订阅再拉历史，会引入重叠区，但可以利用事件 ID 消除重复。这个选择把“可能缺一段”变成了“可能多收到一遍”。</p>
+<p>接入方还要继续考虑自己的行为：如果收到事件就立刻发通知，去重必须发生在通知之前。如果消费者进程崩溃，去重状态是否随之丢失？事件有 ID，不等于接收方已经正确处理了它。实时界面、持久化记录和业务动作之间，还需要各自明确提交位置。</p>
+<h2 id="保存了全部历史，不等于模型每次都知道全部历史"><a href="#保存了全部历史，不等于模型每次都知道全部历史" class="headerlink" title="保存了全部历史，不等于模型每次都知道全部历史"></a>保存了全部历史，不等于模型每次都知道全部历史</h2><p>这里可以把上下文视为一次决策需要的“工作集”。下面继续做设计推演。</p>
+<p>假设早期指令写着“只处理测试环境”，后面又积累了几百次工具调用。如果恢复时只读取最近的错误日志，就可能拥有足够的信息继续修复，却缺少限制操作范围的那条指令。</p>
+<p>保存历史解决了可找回的问题，组织工作集解决的是本次决策能否正确使用它。对一个准备写入外部系统的动作，我会希望工作集里至少能回答四件事：当前目标是什么、作用范围是什么、用户批准了什么、这次动作的参数是什么。</p>
+<p>进一步说，批准“提交版本 A”不能自然延伸为批准“提交后来生成的版本 B”。接入方可以考虑把审批记录绑定到具体产物版本或参数摘要；内容变了，就重新判断原有批准是否仍适用。这是应用层的一种设计选择，不是这里声称存在的 Managed Agents 默认机制。</p>
+<h2 id="凭据隔离解决不了全部授权问题"><a href="#凭据隔离解决不了全部授权问题" class="headerlink" title="凭据隔离解决不了全部授权问题"></a>凭据隔离解决不了全部授权问题</h2><p><a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/managed-agents/vaults">官方 Vault 文档</a>把凭据作为独立资源注册，再由会话引用；同时说明 Vault 和凭据资源具有 workspace 作用域。接入产品时，不能只看“为每个用户建了一个 Vault”，还要核对应用如何把当前用户映射到正确的资源，以及谁能创建引用这些资源的会话。</p>
+<p>在自己的工具接口里，还应区分“能调用服务”和“能执行这个业务动作”。例如，允许查询报告，不应自动意味着允许提交报告；允许提交测试报告，也不应通过一个自由文本参数切换到生产环境。</p>
+<p>一个较清楚的边界是：模型提出动作，工具入口检查身份、资源与参数，必要时等待审批，然后执行。凭据不出现在模型上下文中，是一项有价值的隔离措施；但如果一个已授权工具本身允许过宽的操作，攻击者并不一定需要先拿到凭据。</p>
+<h2 id="读完以后，我会怎样评估这类平台"><a href="#读完以后，我会怎样评估这类平台" class="headerlink" title="读完以后，我会怎样评估这类平台"></a>读完以后，我会怎样评估这类平台</h2><p>我会拿一条完整的业务链路做故障演练：在外部提交完成、结果尚未写回的时候中断，再观察恢复过程。平台、接入服务和业务系统分别知道什么，谁负责判断未知结果，应该能逐项说清楚。</p>
+<p>然后再换一次模型或上下文策略：任务目标、审批记录、工具操作标识和产物版本是否仍能沿用？如果这些东西被塞在某段临时提示词里，模型升级就可能同时变成一次状态迁移。</p>
+<p>这与之前那篇 <a href="/2026/10/03/multi-harness-rl-guide/">Multi-harness RL 导读</a>也形成了一个值得并排考虑的问题：模型如何适应工具框架，与系统如何承受框架变化，是两个层面的工作。前者关注完成任务的能力，后者关注运行、恢复和替换的边界；不能只靠其中一层替另一层兜底。</p>
+<p>对 Managed Agents，我最关心的评估单位会是一条带故障、带审批、带外部副作用的完整任务链路。演示里顺利跑完一次，只覆盖了这条链路中最容易观察的部分。</p>
+</div><hr><p><a href="/archives/">← Posts</a></p></article></main><footer><nav><a target="_blank" rel="noopener" href="https://github.com/GuSmallwhite">Github</a> <a href="/archives/">Archive</a></nav></footer></div></body></html>
