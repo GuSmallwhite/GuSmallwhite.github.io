@@ -15,6 +15,6 @@ const featured = [
 <h2>Notes</h2>
 <ul><% featured.forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% } }); %></ul>
 <h2>Writing</h2>
-<ul><% site.posts.sort('date',-1).toArray().filter(p => ['我好像是败犬','我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
+<ul><% site.posts.sort('date',-1).toArray().filter(p => ['我好像是哲学家','假象哥的故事'].includes(p.title)).forEach(function(post) { %><li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li><% }); %></ul>
 <h2>Posts</h2>
 <ul class="posts"><% featured.forEach(function(item) { const post = posts.find(p => p.title === item.title); if (post) { %><li><a href="<%- url_for(post.path) %>"><%= date(post.date,'YYYY-MM-DD') %> - <%= post.title %></a><br><%= item.summary %></li><% } }); %><li><a href="/archives/">...Posts</a></li></ul>
